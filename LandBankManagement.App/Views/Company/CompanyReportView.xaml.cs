@@ -3,6 +3,7 @@ using LandBankManagement.Services;
 using LandBankManagement.ViewModels;
 using Syncfusion.UI.Xaml.Reports;
 using System;
+using System.Collections;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -25,21 +26,20 @@ namespace LandBankManagement.Views
         {
             ViewModel = ServiceLocator.Current.GetService<CompanyReportViewModel>();
             NavigationService = ServiceLocator.Current.GetService<INavigationService>();
-            ICompanyService CompanyService = ServiceLocator.Current.GetService<ICompanyService>();
-            this.InitializeComponent();
 
-            CompanyReportViewer = new CompanyReportViewer(reportViewer, CompanyService);
+            InitializeComponent();
+
+            CompanyReportViewer = new CompanyReportViewer(reportViewer, ViewModel);
 
             Loaded += ReportParameters_Loaded;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            ViewModel.Subscribe();
-
-            //  await ViewModel.LoadAsync(e.Parameter as CompanyReportArgs);
-
+            await ViewModel.LoadCompanies();
+            CompanyReportViewer.UpdateDataSet();
         }
+
 
         async void ReportParameters_Loaded(object sender, RoutedEventArgs e)
         {
@@ -59,18 +59,40 @@ namespace LandBankManagement.Views
 
         void reportViewer_ViewButtonClick(object sender, CancelEventArgs args)
         {
-            this.CompanyReportViewer.UpdateDataSet();
+            CompanyReportViewer.UpdateDataSet();
         }
 
         void reportViewer_ReportLoaded(object sender, EventArgs e)
         {
             CompanyReportViewer.SetParameter();
-            CompanyReportViewer.UpdateDataSet();
+
+            if (ViewModel.ReportItems != null)
+                CompanyReportViewer.UpdateDataSet();
         }
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            ViewModel.Unload();
-            ViewModel.Unsubscribe();
+            reportViewer.ReportLoaded -= reportViewer_ReportLoaded;
+            reportViewer.ViewButtonClick -= reportViewer_ViewButtonClick;
+            Loaded -= ReportParameters_Loaded;
+
+            if (reportViewer.DataSources != null)
+            {
+                foreach (var dataDataSource in reportViewer.DataSources)
+                {
+                    IList list = dataDataSource.Value as IList;
+
+                    if (list != null)
+                    {
+                        list.Clear();
+                    }
+                }
+                reportViewer.DataSources.Clear();
+            }
+
+            reportViewer.Reset();
+            reportViewer.Dispose();
         }
+
     }
 }

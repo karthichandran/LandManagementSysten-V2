@@ -161,7 +161,7 @@ namespace LandBankManagement.Data.Services
         }
         public async  Task<List<DropDownList>> GetPartyOptions(string party)
         {
-            var Parties = await _dataSource.Parties.Where(x => x.PartyFirstName.Contains(party))
+            var Parties = await _dataSource.Parties.Where(x => x.PartyFirstName.Contains(party) && x.GroupId == 0)
                 .Select(x => new DropDownList { Id = x.PartyId, Description = x.PartyFirstName})
                 .ToListAsync();
 

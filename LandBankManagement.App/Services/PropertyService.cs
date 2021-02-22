@@ -322,8 +322,7 @@ namespace LandBankManagement.Services
             {
                 var paySchedule = new List<PropPaySchedule>();
                 foreach (var model in schedules) {
-                    if (model.ScheduleId != 0)
-                        continue;
+                   
                     var pay = new PropPaySchedule();
                     UpdatePropPaySchedule(pay, model);
                     paySchedule.Add(pay);
@@ -333,9 +332,18 @@ namespace LandBankManagement.Services
             }
         }
 
+        public async Task<int> DeletePropPaySchedule(int propPayScheduleId) {
+            using (var dataService = DataServiceFactory.CreateDataService())
+            {
+
+                return await dataService.DeletePropPaySchedule(propPayScheduleId);
+            }
+        }
+
         private void UpdatePropPaySchedule(PropPaySchedule target, PaymentScheduleModel source) {
             target.PropertyId = source.PropertyId;
             target.PropertyDocumentTypeId = source.PropertyDocumentTypeId;
+            target.PropPayScheduleId = source.ScheduleId;
             target.ScheduleDate = source.ScheduleDate.UtcDateTime;
             target.Description = source.Description;
             target.Amount1 = source.Amount1;

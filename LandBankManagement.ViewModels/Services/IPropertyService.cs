@@ -31,5 +31,6 @@ namespace LandBankManagement.Services
         void StoreItems(PropertyContainer data);
         PropertyContainer GetStoredItems();
         void AddParty(PropertyPartyModel propertyPartyModel);
+        Task<int> DeletePropPaySchedule(int propPayScheduleId);
     }
 }

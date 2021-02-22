@@ -1,10 +1,11 @@
-﻿using LandBankManagement.ViewModels;
+﻿using LandBankManagement.Common;
+using LandBankManagement.Controls;
+using LandBankManagement.Models;
+using LandBankManagement.ViewModels;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using System;
-using LandBankManagement.Converters;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace LandBankManagement.Views
 {
@@ -56,6 +57,19 @@ namespace LandBankManagement.Views
                 }
             }
 
+        }
+
+        private void treeGrid_SelectionChanged(object sender, Syncfusion.UI.Xaml.Grid.GridSelectionChangedEventArgs e)
+        {
+            var model = (PaymentScheduleModel)treeGrid.SelectedItem;
+            if (model != null)
+                ViewModel.SelectedPayment(model.Identity);
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var identity = Convert.ToInt32(((Button)sender).Tag.ToString());
+            ViewModel.DeletePayment(identity);
         }
     }
 }

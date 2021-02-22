@@ -45,7 +45,7 @@ namespace LandBankManagement.ViewModels
             get => _totalAmount2;
             set => Set(ref _totalAmount2, value);
         }
-
+        int currentDocTypeId = 0;
 
         public CostDetailsViewModel( IPropertyService propertyService, ICommonServices commonServices, PropertyListViewModel propertyListViewModel) : base(commonServices)
         {           
@@ -54,10 +54,18 @@ namespace LandBankManagement.ViewModels
         }
 
         public async void LoadAsync(int id) {
+            currentDocTypeId = id;
             CurrentPayment = new PaymentScheduleModel() { ScheduleDate =DateTimeOffset.Now };
             Item =await PropertyService.GetPropertyCostDetails(id);
             Parties = Item.Parties;
+            var inx = 1;
+            foreach (var obj in Item.PropPaySchedules)
+            {
+                obj.Identity = inx;
+                inx++;
+            }
             PaymentScheduleList = new ObservableCollection<PaymentScheduleModel>(Item.PropPaySchedules);
+           
             CurrentPayment = new PaymentScheduleModel() { ScheduleDate = DateTimeOffset.Now,PropertyId=Item.PropertyId, PropertyDocumentTypeId = Item.PropertyDocumentTypeId };
             CalculateTotalAMounts();
         }
@@ -93,10 +101,51 @@ namespace LandBankManagement.ViewModels
                 PaymentScheduleList = new ObservableCollection<PaymentScheduleModel>();
 
             CurrentPayment.Total = CurrentPayment.Amount1 + CurrentPayment.Amount2;
-            PaymentScheduleList.Add(CurrentPayment);
+            if (CurrentPayment.Total <= 0)
+                return;
+
+            if (CurrentPayment.ScheduleId <= 0)
+                PaymentScheduleList.Add(CurrentPayment);
+            else { 
+            
+            }
+            var inx = 1;
+           foreach(var obj in PaymentScheduleList) {                
+                    obj.Identity = inx;
+                    inx++;               
+            }
+            var temp = PaymentScheduleList;
+            PaymentScheduleList = new ObservableCollection<PaymentScheduleModel>();
+            PaymentScheduleList = temp;
             CurrentPayment = new PaymentScheduleModel() { ScheduleDate = DateTimeOffset.Now, PropertyId = Item.PropertyId ,PropertyDocumentTypeId=Item.PropertyDocumentTypeId};
             CalculateTotalAMounts();
         }
+        public async void DeletePayment(int id) {
+            var item = PaymentScheduleList.Where(x => x.Identity == id).FirstOrDefault();
+            if (item != null) {
+                if (item.ScheduleId == 0)
+                {
+                    PaymentScheduleList.Remove(item);
+                    var inx = 1;
+                    foreach (var obj in PaymentScheduleList)
+                    {
+                        obj.Identity = inx;
+                        inx++;
+                    }
+                }
+                else
+                {
+                    await PropertyService.DeletePropPaySchedule(item.ScheduleId);
+                    LoadAsync(currentDocTypeId);
+                }
+
+            }
+            
+            var temp = PaymentScheduleList;
+            PaymentScheduleList = new ObservableCollection<PaymentScheduleModel>();
+            PaymentScheduleList = temp;
+        }
+
         public void ClearPayment() {
             CurrentPayment = new PaymentScheduleModel() { ScheduleDate = DateTimeOffset.Now , PropertyId = Item.PropertyId, PropertyDocumentTypeId = Item.PropertyDocumentTypeId };
         }
@@ -137,6 +186,9 @@ namespace LandBankManagement.ViewModels
 
         }
 
+        public void SelectedPayment(int id) {
+            CurrentPayment = PaymentScheduleList.Where(x => x.Identity == id).FirstOrDefault();
+        }
 
         public void Subscribe()
         {

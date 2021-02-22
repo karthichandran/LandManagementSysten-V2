@@ -556,7 +556,10 @@ dt in _dataSource.DocumentTypes on pd.DocumentTypeId equals dt.DocumentTypeId
                 }
                 foreach (var model in schedules)
                 {
+                    if(model.PropPayScheduleId==0)
                     _dataSource.Entry(model).State = EntityState.Added;
+                    else
+                        _dataSource.Entry(model).State = EntityState.Modified;
                 }
                await _dataSource.SaveChangesAsync();
                 return 1;
@@ -564,7 +567,20 @@ dt in _dataSource.DocumentTypes on pd.DocumentTypeId equals dt.DocumentTypeId
             catch (Exception ex) {
                 throw ex;
             }
-        }       
+        }
+        public async Task<int> DeletePropPaySchedule(int propPayScheduleId) {
+            try
+            {
+                var paySchedule = _dataSource.PropPaySchedules.Where(x => x.PropPayScheduleId == propPayScheduleId).FirstOrDefault();
+                _dataSource.PropPaySchedules.Remove(paySchedule);
+                await _dataSource.SaveChangesAsync();
+                return 1;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public async Task<PropertyCostDetails> GetPropertyCostDetails(int propDocTypeId)
         {

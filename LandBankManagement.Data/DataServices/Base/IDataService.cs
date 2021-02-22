@@ -166,7 +166,7 @@ namespace LandBankManagement.Data.Services
         Task<int> UpdatePropCheckListMasterAsync(PropCheckListMaster model);
         Task<int> DeletePropCheckListMasterAsync(PropCheckListMaster model);
         Task<int> DeleteCheckListOfPropertyAsync(int checkListPropertyId);
-
+        Task<int> DeletePropPaySchedule(int propPayScheduleId);
         Task<int> AddFundTransferAsync(FundTransfer model);
         Task<FundTransfer> GetFundTransferAsync(long id);
         Task<IList<FundTransfer>> GetFundTransfersAsync(DataRequest<FundTransfer> request);

@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:LandBankManagement.Controls"
+      xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:views="using:LandBankManagement.Views"
     xmlns:viewmodels="using:LandBankManagement.ViewModels"
     mc:Ignorable="d" 
@@ -29,7 +30,7 @@
                     </Grid>
                     <controls:FluidGrid Columns="2" ColumnSpacing="6" RowSpacing="12" MinColumnWidth="60">
                         <controls:FormTextBox Header="PAN " MaxLength="10" Text="{x:Bind EditableItem.PAN, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" CharacterCasing="Upper"/>
-                        <controls:FormTextBox Header="Aadhaar No " Text="{x:Bind EditableItem.AadharNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="12"/>
+                        <controls:FormTextBox  extensions:TextBoxMask.Mask="9999\-9999\-9999"  extensions:TextBoxMask.PlaceHolder="9-"  Header="Aadhaar No " Text="{x:Bind EditableItem.AadharNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="12"/>
                     </controls:FluidGrid>
                     <controls:FormTextBox Header="GSTIN" MaxLength="15" Text="{x:Bind EditableItem.GSTIN, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" CharacterCasing="Upper"/>
                     <controls:FormTextBox Header="Contact Person" Text="{x:Bind EditableItem.ContactPerson, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />

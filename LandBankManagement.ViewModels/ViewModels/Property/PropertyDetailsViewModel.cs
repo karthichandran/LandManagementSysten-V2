@@ -697,7 +697,8 @@ namespace LandBankManagement.ViewModels
                 var isExist = PropertyDocumentTypeList.Where(x => x.DocumentTypeId == documentTypeId).FirstOrDefault();
                 if (isExist != null)
                 {
-                    EditableItem.DocumentTypeId = CurrentDocumentType.DocumentTypeId.ToString();                    
+                    EditableItem.DocumentTypeId = CurrentDocumentType.DocumentTypeId.ToString();
+                    ShiftDocumentType(Convert.ToInt32( EditableItem.DocumentTypeId));
                     return;
                 }
             }
@@ -706,8 +707,14 @@ namespace LandBankManagement.ViewModels
 
             CurrentDocumentType.DocumentTypeId = documentTypeId;
             CurrentDocumentType.DocumentType = DocumentTypeOptions.Where(x => x.Id == documentTypeId.ToString()).First().Description;
-            if (PropertyDocumentTypeList == null)
+            if (PropertyDocumentTypeList == null || Item.PropertyId<=0)
                 PropertyDocumentTypeList = new ObservableCollection<PropertyDocumentTypeModel>();
+
+            var duplicateItems = PropertyDocumentTypeList.Where(x => x.PropertyDocumentTypeId == 0).ToList();
+            if (duplicateItems.Count() > 0) {
+                foreach (var obj in duplicateItems)
+                    PropertyDocumentTypeList.Remove(obj);
+            }
             PropertyDocumentTypeList.Add(CurrentDocumentType);
         }
 
@@ -867,7 +874,11 @@ namespace LandBankManagement.ViewModels
                 //    var inx = PropertyDocumentTypeList.ToList().FindIndex(x=>x.PropertyDocumentTypeId==CurrentDocumentType.PropertyDocumentTypeId);
                 //    PropertyDocumentTypeList[inx] = CurrentDocumentType;
                 //}
-
+                var isDuplicate = PropertyDocumentTypeList.GroupBy(x => x.DocumentTypeId).Where(x => x.Count() > 1).Select(y => y.Key).ToList();
+                if (isDuplicate.Count() > 0)
+                {
+                    return false;
+                }    
                 model.PropertyDocumentType = PropertyDocumentTypeList;
                 model.HobliId = SelectedHobli;
                 model.VillageId = SelectedVillage;
@@ -1028,7 +1039,7 @@ namespace LandBankManagement.ViewModels
         {
             EnableDocType = true;
             EnablePropertyName = true;
-            Item = new PropertyModel() { PropertyId = -1,  PropertyTypeId = "0", CompanyID = "0", TalukId = "0", HobliId = "0", VillageId = "0", DocumentTypeId = "0",DateOfExecution=DateTimeOffset.Now};
+          
             PartySearchQuery = "";
             PartyOptions = null;
             PartyList = null;
@@ -1042,6 +1053,9 @@ namespace LandBankManagement.ViewModels
             ResetVillageOption(null);
             ResetDocumentTypeOption();
             TotalArea = "";
+            Item = new PropertyModel() { PropertyId = -1, PropertyTypeId = "0", CompanyID = "0", TalukId = "0", HobliId = "0", VillageId = "0", DocumentTypeId = "0", DateOfExecution = DateTimeOffset.Now };
+            SelectedHobli = "0";
+            SelectedVillage = "0";
         }
         protected override async Task<bool> DeleteItemAsync(PropertyModel model)
         {

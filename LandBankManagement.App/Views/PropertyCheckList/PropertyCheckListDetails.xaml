@@ -111,9 +111,13 @@
                     </controls:FluidGrid>
                         <controls:FluidGrid  ColumnSpan="2" Columns="5" ColumnSpacing="10" Margin="0 20 0 0">
                             
-                            <controls:FormTextBox Header="Acres " Text="{x:Bind EditableItem.LandAreaInputAcres, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" LostFocus="AreaTextBox_LostFocus" TextChanging="LandArea_TextChanging"/>
+                            <controls:FormTextBox Header="Acres "  Text="{x:Bind EditableItem.LandAreaInputAcres, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" LostFocus="AreaTextBox_LostFocus" TextChanging="LandArea_TextChanging"/>
                             <controls:FormTextBox Header="Guntas" Text="{x:Bind EditableItem.LandAreaInputGuntas, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" LostFocus="AreaTextBox_LostFocus" TextChanging="LandArea_TextChanging"/>
                             <controls:FormTextBox Header="Aanas" Text="{x:Bind EditableItem.LandAreaInputAanas, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" LostFocus="AreaTextBox_LostFocus" TextChanging="LandArea_TextChanging"/>
+                           
+                            <controls:FormTextBox Header="sq. Mtrs" Text="{x:Bind EditableItem.LandAreaInSqMts, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"  IsReadOnly="True"/>
+                            <controls:FormTextBox Header="sft." Text="{x:Bind EditableItem.LandAreaInSqft, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"  IsReadOnly="True"/>
+                            
                             <!--<Grid Padding="0 5 0 0" HorizontalAlignment="Center">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -129,9 +133,6 @@
                                 </StackPanel>
 
                             </Grid>-->
-                            <controls:FormTextBox Header="sq. Mtrs" Text="{x:Bind EditableItem.LandAreaInSqMts, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"  IsReadOnly="True"/>
-                            <controls:FormTextBox Header="sft." Text="{x:Bind EditableItem.LandAreaInSqft, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"  IsReadOnly="True"/>
-                           
                         </controls:FluidGrid>
                        
                     <!--<controls:FluidGrid  ColumnSpan="2" Columns="2" ColumnSpacing="10">

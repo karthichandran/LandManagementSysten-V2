@@ -245,11 +245,29 @@ namespace LandBankManagement.ViewModels
                 IsProcessing = true;
                 StartStatusMessage("Saving Party...");
                 PartyViewModel.ShowProgressRing();
+                //if (model.AadharNo != "" && model.AadharNo != null)
+                //{
+                //    var aadhar = model.AadharNo.Split('-');
+                //    var formattedAdhar = "";
+                //    foreach (var obj in aadhar)
+                //    {
+                //        formattedAdhar += obj;
+                //    }
+                //    model.AadharNo = formattedAdhar;
+                //}
                 if (model.PartyId <= 0)
                     await PartyService.AddPartyAsync(model, DocList);
                 else
                     await PartyService.UpdatePartyAsync(model, DocList);
-                ShowPopup("success", "Party is Saved");
+                //ShowPopup("success", "Party is Saved");
+                //var item = await PartyService.GetPartyAsync(model.PartyId);
+                //if (item.AadharNo != "" && item.AadharNo != null)
+                //{
+                //    item.AadharNo = item.AadharNo.Insert(4, "-");
+                //    item.AadharNo = item.AadharNo.Insert(9, "-");
+                //}
+
+                //Item = item;
                 DocList = model.partyDocuments;
                 if (DocList != null)
                 {
@@ -376,6 +394,12 @@ namespace LandBankManagement.ViewModels
                 return true;
             if (model.AadharNo.Length < 10)
                 return false;
+            //var aadhar = model.AadharNo.Split('-');
+            //var formattedAdhar = "";
+            //foreach (var obj in aadhar)
+            //{
+            //    formattedAdhar += obj;
+            //}
             Regex regex = new Regex(@"^(\d{12}|\d{16})$");
             if (!regex.IsMatch(model.AadharNo.Trim()))
             {

@@ -117,6 +117,12 @@ namespace LandBankManagement.ViewModels
                 SelectedPivotIndex = 1;
                 ShowProgressRing();
                 var model = await VendorService.GetVendorAsync(selected.VendorId);
+                //if (model.AadharNo != "" && model.AadharNo != null)
+                //{
+                //    model.AadharNo = model.AadharNo.Insert(4, "-");
+                //    model.AadharNo = model.AadharNo.Insert(9, "-");
+                //}
+
                 selected.Merge(model);
                 VendorDetails.Item = model;
                 VendorDetails.DocList = model.VendorDocuments;

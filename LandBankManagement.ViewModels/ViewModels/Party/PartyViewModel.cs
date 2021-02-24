@@ -117,6 +117,11 @@ namespace LandBankManagement.ViewModels
             {
                 ShowProgressRing();
                 var model = await PartyService.GetPartyAsync(selected.PartyId);
+                //if (model.AadharNo != "" && model.AadharNo !=null)
+                //{
+                //    model.AadharNo = model.AadharNo.Insert(4, "-");
+                //    model.AadharNo = model.AadharNo.Insert(9, "-");
+                //}
                 selected.Merge(model);
                 PartyDetails.Item = model;
                 PartyDetails.DocList = model.partyDocuments;

@@ -774,9 +774,11 @@ namespace LandBankManagement.ViewModels
 
             foreach (var item in VendorOptions) {
                 if (item.IsSelected) {
-                    if (VendorList == null)
-                        VendorList = new ObservableCollection<PropertyCheckListVendorModel>();
+                    //if (VendorList == null)
+                    //    VendorList = new ObservableCollection<PropertyCheckListVendorModel>();
                     var isGroup = item.Description.Split('-').Length > 1 ? true : false;
+
+                    VendorList = new ObservableCollection<PropertyCheckListVendorModel>();
                     VendorList.Add(new PropertyCheckListVendorModel
                     { 
                     VendorId=Convert.ToInt32( item.Id),

@@ -597,7 +597,7 @@ namespace LandBankManagement.ViewModels
                         if (existParty != null)
                             continue;
                     }
-                    if (PartyList == null)
+                   // if (PartyList == null)
                         PartyList = new ObservableCollection<PropertyPartyModel>();
                     PartyList.Add(new PropertyPartyModel { 
                     PartyId=Convert.ToInt32( item.Id),

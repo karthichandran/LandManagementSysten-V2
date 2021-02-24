@@ -182,10 +182,29 @@ namespace LandBankManagement.ViewModels
                 IsProcessing = true;
                 StartStatusMessage("Saving Vendor...");
                 VendorViewModel.ShowProgressRing();
+                //if (model.AadharNo != "" && model.AadharNo != null)
+                //{
+                //    var aadhar = model.AadharNo.Split('-');
+                //    var formattedAdhar = "";
+                //    foreach (var obj in aadhar)
+                //    {
+                //        formattedAdhar += obj;
+                //    }
+                //    model.AadharNo = formattedAdhar;
+                //}
                 if (model.VendorId <= 0)
                     await VendorService.AddVendorAsync(model, DocList);
                 else
                     await VendorService.UpdateVendorAsync(model, DocList);
+
+                //var item = await VendorService.GetVendorAsync(model.VendorId);
+                //if (item.AadharNo != "" && item.AadharNo != null)
+                //{
+                //    item.AadharNo = item.AadharNo.Insert(4, "-");
+                //    item.AadharNo = item.AadharNo.Insert(9, "-");
+                //}
+              
+               // Item = item;
                 DocList = model.VendorDocuments;
                 if (DocList != null)
                 {
@@ -311,8 +330,15 @@ namespace LandBankManagement.ViewModels
         {
             if (string.IsNullOrEmpty(model.AadharNo) || model.AadharNo.Trim() == "")
                 return true;
+           
             if (model.AadharNo.Length < 10)
                 return false;
+            //var aadhar = model.AadharNo.Split('-');
+            //var formattedAdhar = "";
+            //foreach (var obj in aadhar) {
+            //    formattedAdhar += obj;
+            //}
+
             Regex regex = new Regex(@"^(\d{12}|\d{16})$");
             if (!regex.IsMatch(model.AadharNo.Trim()))
             {

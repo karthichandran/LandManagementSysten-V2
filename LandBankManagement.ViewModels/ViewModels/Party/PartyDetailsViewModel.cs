@@ -259,7 +259,7 @@ namespace LandBankManagement.ViewModels
                     await PartyService.AddPartyAsync(model, DocList);
                 else
                     await PartyService.UpdatePartyAsync(model, DocList);
-                //ShowPopup("success", "Party is Saved");
+                ShowPopup("success", "Party is Saved");
                 //var item = await PartyService.GetPartyAsync(model.PartyId);
                 //if (item.AadharNo != "" && item.AadharNo != null)
                 //{

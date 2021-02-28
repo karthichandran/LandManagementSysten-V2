@@ -54,7 +54,7 @@ namespace LandBankManagement.Data.Services
 
             var partyName = "";
             var propertyparty =await _dataSource.PropertyParty.Where(x => x.PropertyId == propertyId).ToListAsync();
-            if (propertyparty != null) {
+            if (propertyparty != null&& propertyparty.Count !=0) {
                 if (propertyparty.Count == 1)
                     partyName = _dataSource.Parties.Where(x => x.PartyId == propertyparty[0].PartyId).Select(s => s.PartyFirstName).First();
                 else

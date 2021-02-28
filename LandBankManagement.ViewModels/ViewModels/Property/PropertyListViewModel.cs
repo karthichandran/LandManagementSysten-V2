@@ -194,6 +194,11 @@ namespace LandBankManagement.ViewModels
             await PropertyView.PopulateDetails(model);
         }
 
+        public async void PopulateDocType(PropertyModel model,int docType)
+        {
+            await PropertyView.PopulateDetails(model,docType);
+        }
+
         protected override async void OnNew()
         {
             StatusReady();

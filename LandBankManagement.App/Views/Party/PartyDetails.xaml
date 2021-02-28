@@ -16,6 +16,12 @@
         <DataTemplate x:Key="DetailsTemplate" x:DataType="viewmodels:PartyDetailsViewModel" >
             <controls:FluidGrid Margin="0,12,0,50" Columns="3" ColumnSpacing="40" RowSpacing="12"  HorizontalAlignment="Center">
                 <controls:FluidGrid Margin="0,12,0,0" ColumnSpan="2"  ColumnSpacing="12" RowSpacing="12"  HorizontalAlignment="Center">
+                    <controls:FormComboBox Grid.Column="0"  Header="Group" ItemsSource="{x:Bind GroupOptions, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                           SelectedValue="{x:Bind EditableItem.GroupId, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                           SelectedValuePath="Id" DisplayMemberPath="Description" />
+
+                </controls:FluidGrid>
+                <controls:FluidGrid Margin="0,12,0,0" ColumnSpan="2"  ColumnSpacing="12" RowSpacing="12"  HorizontalAlignment="Center">
                     <controls:FormTextBox Header="Party Name *" Text="{x:Bind EditableItem.PartyName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <controls:FormTextBox Header="Party Alias" Text="{x:Bind EditableItem.PartyAlias, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <Grid >
@@ -43,9 +49,7 @@
                         <controls:FormTextBox Header="Postal Code" MaxLength="6" Text="{x:Bind EditableItem.PinCode, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                         <controls:FormTextBox Header="City" MaxLength="120" Text="{x:Bind EditableItem.City, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     </controls:FluidGrid>
-                    <controls:FormComboBox Grid.Column="0"  Header="Group" ItemsSource="{x:Bind GroupOptions, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                           SelectedValue="{x:Bind EditableItem.GroupId, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                           SelectedValuePath="Id" DisplayMemberPath="Description" />
+                   
                     <controls:FormTextBox Header="Bank Name" Text="{x:Bind EditableItem.BankName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <controls:FormTextBox Header="Branch Name" Text="{x:Bind EditableItem.BranchName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <controls:FormTextBox Header="IFSC Code" Text="{x:Bind EditableItem.IFSCCode, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />

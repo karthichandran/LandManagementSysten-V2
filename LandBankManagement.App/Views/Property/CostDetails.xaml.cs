@@ -49,14 +49,22 @@ namespace LandBankManagement.Views
 
         private void SaleValue_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(ViewModel.Item.SaleValue1) && !string.IsNullOrEmpty(ViewModel.Item.SaleValue1)) {
+            try
+            {
+                var sal1 = (string.IsNullOrEmpty(ViewModel.Item.SaleValue1)) ? 0 : Convert.ToDecimal(ViewModel.Item.SaleValue1);
+                var sal2 = (string.IsNullOrEmpty(ViewModel.Item.SaleValue2)) ? 0 : Convert.ToDecimal(ViewModel.Item.SaleValue2);
 
-                var valu = Convert.ToDecimal(ViewModel.Item.SaleValue1) + Convert.ToDecimal(ViewModel.Item.SaleValue2);
-                if (valu > 0) {
+                var valu = sal1 + sal2;
+                if (valu > 0)
+                {
                     TotalSales.Text = valu.ToString();
                 }
             }
-
+            catch (Exception ex) {
+                ViewModel.Item.SaleValue1 = "";
+                ViewModel.Item.SaleValue2 = "";
+                TotalSales.Text = "";
+            }
         }
 
         private void treeGrid_SelectionChanged(object sender, Syncfusion.UI.Xaml.Grid.GridSelectionChangedEventArgs e)

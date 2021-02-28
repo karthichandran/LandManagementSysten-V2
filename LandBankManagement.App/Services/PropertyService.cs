@@ -295,9 +295,9 @@ namespace LandBankManagement.Services
                 Hobli = source.Hobli,
                 Village = source.Village,
                 SurveyNo = source.SurveyNo,
-                SaleValue1 = source.SaleValue1.ToString(),
-                SaleValue2 = source.SaleValue2.ToString(),
-                Total = (source.SaleValue1 + source.SaleValue2).ToString()
+                SaleValue1 =(source.SaleValue1==0)?"": source.SaleValue1.ToString(),
+                SaleValue2 = (source.SaleValue2 == 0) ? "" : source.SaleValue2.ToString(),
+                Total = (source.SaleValue1 + source.SaleValue2)==0?"":(source.SaleValue1 + source.SaleValue2).ToString()
             };
 
             var models = new ObservableCollection<PropertyPartyModel>();

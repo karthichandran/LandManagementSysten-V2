@@ -105,7 +105,7 @@ namespace LandBankManagement.ViewModels
             }
         }
 
-        public async Task PopulateDetails(PropertyModel selected)
+        public async Task PopulateDetails(PropertyModel selected,int docTypeId=0)
         {
             try
             {
@@ -118,7 +118,8 @@ namespace LandBankManagement.ViewModels
                 var modelList = await PropertyService.GetPropertyByGroupGuidAsync(selected.GroupGuid.GetValueOrDefault());
                 HideProgressRing();
                 PropertyDetials.PropertyList = modelList;
-                var model = modelList[0];
+                //var model = modelList[0];
+                var model = modelList.Where(x=>x.PropertyId==selected.PropertyId).FirstOrDefault();
                 //selected.Merge(model);
               
                 if (model.PropertyDocumentType == null)
@@ -134,18 +135,25 @@ namespace LandBankManagement.ViewModels
                         }
                     }
                 }
-                UpdateAreas(model, model.PropertyDocumentType[0]);
+                PropertyDocumentTypeModel docTypeModel;
+                if(docTypeId==0)
+                docTypeModel = model.PropertyDocumentType[0];
+                else
+                docTypeModel = model.PropertyDocumentType.Where(x => x.PropertyDocumentTypeId == docTypeId).FirstOrDefault();
+                UpdateAreas(model, docTypeModel);
                   PropertyDetials.ChangeCompanyOptions(model.CompanyID);
-               // PropertyDetials.ChangeTalukOptions(model.TalukId);
-               // PropertyDetials.ChangeHobliOptions(model.HobliId);
-               // PropertyDetials.ChangeVillageOptions(model.VillageId);
-                PropertyDetials.Item = model;
+                // PropertyDetials.ChangeTalukOptions(model.TalukId);
+                // PropertyDetials.ChangeHobliOptions(model.HobliId);
+                // PropertyDetials.ChangeVillageOptions(model.VillageId);
+                PropertyDetials.Item = null;
+                 PropertyDetials.Item = model;
                 PropertyDetials.PropertyDocumentTypeList = model.PropertyDocumentType;
-                PropertyDetials.CurrentDocumentType = model.PropertyDocumentType[0];
+                PropertyDetials.CurrentDocumentType = docTypeModel;
                 await PropertyDetials.GetPropertyParties(model.PropertyId);
 
                 PropertyDetials.EnableDocType = false;
                 PropertyDetials.CalculateTotalArea();
+                PropertyDetials.SetCurrentDocumentType(docTypeModel.DocumentTypeId);
                 //  PropertyDetials.DocList = model.PropertyDocuments;
 
                 //if (model.PropertyDocuments != null)

@@ -65,11 +65,29 @@ namespace LandBankManagement.Views
         private void EditProperty_Click(object sender, RoutedEventArgs e)
         {
             var propertyId = Convert.ToInt32(((Button)sender).Tag.ToString());
-            var selectedItem = ViewModel.Items.Where(x => x.PropertyId == propertyId).FirstOrDefault();
+            PropertyModel selectedItem=new PropertyModel();
+            foreach (var obj in ViewModel.Items)
+            {
+                selectedItem = obj.Children.Where(x => x.PropertyId == propertyId).FirstOrDefault();
+                if (selectedItem != null)
+                    break;
+            }
             ViewModel.PopulateProperty(selectedItem);
         }
-              
 
+        private void EditDocType_Click(object sender, RoutedEventArgs e)
+        {
+            var docTypeId = Convert.ToInt32(((Button)sender).CommandParameter.ToString());
+            var propertyId = Convert.ToInt32(((Button)sender).Tag.ToString());
+            PropertyModel selectedItem = new PropertyModel();
+            foreach (var obj in ViewModel.Items)
+            {
+                selectedItem = obj.Children.Where(x => x.PropertyId == propertyId).FirstOrDefault();
+                if (selectedItem != null)
+                    break;
+            }
+            ViewModel.PopulateDocType(selectedItem, docTypeId);
+        }
         private async void OnQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             ViewModel.Query = args.QueryText;
@@ -113,5 +131,7 @@ namespace LandBankManagement.Views
             var index = Convert.ToInt32(((Button)sender).Tag.ToString());
             ViewModel.ChangeVisibility(index);
         }
+
+      
     }
 }

@@ -99,25 +99,41 @@ namespace LandBankManagement.ViewModels
         public void AddPaymentToList() {
             if (PaymentScheduleList == null)
                 PaymentScheduleList = new ObservableCollection<PaymentScheduleModel>();
+            if (CurrentPayment.Identity <=0)
+            {
+                CurrentPayment.Total = CurrentPayment.Amount1 + CurrentPayment.Amount2;
+                if (CurrentPayment.Total <= 0)
+                    return;
 
-            CurrentPayment.Total = CurrentPayment.Amount1 + CurrentPayment.Amount2;
-            if (CurrentPayment.Total <= 0)
-                return;
+                if (CurrentPayment.ScheduleId <= 0)
+                    PaymentScheduleList.Add(CurrentPayment);
+                else
+                {
 
-            if (CurrentPayment.ScheduleId <= 0)
-                PaymentScheduleList.Add(CurrentPayment);
-            else { 
-            
-            }
-            var inx = 1;
-           foreach(var obj in PaymentScheduleList) {                
+                }
+                var inx = 1;
+                foreach (var obj in PaymentScheduleList)
+                {
                     obj.Identity = inx;
-                    inx++;               
+                    inx++;
+                }
+                var temp = PaymentScheduleList;
+                PaymentScheduleList = new ObservableCollection<PaymentScheduleModel>();
+                PaymentScheduleList = temp;
+               
             }
-            var temp = PaymentScheduleList;
-            PaymentScheduleList = new ObservableCollection<PaymentScheduleModel>();
-            PaymentScheduleList = temp;
-            CurrentPayment = new PaymentScheduleModel() { ScheduleDate = DateTimeOffset.Now, PropertyId = Item.PropertyId ,PropertyDocumentTypeId=Item.PropertyDocumentTypeId};
+            else {
+
+                var existItem = PaymentScheduleList.Where(x => x.Identity == CurrentPayment.Identity).FirstOrDefault();
+                existItem.Description = CurrentPayment.Description;
+                existItem.Amount1 = CurrentPayment.Amount1;
+                existItem.Amount2 = CurrentPayment.Amount2;
+
+                var temp = PaymentScheduleList;
+                PaymentScheduleList = new ObservableCollection<PaymentScheduleModel>();
+                PaymentScheduleList = temp;
+            }
+            CurrentPayment = new PaymentScheduleModel() { Identity = -1, ScheduleDate = DateTimeOffset.Now, PropertyId = Item.PropertyId, PropertyDocumentTypeId = Item.PropertyDocumentTypeId };
             CalculateTotalAMounts();
         }
         public async void DeletePayment(int id) {
@@ -144,6 +160,7 @@ namespace LandBankManagement.ViewModels
             var temp = PaymentScheduleList;
             PaymentScheduleList = new ObservableCollection<PaymentScheduleModel>();
             PaymentScheduleList = temp;
+            CalculateTotalAMounts();
         }
 
         public void ClearPayment() {

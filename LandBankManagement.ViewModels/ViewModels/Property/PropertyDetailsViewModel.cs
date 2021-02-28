@@ -615,7 +615,7 @@ namespace LandBankManagement.ViewModels
             if (string.IsNullOrEmpty(Item.PropertyName))
             {
                 var partyName = "";
-                if (PartyList!=null) {
+                if (PartyList!=null&& PartyList.Count>0) {
                     if (PartyList.Count > 1)
                         partyName = PartyList.Where(x => x.IsPrimaryParty == true).FirstOrDefault().PartyName;
                     else

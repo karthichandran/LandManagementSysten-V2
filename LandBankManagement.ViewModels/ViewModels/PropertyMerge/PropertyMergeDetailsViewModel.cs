@@ -153,18 +153,24 @@ namespace LandBankManagement.ViewModels
         }
 
         public async Task LoadedSelectedProperty() {
-            if (selectedDocumentType == "0" || selectedDocumentType == null)
-                return;
-            if (Convert.ToInt32(selectedDocumentType) > 0) {
-                PropertyMergesViewModel.ShowProgressRing();
-                var model = await PropertyMergeService.GetPropertyListItemForProeprty(Convert.ToInt32(selectedProperty), Convert.ToInt32(selectedDocumentType));
-                var area = model.LandArea.Split('-');
-                var calculatedArea = AreaConvertor.ConvertArea(Convert.ToDecimal( area[0]), Convert.ToDecimal(area[1]), Convert.ToDecimal(area[2]));
-                model.LandArea = calculatedArea.Acres + " - " + calculatedArea.Guntas + " - " + calculatedArea.Anas;
-                PropertyMergesViewModel.HideProgressRing();
-                if (CurrentProperty == null)
-                    CurrentProperty = new PropertyMergeListModel();
-                CurrentProperty = model;
+            try
+            {
+                if (selectedDocumentType == "0" || selectedDocumentType == null)
+                    return;
+                if (Convert.ToInt32(selectedDocumentType) > 0)
+                {
+                    PropertyMergesViewModel.ShowProgressRing();
+                    var model = await PropertyMergeService.GetPropertyListItemForProeprty(Convert.ToInt32(selectedProperty), Convert.ToInt32(selectedDocumentType));
+                    var area = model.LandArea.Split('-');
+                    var calculatedArea = AreaConvertor.ConvertArea(Convert.ToDecimal(area[0]), Convert.ToDecimal(area[1]), Convert.ToDecimal(area[2]));
+                    model.LandArea = calculatedArea.Acres + " - " + calculatedArea.Guntas + " - " + calculatedArea.Anas;
+                    PropertyMergesViewModel.HideProgressRing();
+                    if (CurrentProperty == null)
+                        CurrentProperty = new PropertyMergeListModel();
+                    CurrentProperty = model;
+                }
+            }
+            catch (Exception ex) { 
             }
         }
 

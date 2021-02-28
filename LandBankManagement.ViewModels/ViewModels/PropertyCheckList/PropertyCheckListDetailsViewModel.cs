@@ -795,8 +795,23 @@ namespace LandBankManagement.ViewModels
         public void PreparePropertyName() {
             if (string.IsNullOrEmpty(Item.PropertyName))
             {
+                var vendorName = "";
+                if (VendorList != null && VendorList.Count > 0) {
+                    PropertyCheckListVendorModel vendor;
+                    if (VendorList.Count > 1)
+                        vendor = VendorList.Where(x => x.IsPrimaryVendor == true).FirstOrDefault();
+                    else
+                        vendor = VendorList[0];
+                    if (vendor.IsGroup)
+                        vendorName = vendor.VendorName.Substring(6);
+                    else
+                        vendorName = vendor.VendorName;
+                }
+
                 var village = VillageOptions.Where(x => x.Id == SelectedVillage).FirstOrDefault().Description;
                 Item.PropertyName = village + " - " + Item.SurveyNo;
+                if(vendorName!="" && !Item.PropertyName.Contains(vendorName))
+                    Item.PropertyName=vendorName+" - "+ village + " - " + Item.SurveyNo;
                 RestartItem();
             }
         }

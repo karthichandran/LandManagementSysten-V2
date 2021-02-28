@@ -530,7 +530,8 @@ namespace LandBankManagement.ViewModels
 
         public void ResetTalukOption()
         {
-            TalukOptions = ActiveTalukOptions;
+            TalukOptions = null;
+               TalukOptions = ActiveTalukOptions;
             ShowActiveTaluk = true;
             ChangeTaluk = false;
         }
@@ -554,7 +555,8 @@ namespace LandBankManagement.ViewModels
 
         public void ResetHobliOption(string hobliId)
         {
-            HobliOptions = ActiveHobliOptions;
+            HobliOptions = null;
+               HobliOptions = ActiveHobliOptions;
             ShowActiveHobli = true;
             ChangeHobli = false;
             if (hobliId != null)
@@ -579,6 +581,7 @@ namespace LandBankManagement.ViewModels
 
         public void ResetVillageOption(string villageId)
         {
+            VillageOptions = null;
             VillageOptions = ActiveVillageOptions;
             ShowActiveVillage = true;
             ChangeVillage = false;
@@ -611,38 +614,54 @@ namespace LandBankManagement.ViewModels
             var hobliId = Item.HobliId;
             int id = Convert.ToInt32(Item.TalukId);
             HobliOptions = await DropDownService.GetHobliOptionsByTaluk(id);
-            if (HobliOptions.Count == 1 &&( hobliId == "0" || hobliId == null))
-                return;
-            var isExist = HobliOptions.Where(x => x.Id == hobliId).FirstOrDefault();
-            var isValid = hobliId == null ? null : isExist;
-            if (HobliOptions.Count <= 1 || isValid==null )
-            {
-                ChangeHobliOptions(hobliId);
-            }
-            else
+            if (hobliId != "0" && hobliId != null)
             {
                 SelectedHobli = "0";
                 SelectedHobli = hobliId;
+                var isActive = HobliOptions.Where(x => x.Id == hobliId).FirstOrDefault();
+                if (isActive == null)
+                    ChangeHobliOptions(hobliId);
             }
-           
+            //if (HobliOptions.Count == 1 &&( hobliId == "0" || hobliId == null))
+            //    return;
+            //var isExist = HobliOptions.Where(x => x.Id == hobliId).FirstOrDefault();
+            //var isValid = hobliId == null ? null : isExist;
+            //if (HobliOptions.Count <= 1 || isValid==null )
+            //{
+            //    ChangeHobliOptions(hobliId);
+            //}
+            //else
+            //{
+            //    SelectedHobli = "0";
+            //    SelectedHobli = hobliId;
+            //}
+
         }
         public async Task LoadVillage()
         {
             var villageId = Item.VillageId;
             VillageOptions = await DropDownService.GetVillageOptionsByHobli(Convert.ToInt32( SelectedHobli));
-            if (VillageOptions.Count == 1 && (villageId == "0" || villageId == null))
-                return;
-            var isExist = VillageOptions.Where(x => x.Id == villageId).FirstOrDefault();
-            var isValid = villageId == null ? null : isExist;
-            if (VillageOptions.Count <= 1 || isValid == null)
-            {
-                ChangeVillageOptions(villageId);
-            }
-            else
+            if (villageId != "0" && villageId != null)
             {
                 SelectedVillage = "0";
                 SelectedVillage = villageId;
+                var isActive = VillageOptions.Where(x => x.Id == villageId).FirstOrDefault();
+                if (isActive == null)
+                    ChangeVillageOptions(villageId);
             }
+            //if (VillageOptions.Count == 1 && (villageId == "0" || villageId == null))
+            //    return;
+            //var isExist = VillageOptions.Where(x => x.Id == villageId).FirstOrDefault();
+            //var isValid = villageId == null ? null : isExist;
+            //if (VillageOptions.Count <= 1 || isValid == null)
+            //{
+            //    ChangeVillageOptions(villageId);
+            //}
+            //else
+            //{
+            //    SelectedVillage = "0";
+            //    SelectedVillage = villageId;
+            //}
         }
 
         public void PrepareCheckList() {
@@ -1051,6 +1070,8 @@ namespace LandBankManagement.ViewModels
         {
             try
             {
+                if (model==null|| model.PropertyCheckListId<=0|| model.PropertyCheckListId == null)
+                    return false;
                 StartStatusMessage("Deleting Property checklist...");
                 PropertyCheckListViewModel.ShowProgressRing();
                 await PropertyCheckListService.DeletePropertyCheckListAsync(model);
@@ -1075,7 +1096,7 @@ namespace LandBankManagement.ViewModels
 
         protected override async Task<bool> ConfirmDeleteAsync()
         {
-            if (Item.PropertyCheckListId == 0)
+            if (Item== null || Item.PropertyCheckListId == null || Item.PropertyCheckListId <= 0)
                 return false;
             return await DialogService.ShowAsync("Confirm Delete", "Are you sure to delete current Property?", "Ok", "Cancel");
         }

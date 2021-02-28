@@ -112,7 +112,11 @@ namespace LandBankManagement.ViewModels
                 if (selected == null)
                     return;
                 SelectedPivotIndex = 1;
-                
+                var temp = PropertyDetials.TalukOptions; 
+                PropertyDetials.TalukOptions = null;
+                PropertyDetials.TalukOptions = temp;
+                PropertyDetials.HobliOptions = null;
+                PropertyDetials.VillageOptions = null;
                 ShowProgressRing();
                 // var model = await PropertyService.GetPropertyAsync(selected.PropertyId);
                 var modelList = await PropertyService.GetPropertyByGroupGuidAsync(selected.GroupGuid.GetValueOrDefault());

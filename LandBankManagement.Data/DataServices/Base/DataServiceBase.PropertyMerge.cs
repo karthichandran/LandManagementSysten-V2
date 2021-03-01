@@ -135,7 +135,7 @@ namespace LandBankManagement.Data.Services
                     item.Balance1 = (Convert.ToDecimal(item.SaleValue1) - Convert.ToDecimal(item.Amount1)).ToString();
                     item.Balance2 = (Convert.ToDecimal(item.SaleValue2) - Convert.ToDecimal(item.Amount2)).ToString();
                     var propertyparty = await _dataSource.PropertyParty.Where(x => x.PropertyGuid == item.PropertyGuid).ToListAsync();
-                    if (propertyparty != null)
+                    if (propertyparty != null && propertyparty.Count>0)
                     {
                         if (propertyparty.Count == 1)
                             item.Party  = _dataSource.Parties.Where(x => x.PartyId == propertyparty[0].PartyId).Select(s => s.PartyFirstName).First();

@@ -1,4 +1,5 @@
-﻿using LandBankManagement.ViewModels;
+﻿using LandBankManagement.Models;
+using LandBankManagement.ViewModels;
 using System;
 using System.Linq;
 using Windows.UI.Xaml;
@@ -64,6 +65,12 @@ namespace LandBankManagement.Views
         {
             sender.Text = new String(sender.Text.Where(x=>char.IsDigit(x)||x=='.' ).ToArray());
             sender.SelectionStart = sender.Text.Length;
+        }
+
+        private void PaymentListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item =(DealPayScheduleModel) ((ListView)sender).SelectedItem;
+            ViewModel.CurrentSchedule = item;
         }
     }
 }

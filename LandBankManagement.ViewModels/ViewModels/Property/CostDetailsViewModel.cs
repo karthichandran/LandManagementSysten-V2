@@ -128,6 +128,7 @@ namespace LandBankManagement.ViewModels
                 existItem.Description = CurrentPayment.Description;
                 existItem.Amount1 = CurrentPayment.Amount1;
                 existItem.Amount2 = CurrentPayment.Amount2;
+                existItem.Total = existItem.Amount1+ existItem.Amount2;
 
                 var temp = PaymentScheduleList;
                 PaymentScheduleList = new ObservableCollection<PaymentScheduleModel>();

@@ -211,6 +211,7 @@ namespace LandBankManagement.ViewModels
                     }) ;
                 }
             }
+            PartySearchQuery = "";
         }
 
         public async void RemoveParty(int id)
@@ -253,35 +254,66 @@ namespace LandBankManagement.ViewModels
         }
         public void AddPaymentToList()
         {
+            if (CurrentSchedule == null)
+                return;
+            
             if (ScheduleList == null)
                 ScheduleList = new ObservableCollection<DealPayScheduleModel>();
 
             CurrentSchedule.Total = CurrentSchedule.Amount1 + CurrentSchedule.Amount2;
-            ScheduleList.Add(CurrentSchedule);
+            if (CurrentSchedule.Total <= 0)
+                return;
+
+            if (CurrentSchedule.Identity <= 0)
+            {
+                CurrentSchedule.Total = CurrentSchedule.Amount1 + CurrentSchedule.Amount2;
+                ScheduleList.Add(CurrentSchedule);              
+               
+                for (int i = 0; i < ScheduleList.Count; i++)
+                {
+                    ScheduleList[i].Identity = i + 1;
+                }
+                ScheduleList = new ObservableCollection<DealPayScheduleModel>(ScheduleList);
+            }
+            else {
+
+                var existItem = ScheduleList.Where(x => x.Identity == CurrentSchedule.Identity).FirstOrDefault();
+                existItem.Description = CurrentSchedule.Description;
+                existItem.Amount1 = CurrentSchedule.Amount1;
+                existItem.Amount2 = CurrentSchedule.Amount2;
+                existItem.Total = existItem.Amount1+ existItem.Amount2;
+                existItem.ScheduleDate = CurrentSchedule.ScheduleDate;
+                ScheduleList = new ObservableCollection<DealPayScheduleModel>(ScheduleList);
+            }
             CurrentSchedule = new DealPayScheduleModel() { ScheduleDate = DateTimeOffset.Now };
             CalculateTotalAMounts();
-            for (int i = 0; i < ScheduleList.Count; i++) {
-                ScheduleList[i].Identity = i + 1;
-            }
-            ScheduleList = new ObservableCollection<DealPayScheduleModel>( ScheduleList);
-            PartySearchQuery = "";
         }
 
         public async void DeletePaySchedule(int inx) {
-            if (inx == 0)
-                return;
-
+          
             StartStatusMessage("Deleteing Payment...");
             DealsViewModel.ShowProgressRing();
-            if (ScheduleList[inx - 1].DealPayScheduleId > 0) {
-               await DealService.DeleteDealPayScheduleAsync(ScheduleList[inx - 1].DealPayScheduleId);
+            var item = ScheduleList.Where(x => x.Identity == inx).FirstOrDefault();
+            if (item == null)
+                return;
+
+            if (item.DealPayScheduleId > 0)
+            {
+                await DealService.DeleteDealPayScheduleAsync(item.DealPayScheduleId);
             }
-            ScheduleList.RemoveAt(inx - 1);
+            
+            ScheduleList.Remove(item);
+            var i = 1;
+            foreach (var obj in ScheduleList)
+            {
+                obj.Identity = i;
+                i++;
+            }
 
             DealsViewModel.HideProgressRing();
             CalculateTotalAMounts();
+            CurrentSchedule = new DealPayScheduleModel() { ScheduleDate = DateTimeOffset.Now };
             EndStatusMessage("Payment deleted");
-
         }
 
         public void Subscribe()
@@ -334,7 +366,8 @@ namespace LandBankManagement.ViewModels
                 LogException("Deals", "Save", ex);
                 return false;
             }
-            finally { DealsViewModel.HideProgressRing(); }
+            finally { 
+                DealsViewModel.HideProgressRing(); }
         }
 
         public async Task loadDeal(int dealId) {

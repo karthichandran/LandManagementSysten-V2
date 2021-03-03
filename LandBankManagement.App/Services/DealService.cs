@@ -136,10 +136,9 @@ namespace LandBankManagement.Services
                     var list = new List<DealPaySchedule>();
                     foreach (var obj in model.DealPaySchedules)
                     {
-                        if (obj.DealPayScheduleId > 0)
-                            continue;
                         var pay = new DealPaySchedule();
                         UpdateDealPayScheculeFromModel(pay, obj);
+                        if (obj.DealPayScheduleId <= 0)                         
                         pay.DealPayScheduleId = 0;
                         list.Add(pay);
                     }

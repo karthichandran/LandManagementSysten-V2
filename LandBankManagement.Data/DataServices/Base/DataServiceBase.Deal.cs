@@ -255,7 +255,10 @@ c in _dataSource.Companies on d.CompanyId equals c.CompanyID
             foreach (var item in model.DealPaySchedules)
             {
                 item.DealId = model.DealId;
+                if(item.DealPayScheduleId<=0)
                 _dataSource.Entry(item).State = EntityState.Added;
+                else
+                _dataSource.Entry(item).State = EntityState.Modified;
             }
             await _dataSource.SaveChangesAsync();
 

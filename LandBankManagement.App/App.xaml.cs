@@ -75,8 +75,10 @@ namespace LandBankManagement
 
         private void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
+            e.Handled = true;// Note: To avoid terminate the app
             var logService = ServiceLocator.Current.GetService<ILogService>();
             logService.WriteAsync(Data.LogType.Error, "App", "UnhandledException", e.Message, e.Exception.ToString());
+           
         }
     }
 }

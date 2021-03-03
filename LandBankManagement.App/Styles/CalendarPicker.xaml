@@ -105,8 +105,8 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <ContentPresenter x:Name="HeaderContentPresenter" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Margin="{ThemeResource ComboBoxHeaderThemeMargin}" TextWrapping="Wrap" Visibility="Collapsed" x:DeferLoadStrategy="Lazy"/>
-                        <Border x:Name="Background" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Grid.ColumnSpan="2" Grid.Row="1"/>
-                        <TextBlock x:Name="DateText" Foreground="{ThemeResource CalendarDatePickerTextForeground}" FontSize="14" HorizontalAlignment="Left" Padding="6,16,6,4" Grid.Row="1" Text="{TemplateBinding PlaceholderText}" VerticalAlignment="Center"/>
+                        <Border x:Name="Background" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Grid.ColumnSpan="2" Grid.Row="1" Height="33"/>
+                        <TextBlock x:Name="DateText" Foreground="{ThemeResource CalendarDatePickerTextForeground}" FontSize="14" HorizontalAlignment="Left" Padding="6,16,6,14" Grid.Row="1" Text="{TemplateBinding PlaceholderText}" VerticalAlignment="Center"/>
                         <FontIcon x:Name="CalendarGlyph" Grid.Column="1" FontFamily="{ThemeResource SymbolThemeFontFamily}" Foreground="{ThemeResource CalendarDatePickerCalendarGlyphForeground}" FontSize="16" Glyph="&#xE787;" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center"/>
                     </Grid>
                 </ControlTemplate>

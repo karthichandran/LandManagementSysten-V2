@@ -256,7 +256,7 @@ namespace LandBankManagement.ViewModels
         {
             if (CurrentSchedule == null)
                 return;
-            
+
             if (ScheduleList == null)
                 ScheduleList = new ObservableCollection<DealPayScheduleModel>();
 

@@ -63,8 +63,8 @@
                    
                     <controls:FormTextBox Header="Bank Name" Text="{x:Bind EditableItem.BankName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <controls:FormTextBox Header="Branch Name" Text="{x:Bind EditableItem.BranchName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                    <controls:FormTextBox Header="IFSC Code" Text="{x:Bind EditableItem.IFSCCode, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                    <controls:FormTextBox  x:Name="accountNo" Header="Account Number" Text="{x:Bind EditableItem.AccountNumber, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextChanging="accountNo_TextChanging"/>
+                    <controls:FormTextBox Header="IFSC Code" Text="{x:Bind EditableItem.IFSCCode, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="12" />
+                    <controls:FormTextBox  x:Name="accountNo" Header="Account Number" Text="{x:Bind EditableItem.AccountNumber, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextChanging="accountNo_TextChanging" MaxLength="18"/>
                     <CheckBox x:Name="isActive" Margin="10 20 0 0" IsChecked="{x:Bind EditableItem.IsVendorActive, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
                         <TextBlock Text="IsActive"  Foreground="{StaticResource TextControlTextBlockHeaderForeground}" FontSize="15"/>
                 </CheckBox>

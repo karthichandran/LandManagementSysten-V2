@@ -324,25 +324,33 @@ namespace LandBankManagement.ViewModels
             Item.DateOfExecution = DateTimeOffset.Now;
             IsEditMode = true;
             await GetDropdowns();
-            if(fromParty)
-            GetStoredItem();
 
             ResetCompanyOption();
             ResetTalukOption();
             ResetHobliOption(null);
             ResetVillageOption(null);
             ResetDocumentTypeOption();
+
+            if (fromParty)
+            GetStoredItem();
         }
         public void GetStoredItem() {
             var prop = PropertyService.GetStoredItems();
             if (prop != null) {
-                Item = prop.Item;
+                var model = prop.Item;
+               ChangeCompanyOptions(model.CompanyID);
+               ChangeTalukOptions(model.TalukId);
+               ChangeHobliOptions(model.HobliId);
+               ChangeVillageOptions(model.VillageId);
+                Item = model;
                 DocList = prop.DocList;
                 PartyList = prop.PartyList;
                 PropertyList = prop.PropertyList;
             }
         }
         public void storeItems() {
+            Item.HobliId = SelectedHobli;
+            Item.VillageId = SelectedVillage;
             var property = new PropertyContainer
             {
                 Item = Item,
@@ -541,6 +549,8 @@ namespace LandBankManagement.ViewModels
                 var isActive = HobliOptions.Where(x => x.Id == hobliId).FirstOrDefault();
                 if (isActive == null)
                     ChangeHobliOptions(hobliId);
+                else
+                    ShowActiveHobli = true;
             }
             //if (HobliOptions.Count == 1 &&( hobliId == "0"|| hobliId==null))
             //    return;
@@ -563,8 +573,10 @@ namespace LandBankManagement.ViewModels
                 SelectedVillage = "0";
                 SelectedVillage = villageId;
                 var isActive = VillageOptions.Where(x => x.Id == villageId).FirstOrDefault();
-                if(isActive==null)
-                ChangeVillageOptions(villageId);
+                if (isActive == null)
+                    ChangeVillageOptions(villageId);
+                else
+                    ShowActiveVillage = true;
             }
             //if (VillageOptions.Count == 1 && (villageId == "0" || villageId == null))
             //    return;
@@ -598,44 +610,59 @@ namespace LandBankManagement.ViewModels
             PropertyView.HideProgressRing();
         }
 
-        public void PreparePartyList() {
+        public async void PreparePartyList() {
+            if (PartyList!=null && PartyList.Count >= 1)
+            {
+                await ValidationMeassge("Please remove old party then add new one");
+            }    
+
             PopupOpened = false;
-            if (PartyOptions == null)
+            if (PartyOptions == null|| PartyOptions.Count<=0)
                 return;
 
             foreach (var item in PartyOptions) {
 
                 if (item.IsSelected) {
-                    if (PartyList != null)
-                    {
-                        var existParty = PartyList.Where(x => x.PartyId.ToString() == item.Id).FirstOrDefault();
-                        if (existParty != null)
-                            continue;
-                    }
-                   // if (PartyList == null)
-                        PartyList = new ObservableCollection<PropertyPartyModel>();
+                    //if (PartyList != null)
+                    //{
+                    //    var existParty = PartyList.Where(x => x.PartyId.ToString() == item.Id).FirstOrDefault();
+                    //    if (existParty != null)
+                    //        continue;
+                    //}
+                    var isGroup = item.Description.Split('(').Length > 1 ? true : false;
+                    // if (PartyList == null)
+                    PartyList = new ObservableCollection<PropertyPartyModel>();
                     PartyList.Add(new PropertyPartyModel { 
                     PartyId=Convert.ToInt32( item.Id),
-                    PartyName=item.Description
+                    PartyName=item.Description,
+                    IsGroup= isGroup
                     });
                 }
             }
+
+            if (PartyList == null || PartyList.Count <= 0)
+                return;
             if (PartyList.Count == 1)
                 PartyList[0].IsPrimaryParty = true;
             PartyOptions = null;
             PartySearchQuery = "";
+           
+            PreparePropertyName();
         }
 
-        public void PreparePropertyName() {
-            if (string.IsNullOrEmpty(Item.PropertyName))
-            {
+        public void PreparePropertyName() {            
                 var partyName = "";
                 if (PartyList!=null&& PartyList.Count>0) {
+                PropertyPartyModel party;
                     if (PartyList.Count > 1)
-                        partyName = PartyList.Where(x => x.IsPrimaryParty == true).FirstOrDefault().PartyName;
+                    party = PartyList.Where(x => x.IsPrimaryParty == true).FirstOrDefault();
                     else
-                        partyName = PartyList[0].PartyName;
-                }
+                    party = PartyList[0];
+                if (party.IsGroup)
+                    partyName = party.PartyName.Substring(0, party.PartyName.Length - 3);
+                else
+                    partyName = party.PartyName;
+            }
 
                 var village = VillageOptions.Where(x => x.Id == SelectedVillage).FirstOrDefault().Description;
                 Item.PropertyName = village + " - " + Item.SurveyNo;
@@ -643,8 +670,7 @@ namespace LandBankManagement.ViewModels
                 if (partyName!="" && !Item.PropertyName.Contains(partyName))
                     Item.PropertyName =partyName +" - "+ village + " - " + Item.SurveyNo;
 
-                RestartItem();
-            }
+                RestartItem();            
         }
 
         public void UpdatePropertyName(string party) {
@@ -847,7 +873,9 @@ namespace LandBankManagement.ViewModels
         }
 
         public void CloneProperty() {
-           
+
+            if (PartyList == null || PartyList.Count <= 0)
+                return;
             var newItem = new PropertyModel();
             newItem.CompanyID = Item.CompanyID;
             newItem.TalukId = Item.TalukId;
@@ -1023,12 +1051,12 @@ namespace LandBankManagement.ViewModels
                 return;
             var parties = new List<PropertyPartyModel>();
             foreach (var model in PartyList) {
-                var isGroup = model.PartyName.Split('-').Length > 1 ? true : false;
+                var isGroup = model.PartyName.Split('(').Length > 1 ? true : false;
                     parties.Add(new PropertyPartyModel
                     {
                         PartyId=model.PartyId,
                         PropertyId= property.PropertyId,
-                        PropertyGuid=property.PropertyGuid,
+                        PropertyGuid=property.GroupGuid.Value,
                         PropertyPartyId=model.PropertyPartyId,
                         IsPrimaryParty=model.IsPrimaryParty==null?false: model.IsPrimaryParty,
                         IsGroup= isGroup

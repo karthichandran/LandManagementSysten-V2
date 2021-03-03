@@ -205,9 +205,10 @@ namespace LandBankManagement.ViewModels
                         DealPartyList = new ObservableCollection<DealPartiesModel>();
                     DealPartyList.Add(new DealPartiesModel
                     {
-                        PartyId =Convert.ToInt32( item.Id),
-                        PartyName = item.Description
-                    });
+                        PartyId = Convert.ToInt32(item.Id),
+                        PartyName = item.Description,
+                        IsGroup = item.Description.Contains("(G)") ? true : false
+                    }) ;
                 }
             }
         }
@@ -263,7 +264,7 @@ namespace LandBankManagement.ViewModels
                 ScheduleList[i].Identity = i + 1;
             }
             ScheduleList = new ObservableCollection<DealPayScheduleModel>( ScheduleList);
-
+            PartySearchQuery = "";
         }
 
         public async void DeletePaySchedule(int inx) {
@@ -316,6 +317,7 @@ namespace LandBankManagement.ViewModels
                 else
                     await DealService.UpdateDealAsync(model);
                 IsProcessing = false;
+                await loadDeal(mergeId == 0 ? model.DealId : mergeId);
                 //var item = await DealService.GetDealAsync(mergeId == 0 ? model.DealId : mergeId);
                 //Item = item;
                 //PropertyList = item.propertyMergeLists;
@@ -335,6 +337,30 @@ namespace LandBankManagement.ViewModels
             finally { DealsViewModel.HideProgressRing(); }
         }
 
+        public async Task loadDeal(int dealId) {
+            var model = await DealService.GetDealAsync(dealId);
+            Item = model;
+            Sale1 = model.SaleValue1.ToString();
+            Sale2 = model.SaleValue2.ToString();
+            SaleTotal = (model.SaleValue1 + model.SaleValue2).ToString();
+            DealPartyList = model.DealParties;
+            for (int i = 0; i < model.DealPaySchedules.Count; i++)
+            {
+                model.DealPaySchedules[i].Identity = i + 1;
+            }
+            decimal amt1 = 0;
+            decimal amt2 = 0;
+            foreach (var obj in model.DealPaySchedules)
+            {
+                amt1 += obj.Amount1;
+                amt2 += obj.Amount2;
+                obj.Total = obj.Amount1 + obj.Amount2;
+            }
+           TotalAmount1 = amt1.ToString();
+           TotalAmount2 = amt2.ToString();
+           FinalAmount = (amt1 + amt2).ToString();
+           ScheduleList = model.DealPaySchedules;
+        }
 
         protected override void ClearItem()
         {
@@ -348,6 +374,7 @@ namespace LandBankManagement.ViewModels
             Sale1 = "0";
             Sale2 = "0";
             SaleTotal = "0";
+            PartySearchQuery = "";
         }
         protected override async Task<bool> DeleteItemAsync(DealModel model)
         {

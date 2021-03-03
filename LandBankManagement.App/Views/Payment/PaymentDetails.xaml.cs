@@ -72,8 +72,9 @@ namespace LandBankManagement.Views
             var val = ((ComboBox)sender).SelectedValue;
             if (val == null || val.ToString() == "0")
                 return;
+            await ViewModel.LoadGroup();
            await ViewModel.LoadDocumentTypedByProperty();
-           // await ViewModel.LoadParty();
+            await ViewModel.LoadParty();
         }
 
         private async void Groups_SelectionChanged(object sender, SelectionChangedEventArgs e)

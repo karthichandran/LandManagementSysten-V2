@@ -143,7 +143,8 @@ namespace LandBankManagement.ViewModels
                     item.Children = obj;
                     item.ShowChildren = false;
                     item.HideChildren = true;
-                    item.GroupName = string.Join(", ", obj.Select(s => s.PropertyName));
+                    // item.GroupName = string.Join(", ", obj.Select(s => s.PropertyName));
+                    item.GroupName = obj.First().PropertyName.Split('-')[0];
                     Properties.Add(item);
                     i++;
                 }

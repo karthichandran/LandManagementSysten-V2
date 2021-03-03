@@ -155,6 +155,18 @@ namespace LandBankManagement.Data.Services
         {
             return await _dataSource.Groups.Where(x=>x.GroupType==1).Select(x => new { x.GroupId, x.GroupName }).ToDictionaryAsync(t => t.GroupId, t => t.GroupName);
         }
+
+        public async Task<Dictionary<int, string>> GetGroupsOptionsByProperty(int propertyId)
+        {
+            var item = _dataSource.PropertyParty.Where(x => x.PropertyId == propertyId).FirstOrDefault();
+            if (item == null)
+                return null;
+            if (item.IsGroup)
+                return await _dataSource.Groups.Where(x => x.GroupId == item.PartyId).Select(x => new { x.GroupId, x.GroupName }).ToDictionaryAsync(t => t.GroupId, t => t.GroupName);
+            else
+                return null;
+        }
+
         public async Task<Dictionary<int, string>> GetGroupsOptionsForVendor()
         {
             return await _dataSource.Groups.Where(x => x.GroupType == 2).Select(x => new { x.GroupId, x.GroupName }).ToDictionaryAsync(t => t.GroupId, t => t.GroupName);
@@ -166,7 +178,7 @@ namespace LandBankManagement.Data.Services
                 .ToListAsync();
 
             var PartyGroups = await _dataSource.Groups.Where(x => x.GroupType == 1 && x.GroupName.Contains(party))
-                 .Select(x => new DropDownList { Id = x.GroupId, Description = "Group- " + x.GroupName}).ToListAsync();
+                 .Select(x => new DropDownList { Id = x.GroupId, Description =  x.GroupName+"(G)"}).ToListAsync();
                
             if (Parties.Count == 0)
                 return PartyGroups;
@@ -191,7 +203,7 @@ namespace LandBankManagement.Data.Services
                .Select(x => new DropDownList { Id = x.VendorId, Description =  x.VendorName }).ToListAsync();
 
             var vendorGroups = await _dataSource.Groups.Where(x => x.GroupType == 2 && x.GroupName.Contains(vendor))
-                 .Select(x => new DropDownList { Id = x.GroupId, Description = "Group- " + x.GroupName }).ToListAsync();
+                 .Select(x => new DropDownList { Id = x.GroupId, Description = x.GroupName+"(G)" }).ToListAsync();
             if (vendors.Count == 0)
                 return vendorGroups;
             else

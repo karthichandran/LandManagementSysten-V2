@@ -104,7 +104,7 @@ namespace LandBankManagement.Services
                 }
 
                 var dealId = await dataService.AddDealAsync(deal);
-                model.Merge(await GetDealsAsync(dataService, dealId));
+                //model.Merge(await GetDealsAsync(dataService, dealId));
                 return dealId;
             }
         }
@@ -147,7 +147,7 @@ namespace LandBankManagement.Services
                 }
 
                await dataService.UpdateDealAsync(deal);
-                model.Merge(await GetDealsAsync(dataService, deal.DealId));
+              //  model.Merge(await GetDealsAsync(dataService, deal.DealId));
                 return 0;
             }
         }
@@ -174,10 +174,33 @@ namespace LandBankManagement.Services
                         DealId = obj.DealId,
                         DealPartyId = obj.DealPartyId,
                         PartyId = obj.PartyId,
+                        IsGroup=obj.IsGroup,
                         PartyName = obj.PartyName
                     });
                 }
                
+                return parties;
+            }
+        }
+
+        public async Task<ObservableCollection<DealPartiesModel>> GetDealPartiesForReceipt(int id)
+        {
+            using (var dataService = DataServiceFactory.CreateDataService())
+            {
+                var items = await dataService.GetDealPartiesForReceipt(id);
+                var parties = new ObservableCollection<DealPartiesModel>();
+                foreach (var obj in items)
+                {
+                    parties.Add(new DealPartiesModel
+                    {
+                        DealId = obj.DealId,
+                        DealPartyId = obj.DealPartyId,
+                        PartyId = obj.PartyId,
+                        IsGroup = obj.IsGroup,
+                        PartyName = obj.PartyName
+                    });
+                }
+
                 return parties;
             }
         }
@@ -221,7 +244,8 @@ namespace LandBankManagement.Services
                         DealId=obj.DealId,
                         DealPartyId=obj.DealPartyId,
                         PartyId=obj.PartyId,
-                        PartyName=obj.PartyName
+                        PartyName=obj.PartyName,
+                        IsGroup=obj.IsGroup
                     });
 
                 }
@@ -261,6 +285,7 @@ namespace LandBankManagement.Services
             target.DealId = source.DealId;
             target.DealPartyId = source.DealPartyId;
             target.PartyId = source.PartyId;
+            target.IsGroup = source.IsGroup;
         }
         private void UpdateDealPayScheculeFromModel(DealPaySchedule target, DealPayScheduleModel source)
         {

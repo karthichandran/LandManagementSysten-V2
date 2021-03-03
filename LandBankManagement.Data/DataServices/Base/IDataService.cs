@@ -260,6 +260,7 @@ namespace LandBankManagement.Data.Services
         Task<Dictionary<int, string>> GetPartyOptionsByGroup(int groupId);
         Task<Dictionary<int, string>> GetGroupsOptionsForParty();
         Task<Dictionary<int, string>> GetGroupsOptionsForVendor();
+        Task<Dictionary<int, string>> GetGroupsOptionsByProperty(int propertyId);
          Task<int> AddPropertyCheckListAsync(PropertyCheckList model);
         Task<PropertyCheckList> GetPropertyCheckListAsync(long id);
         Task<IList<PropertyCheckList>> GetPropertyCheckListAsync(DataRequest<PropertyCheckList> request);
@@ -296,5 +297,6 @@ namespace LandBankManagement.Data.Services
         Task<List<DealParties>> GetDealParties(int dealId);
         Task<int> DeleteDealPartiesAsync(int id);
         Task<int> DeleteDealPayScheduleAsync(int id);
+        Task<List<DealParties>> GetDealPartiesForReceipt(int dealId);
     }
 }

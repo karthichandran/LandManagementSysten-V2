@@ -45,7 +45,7 @@ namespace LandBankManagement.Models
         public string BKarabAreaInSqft { get; set; }
         public bool CheckListMaster { get; set; }
         public string PropertyDescription { get; set; }
-        public int Status { get; set; }
+        public string Status { get; set; }
         public string Remarks { get; set; }
         public string CompanyName { get; set; }
         public string VillageName { get; set; }

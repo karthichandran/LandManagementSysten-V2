@@ -49,7 +49,8 @@ namespace LandBankManagement.Services
         ObservableCollection<ComboBoxOptions> GetSalutationOptions();
         Task<ObservableCollection<ComboBoxOptions>> GetDocumentTypesByPropertyID(int propertyId);
         Task<ObservableCollection<ComboBoxOptions>> GetDealPartiesOptions(int dealId);
-        Task<ObservableCollection<ComboBoxOptions>> GetGroupsOptionsForParty(); 
+        Task<ObservableCollection<ComboBoxOptions>> GetGroupsOptionsForParty();
+        Task<ObservableCollection<ComboBoxOptions>> GetGroupsOptionsByProperty(int propertyId);
         Task<ObservableCollection<ComboBoxOptions>> GetGroupsOptionsForVendor();
     }
 }

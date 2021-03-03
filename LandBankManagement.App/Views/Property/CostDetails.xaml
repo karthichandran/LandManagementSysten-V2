@@ -211,6 +211,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -219,7 +220,7 @@
             </StackPanel>
             <StackPanel  Grid.Column="1"></StackPanel>           
             <TextBlock Grid.Column="2" x:Name="TotalAmountTxt1" Text="{x:Bind ViewModel.TotalAmount1, Mode=OneWay}" Foreground="#616263" FontSize="16"  Padding="15 15 20 0" TextWrapping="Wrap" ></TextBlock>
-            <TextBlock Grid.Column="3" x:Name="TotalAmountTxt2"  Text="{x:Bind ViewModel.TotalAmount1, Mode=OneWay}" Foreground="#616263" FontSize="16"  Padding="15 15 20 0" TextWrapping="Wrap" ></TextBlock>
+            <TextBlock Grid.Column="3" x:Name="TotalAmountTxt2"  Text="{x:Bind ViewModel.TotalAmount2, Mode=OneWay}" Foreground="#616263" FontSize="16"  Padding="15 15 20 0" TextWrapping="Wrap" ></TextBlock>
         </Grid>
 
         <Grid Grid.Row="5"   >

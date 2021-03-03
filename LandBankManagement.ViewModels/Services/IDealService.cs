@@ -21,5 +21,6 @@ namespace LandBankManagement.Services
         Task<ObservableCollection<DealPartiesModel>> GetDealParties(int dealId);
         Task<int> DeleteDealPartiesAsync(int id);
         Task<int> DeleteDealPayScheduleAsync(int id);
+        Task<ObservableCollection<DealPartiesModel>> GetDealPartiesForReceipt(int id);
     }
 }

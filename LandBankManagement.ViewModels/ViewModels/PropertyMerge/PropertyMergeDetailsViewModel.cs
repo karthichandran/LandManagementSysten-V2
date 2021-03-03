@@ -12,6 +12,7 @@ namespace LandBankManagement.ViewModels
 {
     public class PropertyMergeDetailsViewModel : GenericDetailsViewModel<PropertyMergeModel>
     {
+        #region
         public IDropDownService DropDownService { get; }
         public IPropertyMergeService PropertyMergeService { get; }
         public IFilePickerService FilePickerService { get; }
@@ -117,6 +118,7 @@ namespace LandBankManagement.ViewModels
         private bool IsProcessing = false;
 
         private PropertyMergeViewModel PropertyMergesViewModel { get; set; }
+        #endregion
         public PropertyMergeDetailsViewModel(IDropDownService dropDownService, IPropertyMergeService propertMergeService, IFilePickerService filePickerService, ICommonServices commonServices, PropertyMergeViewModel propertyMergeViewModel) : base(commonServices)
         {
             DropDownService = dropDownService;
@@ -190,7 +192,7 @@ namespace LandBankManagement.ViewModels
             if (CurrentProperty==null || CurrentProperty.PropertyGuid == Guid.Empty)
                 return;
 
-            var isExist = PropertyList.Where(x => x.PropertyGuid == CurrentProperty.PropertyGuid).Count();
+            var isExist = PropertyList.Where(x => x.PropertyGuid == CurrentProperty.PropertyGuid && x.PropertyDocumentTypeId==CurrentProperty.PropertyDocumentTypeId).Count();
             if (isExist > 0)
                 return;
 
@@ -202,7 +204,7 @@ namespace LandBankManagement.ViewModels
             var temp = PropertyDocumentOptions;
             PropertyDocumentOptions = null;
             PropertyDocumentOptions = temp;
-
+            if(PropertyList!=null)
             CalculateTotalValues();
         }
 
@@ -256,7 +258,14 @@ namespace LandBankManagement.ViewModels
                 PropertyMergesViewModel.HideProgressRing();
             }
             PropertyList.Remove(item);
-            
+            if (PropertyList == null || PropertyList.Count <= 0) {
+                if (Item.PropertyMergeId > 0) {
+                    var isDeleted = await PropertyMergeService.DeletePropertyMergeAsync(Item);
+                    ClearItem();
+                    return;
+                }
+            }
+
             var newList = PropertyList;
             PropertyList = null;
             PropertyList = newList;
@@ -376,7 +385,7 @@ namespace LandBankManagement.ViewModels
 
         override protected IEnumerable<IValidationConstraint<PropertyMergeModel>> GetValidationConstraints(PropertyMergeModel model)
         {
-            yield return new RequiredGreaterThanZeroConstraint<PropertyMergeModel>("Deal Name", m => m.PropertyMergeDealName);
+            yield return new RequiredConstraint<PropertyMergeModel>("Deal Name", m => m.PropertyMergeDealName);
             
         }
 

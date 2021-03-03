@@ -80,8 +80,8 @@
                                 <sync:GridTextColumn HeaderText="Area" MappingName="LandArea"  ShowToolTip="True"/>
                                 <sync:GridTextColumn HeaderText="Sale Value 1" MappingName="SaleValue1"/>
                                 <sync:GridTextColumn HeaderText="Sale Value 2" MappingName="SaleValue2"/>
-                                <sync:GridTextColumn HeaderText="Amount Paid 1" MappingName="Amount1"/>
-                                <sync:GridTextColumn HeaderText="Amount Paid 2" MappingName="Amount2"/>
+                                <sync:GridTextColumn HeaderText="Bank" MappingName="Amount2"/>
+                                <sync:GridTextColumn HeaderText="Cash" MappingName="Amount1"/>
                                 <sync:GridTextColumn HeaderText="Balance 1" MappingName="Balance1"/>
                                 <sync:GridTextColumn HeaderText="Balance 2" MappingName="Balance2"/>
                                 <sync:GridTextColumn HeaderText="Expense" MappingName="Expense"/>
@@ -115,8 +115,8 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="3" Text="{x:Bind TotalSale1,Mode=TwoWay}"/>
                             <TextBlock Grid.Column="4" Text="{x:Bind TotalSale2,Mode=TwoWay}"/>
-                            <TextBlock Grid.Column="5" Text="{x:Bind TotalAmount1,Mode=TwoWay}"/>
-                            <TextBlock Grid.Column="6" Text="{x:Bind TotalAmount2,Mode=TwoWay}"/>
+                            <TextBlock Grid.Column="5" Text="{x:Bind TotalAmount2,Mode=TwoWay}"/>
+                            <TextBlock Grid.Column="6" Text="{x:Bind TotalAmount1,Mode=TwoWay}"/>
                             <TextBlock Grid.Column="7" Text="{x:Bind TotalBalance1,Mode=TwoWay}"/>
                             <TextBlock Grid.Column="8" Text="{x:Bind TotalBalance2,Mode=TwoWay}"/>
                             <TextBlock Grid.Column="9" Text="{x:Bind Expense,Mode=TwoWay}"/>

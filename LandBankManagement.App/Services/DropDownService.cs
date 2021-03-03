@@ -753,6 +753,8 @@ namespace LandBankManagement.Services
             using (var dataService = DataServiceFactory.CreateDataService())
             {
                 var models = await dataService.GetGroupsOptions();
+                if (models == null)
+                    return list;
                 foreach (var obj in models)
                 {
                     list.Add(new ComboBoxOptions
@@ -771,6 +773,8 @@ namespace LandBankManagement.Services
             using (var dataService = DataServiceFactory.CreateDataService())
             {
                 var models = await dataService.GetGroupsOptionsForParty();
+                if (models == null)
+                    return list;
                 foreach (var obj in models)
                 {
                     list.Add(new ComboBoxOptions
@@ -782,12 +786,36 @@ namespace LandBankManagement.Services
                 list.Insert(0, new ComboBoxOptions { Id = "0", Description = "" });
                 return list;
             }
-        } public async Task<ObservableCollection<ComboBoxOptions>> GetGroupsOptionsForVendor()
+        } 
+         public async Task<ObservableCollection<ComboBoxOptions>> GetGroupsOptionsByProperty(int propertyId)
+        {
+            ObservableCollection<ComboBoxOptions> list = new ObservableCollection<ComboBoxOptions>();
+            using (var dataService = DataServiceFactory.CreateDataService())
+            {
+                var models = await dataService.GetGroupsOptionsByProperty(propertyId);
+                if (models == null)
+                    return list;
+                foreach (var obj in models)
+                {
+                    list.Add(new ComboBoxOptions
+                    {
+                        Id = obj.Key.ToString(),
+                        Description = obj.Value
+                    });
+                }
+                list.Insert(0, new ComboBoxOptions { Id = "0", Description = "" });
+                return list;
+            }
+        } 
+        
+        public async Task<ObservableCollection<ComboBoxOptions>> GetGroupsOptionsForVendor()
         {
             ObservableCollection<ComboBoxOptions> list = new ObservableCollection<ComboBoxOptions>();
             using (var dataService = DataServiceFactory.CreateDataService())
             {
                 var models = await dataService.GetGroupsOptionsForVendor();
+                if (models == null)
+                    return list;
                 foreach (var obj in models)
                 {
                     list.Add(new ComboBoxOptions

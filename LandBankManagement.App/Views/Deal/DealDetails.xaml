@@ -89,9 +89,9 @@
                                                                 <ColumnDefinition Width="40"/>
                                                             </Grid.ColumnDefinitions>
                                                             <TextBlock Text="{Binding Description}" Grid.Column="0"  Foreground="#265fab" FontSize="16"  TextWrapping="Wrap" ></TextBlock>
-
-                                                            <CheckBox x:Name="isAdmin" Grid.Column="1" Foreground="#265fab" IsChecked="{Binding IsSelected,Mode=TwoWay}" >
-                                                            </CheckBox>
+                                                            <RadioButton GroupName="party" Grid.Column="1" Foreground="#265fab" IsChecked="{Binding IsSelected,Mode=TwoWay}"/>
+                                                            <!--<CheckBox x:Name="isAdmin" Grid.Column="1" Foreground="#265fab" IsChecked="{Binding IsSelected,Mode=TwoWay}" >
+                                                            </CheckBox>-->
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ListView.ItemTemplate>

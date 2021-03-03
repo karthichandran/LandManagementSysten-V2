@@ -188,7 +188,7 @@ namespace LandBankManagement.Data.Services
                                 CheckListVendorId = pv.CheckListVendorId,
                                 VendorId =(pv.IsGroup)?vg.GroupId: pv.VendorId,
                                 IsPrimaryVendor = pv.IsPrimaryVendor,
-                                VendorName = (pv.IsGroup) ?"Group-"+ vg.GroupName:  v.VendorName
+                                VendorName = (pv.IsGroup) ?vg.GroupName+" (G)":  v.VendorName
                             })).ToList();
                 return list;
             }

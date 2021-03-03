@@ -146,9 +146,9 @@ namespace LandBankManagement.ViewModels
                 docTypeModel = model.PropertyDocumentType.Where(x => x.PropertyDocumentTypeId == docTypeId).FirstOrDefault();
                 UpdateAreas(model, docTypeModel);
                   PropertyDetials.ChangeCompanyOptions(model.CompanyID);
-                // PropertyDetials.ChangeTalukOptions(model.TalukId);
-                // PropertyDetials.ChangeHobliOptions(model.HobliId);
-                // PropertyDetials.ChangeVillageOptions(model.VillageId);
+                PropertyDetials.ChangeTalukOptions(model.TalukId);
+                PropertyDetials.ChangeHobliOptions(model.HobliId);
+                PropertyDetials.ChangeVillageOptions(model.VillageId);
                 PropertyDetials.Item = null;
                  PropertyDetials.Item = model;
                 PropertyDetials.PropertyDocumentTypeList = model.PropertyDocumentType;

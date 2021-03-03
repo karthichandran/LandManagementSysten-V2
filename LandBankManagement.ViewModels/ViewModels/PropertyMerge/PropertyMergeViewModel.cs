@@ -107,14 +107,18 @@ namespace LandBankManagement.ViewModels
                 var model = await PropertyMergeService.GetPropertyMergeAsync(selected.PropertyMergeId);
                 selected.Merge(model);
                 PropertyMergeDetails.Item = model;
-                foreach (var obj in model.propertyMergeLists) {
-                    var area = obj.LandArea.Split('-');
-                    var calculatedArea = AreaConvertor.ConvertArea(Convert.ToDecimal(area[0]), Convert.ToDecimal(area[1]), Convert.ToDecimal(area[2]));
-                    obj.LandArea = calculatedArea.Acres + " - " + calculatedArea.Guntas + " - " + calculatedArea.Anas;
+                if (model.propertyMergeLists != null && model.propertyMergeLists.Count > 0)
+                {
+                    foreach (var obj in model.propertyMergeLists)
+                    {
+                        var area = obj.LandArea.Split('-');
+                        var calculatedArea = AreaConvertor.ConvertArea(Convert.ToDecimal(area[0]), Convert.ToDecimal(area[1]), Convert.ToDecimal(area[2]));
+                        obj.LandArea = calculatedArea.Acres + " - " + calculatedArea.Guntas + " - " + calculatedArea.Anas;
+                    }
                 }
-
                 PropertyMergeDetails.PropertyList = model.propertyMergeLists;
-                PropertyMergeDetails.CalculateTotalValues();
+                if (PropertyMergeDetails.PropertyList != null)
+                    PropertyMergeDetails.CalculateTotalValues();
             }
             catch (Exception ex)
             {

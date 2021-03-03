@@ -72,14 +72,16 @@ namespace LandBankManagement.Data.Services
             }).FirstOrDefaultAsync();
 
             var parties =await (from dp in _dataSource.DealParties
-                           join p in _dataSource.Parties on dp.PartyId equals p.PartyId
-                           where dp.DealId == id
+                           from p in _dataSource.Parties.Where(x=>x.PartyId==dp.PartyId).DefaultIfEmpty()
+                                from g in _dataSource.Groups.Where(x => x.GroupId == dp.PartyId).DefaultIfEmpty()
+                                where dp.DealId == id
                            select new DealParties
                            {
                                DealId = dp.DealId,
                                DealPartyId = dp.DealPartyId,
                                PartyId = dp.PartyId,
-                               PartyName = p.PartyFirstName
+                               IsGroup=dp.IsGroup,
+                               PartyName =(dp.IsGroup)?g.GroupName+" (G)": p.PartyFirstName
                            }).ToListAsync();
 
            // var dealParties =await _dataSource.DealParties.Where(x => x.DealId == id).ToListAsync();
@@ -94,18 +96,58 @@ namespace LandBankManagement.Data.Services
         }
 
         public async Task<List<DealParties>> GetDealParties(int dealId) {
-            var models = await (from dp in _dataSource.DealParties join
-                                p in _dataSource.Parties on dp.PartyId equals p.PartyId
-                                where (dp.DealId == dealId)
-                                select (new DealParties
-                                {
-                                    DealPartyId = dp.DealPartyId,
-                                    DealId = dp.DealId,
-                                    PartyId = dp.PartyId,
-                                    PartyName = p.PartyFirstName
-                                })).ToListAsync();
+            //var models = await (from dp in _dataSource.DealParties join
+            //                    p in _dataSource.Parties on dp.PartyId equals p.PartyId
+            //                    where (dp.DealId == dealId)
+            //                    select (new DealParties
+            //                    {
+            //                        DealPartyId = dp.DealPartyId,
+            //                        DealId = dp.DealId,
+            //                        PartyId = dp.PartyId,
+            //                        IsGroup=dp.IsGroup,
+            //                        PartyName = p.PartyFirstName
+            //                    })).ToListAsync();
+            var models = await (from dp in _dataSource.DealParties
+                                 from p in _dataSource.Parties.Where(x => x.PartyId == dp.PartyId).DefaultIfEmpty()
+                                 from g in _dataSource.Groups.Where(x => x.GroupId == dp.PartyId).DefaultIfEmpty()
+                                 where dp.DealId == dealId
+                                select new DealParties
+                                 {
+                                     DealId = dp.DealId,
+                                     DealPartyId = dp.DealPartyId,
+                                     PartyId = dp.PartyId,
+                                     IsGroup = dp.IsGroup,
+                                     PartyName = (dp.IsGroup) ? g.GroupName + " (G)" : p.PartyFirstName
+                                 }).ToListAsync();
             return models;
         }
+
+        public async Task<List<DealParties>> GetDealPartiesForReceipt(int dealId)
+        {
+
+            var partyType =  _dataSource.DealParties.Where(x => x.DealId == dealId).FirstOrDefault();
+            if (partyType == null)
+                return null;
+            if (partyType.IsGroup)
+            {
+                return await _dataSource.Parties.Where(x => x.GroupId == partyType.PartyId).Select(x => new DealParties
+                {
+                    DealId = dealId,
+                    PartyId = x.PartyId,
+                    PartyName = x.PartyFirstName
+                }).ToListAsync();
+            }
+            else {
+                return await _dataSource.Parties.Where(x => x.PartyId == partyType.PartyId).Select(x => new DealParties
+                {
+                    DealId = dealId,
+                    PartyId = x.PartyId,
+                    PartyName = x.PartyFirstName
+                }).ToListAsync();
+            }
+           
+        }
+
 
         public async Task<IList<Deal>> GetDealsAsync(DataRequest<Deal> request)
         {

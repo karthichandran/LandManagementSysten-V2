@@ -236,7 +236,7 @@ namespace LandBankManagement.Services
             target.CashAccountId = Convert.ToInt32(source.CashAccountId??"0");
             target.PDC = source.PDC;
             target.AccountName = source.AccountName;
-            target.GroupId = Convert.ToInt32(source.GroupId);
+            target.GroupId = Convert.ToInt32(string.IsNullOrEmpty( source.GroupId)?"0": source.GroupId);
         }
     }
 }

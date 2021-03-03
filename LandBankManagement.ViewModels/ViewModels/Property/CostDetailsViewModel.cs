@@ -53,7 +53,7 @@ namespace LandBankManagement.ViewModels
             PropertyListViewModel = propertyListViewModel;
         }
 
-        public async void LoadAsync(int id) {
+        public async Task LoadAsync(int id) {
             currentDocTypeId = id;
             CurrentPayment = new PaymentScheduleModel() { ScheduleDate =DateTimeOffset.Now };
             Item =await PropertyService.GetPropertyCostDetails(id);
@@ -75,7 +75,7 @@ namespace LandBankManagement.ViewModels
             decimal totalAmt2 = 0;
             foreach (var model in PaymentScheduleList)
             {
-                model.Total = model.Amount1 + model.Amount2;
+                model.Total += model.Amount1 + model.Amount2;
                 totalAmt1 += model.Amount1;
                 totalAmt2 += model.Amount2;
             }
@@ -171,7 +171,7 @@ namespace LandBankManagement.ViewModels
             throw new NotImplementedException();
         }
 
-        public async void SavePaymentSequence() {
+        public async Task SavePaymentSequence() {
             if (PaymentScheduleList.Count == 0)
                 return;
             //bool anyNew = false;
@@ -196,7 +196,8 @@ namespace LandBankManagement.ViewModels
             }
 
             var status= await PropertyService.AddPropPaySchedule(Item.PropertyDocumentTypeId,PaymentScheduleList.ToList(), sale1, sale2);
-            if(status>0)
+            await LoadAsync(Item.PropertyDocumentTypeId);
+            if (status>0)
                 await DialogService.ShowAsync("Success", "Cost Details saved successfully", "Ok");
             else
                 await DialogService.ShowAsync("Error", " cost details is not saved", "Ok");

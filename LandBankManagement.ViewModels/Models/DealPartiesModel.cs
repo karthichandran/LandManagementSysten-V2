@@ -11,5 +11,6 @@ namespace LandBankManagement.Models
         public int DealId { get; set; }
         public int PartyId { get; set; }
         public string PartyName { get; set; }
+        public bool IsGroup { get; set; }
     }
 }

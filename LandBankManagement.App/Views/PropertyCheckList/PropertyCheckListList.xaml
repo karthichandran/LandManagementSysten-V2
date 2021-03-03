@@ -61,6 +61,7 @@
                 </Grid>
             </Grid>
         </DataTemplate>
+        
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -84,6 +85,8 @@
                 <sync:GridTextColumn HeaderText="Area" MappingName="TotalArea"/>
                 <sync:GridComboBoxColumn HeaderText="Status" ItemsSource="{x:Bind ViewModel.Status,Mode=TwoWay}" AllowEditing="True" DisplayMemberPath="Description" 
                                          SelectedValuePath="Id" MappingName="Status"/>
+                <!--<sync:GridComboBoxColumn HeaderText="Status" ItemsSource="{Binding Status,Source={StaticResource viewModel}}" AllowEditing="True"  DisplayMemberPath="Description" 
+                                         SelectedValuePath="Id" MappingName="Status"/>-->
                 <sync:GridTextColumn HeaderText="Remarks" MappingName="Remarks" AllowEditing="True"/>
                 <sync:GridTemplateColumn HeaderText="" MappingName="PropertyGuid" Width="50" >
                 <sync:GridTemplateColumn.CellTemplate>

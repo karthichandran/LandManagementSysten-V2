@@ -45,13 +45,13 @@
                     </Grid>
                    
                 <!--<controls:FormTextBox Header="PAN " Text="{x:Bind EditableItem.PAN, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" CharacterCasing="Upper" MaxLength="10"/>-->
-                    <controls:FormTextBox Header="Aadhaar No "  Text="{x:Bind EditableItem.AadharNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <controls:FormTextBox Header="Aadhaar No "  Text="{x:Bind EditableItem.AadharNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="12"/>
                     <!--<controls:FormTextBox 
                         extensions:TextBoxMask.Mask="9999\-9999\-9999" Header="Aadhaar No " 
                                           extensions:TextBoxMask.PlaceHolder="9-"
                                           Text="{x:Bind EditableItem.AadharNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>-->
                 <!--<controls:FormTextBox Header="GSTIN" Text="{x:Bind EditableItem.GSTIN, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" CharacterCasing="Upper" MaxLength="15"/>-->
-                <controls:FormTextBox Header="Contact Person" Text="{x:Bind EditableItem.ContactPerson, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+               
                 <controls:FormTextBox Header="EMail Address" Text="{x:Bind EditableItem.email, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="100"/>
                 <controls:FormTextBox Header="Phone" Text="{x:Bind EditableItem.PhoneNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="10"/>
                     <controls:FormTextBox Header="Address 1" Text="{x:Bind EditableItem.AddressLine1, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="150"/>

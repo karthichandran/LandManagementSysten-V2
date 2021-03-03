@@ -45,9 +45,12 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <controls:FormComboBox x:Name="Groups" Grid.Column="0" Header="Group *" Margin="0 0 3 0" HorizontalAlignment="Stretch" ItemsSource="{x:Bind GroupsOptions, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Path=PartyVisibility,Converter={StaticResource BoolToVisibilityConverter},Mode=TwoWay}"
+                            <StackPanel Orientation="Vertical" Grid.Column="0" Visibility="{Binding Path=PartyVisibility,Converter={StaticResource BoolToVisibilityConverter},Mode=TwoWay}">
+                                <controls:FormTextBox Header="Group" Text="{x:Bind EditableItem.GroupName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>                                
+                            </StackPanel>
+                            <!--<controls:FormComboBox x:Name="Groups" Grid.Column="0" Header="Group *" Margin="0 0 3 0" HorizontalAlignment="Stretch" ItemsSource="{x:Bind GroupsOptions, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Path=PartyVisibility,Converter={StaticResource BoolToVisibilityConverter},Mode=TwoWay}"
                                            SelectedValue="{x:Bind EditableItem.GroupId, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="Groups_SelectionChanged"
-                                           SelectedValuePath="Id" DisplayMemberPath="Description" />
+                                           SelectedValuePath="Id" DisplayMemberPath="Description" />-->
                             <controls:FormComboBox  Header="Party *" Grid.Column="1" Margin="3 0 0 0" HorizontalAlignment="Stretch" ItemsSource="{x:Bind PartyOptions, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding Path=PartyVisibility,Converter={StaticResource BoolToVisibilityConverter},Mode=TwoWay}"
                                            SelectedValue="{x:Bind SelectedParty, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                            SelectedValuePath="Id" DisplayMemberPath="Description" />
@@ -80,8 +83,8 @@
                 </StackPanel>
                     <controls:FormTextBox Header="Amount *" Text="{x:Bind EditableItem.Amount, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <controls:FormTextBox Header="Cheque / ref No *" Text="{x:Bind EditableItem.ChequeNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                   
-                    <CheckBox x:Name="PDC" Margin="10 20 0 0" IsChecked="{x:Bind EditableItem.PDC, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsCashChecked,Mode=TwoWay}" >
+
+                    <CheckBox x:Name="PDC" Margin="10 20 0 0" IsChecked="{x:Bind EditableItem.PDC, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding BankVisibility,Mode=TwoWay}" >
                         <TextBlock Text="PDC"  Foreground="{StaticResource TextControlTextBlockHeaderForeground}" FontSize="15"/>
                 </CheckBox>
                   

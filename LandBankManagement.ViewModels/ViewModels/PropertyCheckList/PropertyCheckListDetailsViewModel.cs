@@ -12,7 +12,8 @@ namespace LandBankManagement.ViewModels
 {
     public class PropertyCheckListDetailsViewModel : GenericDetailsViewModel<PropertyCheckListModel>
     {
-         public IDropDownService DropDownService { get; }
+        #region
+        public IDropDownService DropDownService { get; }
         public IPropertyService PropertyService { get; }
         public IPropertyCheckListService PropertyCheckListService { get; }
         public IFilePickerService FilePickerService { get; }
@@ -326,6 +327,7 @@ namespace LandBankManagement.ViewModels
 
         private bool IsProcessing = false;
         private PropertyCheckListViewModel PropertyCheckListViewModel { get; set; }
+        #endregion
         public PropertyCheckListDetailsViewModel(IDropDownService dropDownService, IPropertyCheckListService propertyCheckListService, IPropertyService propertyService, IFilePickerService filePickerService, ICommonServices commonServices, PropertyCheckListListViewModel propertyCheckListListViewModel, PropertyCheckListViewModel propertyCheckListViewModel) : base(commonServices)
         {
             DropDownService = dropDownService;
@@ -346,15 +348,13 @@ namespace LandBankManagement.ViewModels
             Item = new PropertyCheckListModel() { PropertyCheckListId = -1, PropertyTypeId = "0", CompanyID = "0", TalukId = "0", HobliId = "0", VillageId = "0", DocumentTypeId = "0" };
             IsEditMode = true;
             await GetDropdowns();
-            if (fromVendor)
-                GetStoredItem();
-
             ResetCompanyOption();
             ResetTalukOption();
             ResetHobliOption(null);
             ResetVillageOption(null);
             ResetDocumentTypeOption();
-            //  PrepareCheckList();
+            if (fromVendor)                          
+                GetStoredItem();         
         }
 
         public void GetStoredItem()
@@ -362,16 +362,35 @@ namespace LandBankManagement.ViewModels
             var prop = PropertyCheckListService.GetStoredItems();
             if (prop != null)
             {
-                Item = prop.Item;
+              
+                var model = prop.Item;
+                var hobliId = model.HobliId;
+                var villageId = model.VillageId;
+                // Item = null;
+                ChangeCompanyOptions(model.CompanyID);
+                ChangeTalukOptions(model.TalukId);
+                ChangeHobliOptions(model.HobliId);
+                ChangeVillageOptions(model.VillageId);
+                Item = model;
                 CheckList = prop.CheckList;
                 VendorList = prop.VendorList;
+                RestartItem();
+                SelectedHobli = "0";
+                SelectedVillage = "0";
+                SelectedHobli = hobliId;
+                SelectedVillage = villageId;
+                Item.HobliId = hobliId;
+                Item.VillageId = villageId;
+                CalculateTotalArea();
             }
         }
         public void storeItems()
         {
+            Item.HobliId = SelectedHobli;
+            Item.VillageId = SelectedVillage;
             var property = new PropertyCheckListContainer
             {
-                Item = Item,
+                Item = Item,                
                CheckList=CheckList
             };
             PropertyCheckListService.StoreItems(property);
@@ -389,6 +408,9 @@ namespace LandBankManagement.ViewModels
             var villageId = model.VillageId;
             // Item = null;
             ChangeCompanyOptions(model.CompanyID);
+            ChangeTalukOptions(model.TalukId);
+            ChangeHobliOptions(model.HobliId);
+            ChangeVillageOptions(model.VillageId);
             Item = model;           
             VendorList = model.PropertyCheckListVendors;
             if (model.CheckListOfProperties != null) {
@@ -621,6 +643,8 @@ namespace LandBankManagement.ViewModels
                 var isActive = HobliOptions.Where(x => x.Id == hobliId).FirstOrDefault();
                 if (isActive == null)
                     ChangeHobliOptions(hobliId);
+                else
+                    ShowActiveHobli = true;
             }
             //if (HobliOptions.Count == 1 &&( hobliId == "0" || hobliId == null))
             //    return;
@@ -648,6 +672,8 @@ namespace LandBankManagement.ViewModels
                 var isActive = VillageOptions.Where(x => x.Id == villageId).FirstOrDefault();
                 if (isActive == null)
                     ChangeVillageOptions(villageId);
+                else
+                    ShowActiveVillage = true;
             }
             //if (VillageOptions.Count == 1 && (villageId == "0" || villageId == null))
             //    return;
@@ -786,7 +812,11 @@ namespace LandBankManagement.ViewModels
             PropertyCheckListViewModel.HideProgressRing();
         }
 
-        public void PrepareVendorList() {
+        public async void PrepareVendorList() {
+            if (VendorList!=null && VendorList.Count >= 1)
+            {
+                await ValidationMeassge("Please remove old vendor then add new one");
+            }
             PopupOpened = false;
             if (VendorOptions == null)
                 return;
@@ -795,7 +825,7 @@ namespace LandBankManagement.ViewModels
                 if (item.IsSelected) {
                     //if (VendorList == null)
                     //    VendorList = new ObservableCollection<PropertyCheckListVendorModel>();
-                    var isGroup = item.Description.Split('-').Length > 1 ? true : false;
+                    var isGroup = item.Description.Split('(').Length > 1 ? true : false;
 
                     VendorList = new ObservableCollection<PropertyCheckListVendorModel>();
                     VendorList.Add(new PropertyCheckListVendorModel
@@ -806,14 +836,18 @@ namespace LandBankManagement.ViewModels
                     });
                 }
             }
+            if (VendorList == null || VendorList.Count <= 0)
+                return;
+
             if (VendorList.Count == 1) {
                 VendorList[0].IsPrimaryVendor = true;
             }
+           
+            PreparePropertyName();
         }
 
         public void PreparePropertyName() {
-            if (string.IsNullOrEmpty(Item.PropertyName))
-            {
+           
                 var vendorName = "";
                 if (VendorList != null && VendorList.Count > 0) {
                     PropertyCheckListVendorModel vendor;
@@ -822,7 +856,7 @@ namespace LandBankManagement.ViewModels
                     else
                         vendor = VendorList[0];
                     if (vendor.IsGroup)
-                        vendorName = vendor.VendorName.Substring(6);
+                        vendorName = vendor.VendorName.Substring(0,vendor.VendorName.Length-3);
                     else
                         vendorName = vendor.VendorName;
                 }
@@ -832,7 +866,7 @@ namespace LandBankManagement.ViewModels
                 if(vendorName!="" && !Item.PropertyName.Contains(vendorName))
                     Item.PropertyName=vendorName+" - "+ village + " - " + Item.SurveyNo;
                 RestartItem();
-            }
+            
         }
        
         public async void RemoveVendor(int id) {
@@ -1043,8 +1077,10 @@ namespace LandBankManagement.ViewModels
             PropertyCheckListViewModel.ShowProgressRing();
             var items= PropertyCheckListService.GetPropertyCheckListVendors(id);
             PropertyCheckListViewModel.HideProgressRing();
-            if(items==null)
-            VendorList = new ObservableCollection<PropertyCheckListVendorModel>(items);            
+            if(items!=null)
+            VendorList = new ObservableCollection<PropertyCheckListVendorModel>(items); 
+            else
+            VendorList = new ObservableCollection<PropertyCheckListVendorModel>();            
         }
 
         protected override void ClearItem()

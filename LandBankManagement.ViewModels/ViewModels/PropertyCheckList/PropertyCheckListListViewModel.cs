@@ -68,7 +68,7 @@ namespace LandBankManagement.ViewModels
 
         public async void SaveStatusAndRemarks(int id) {
             var modal = Items.Where(x => x.PropertyCheckListId == id).FirstOrDefault();
-            await PropertyCheckListService.UpdatePropertyCheckListStatusAsync(modal.PropertyCheckListId, modal.Status, modal.Remarks);
+            await PropertyCheckListService.UpdatePropertyCheckListStatusAsync(modal.PropertyCheckListId,Convert.ToInt32( modal.Status), modal.Remarks);
             await RefreshAsync();
         }
 

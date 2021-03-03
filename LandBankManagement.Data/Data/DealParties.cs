@@ -11,6 +11,7 @@ namespace LandBankManagement.Data
         public int DealPartyId { get; set; }
         public int DealId { get; set; }
         public int PartyId { get; set; }
+        public bool IsGroup { get; set; }
         [NotMapped]
         public string PartyName { get; set; }
     }

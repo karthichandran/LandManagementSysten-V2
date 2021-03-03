@@ -78,16 +78,27 @@ namespace LandBankManagement.Views
                 var area = Convert.ToDecimal(IsNullOrEnpty(ViewModel.EditableItem.LandAreaInputAcres));
                 var guntas = Convert.ToDecimal(IsNullOrEnpty(ViewModel.EditableItem.LandAreaInputGuntas));
                 var anas = Convert.ToDecimal(IsNullOrEnpty(ViewModel.EditableItem.LandAreaInputAanas));
-
+                if (area % 1 > 0)
+                {
+                     ViewModel.ValidationMeassge("Decimal values are not allowed");
+                    ViewModel.EditableItem.LandAreaInputAcres = "";
+                    return;
+                }
+                if (guntas % 1 > 0)
+                {
+                     ViewModel.ValidationMeassge("Decimal values are not allowed");
+                    ViewModel.EditableItem.LandAreaInputGuntas = "";
+                    return;
+                }
                 if (guntas > 40 && !IsAnyContentDialogOpen())
                 {
-                    await ViewModel.ValidationMeassge("Land Area Gundas Shoud not be greater than 40");
+                     ViewModel.ValidationMeassge("Land Area Gundas Shoud not be greater than 40");
                     ViewModel.EditableItem.LandAreaInputGuntas = "";
                     return;
                 }
                 if (anas >= 16 && !IsAnyContentDialogOpen())
                 {
-                    await ViewModel.ValidationMeassge("Land Area Aanas Shoud not be greater than 16");
+                     ViewModel.ValidationMeassge("Land Area Aanas Shoud not be greater than 16");
                     ViewModel.EditableItem.LandAreaInputAanas = "";
                     return;
                 }
@@ -99,16 +110,27 @@ namespace LandBankManagement.Views
                 var area = Convert.ToDecimal(IsNullOrEnpty(ViewModel.EditableItem.AKarabAreaInputAcres));
                 var guntas = Convert.ToDecimal(IsNullOrEnpty(ViewModel.EditableItem.AKarabAreaInputGuntas));
                 var anas = Convert.ToDecimal(IsNullOrEnpty(ViewModel.EditableItem.AKarabAreaInputAanas));
-
+                if (area % 1 > 0)
+                {
+                     ViewModel.ValidationMeassge("Decimal values are not allowed");
+                    ViewModel.EditableItem.AKarabAreaInputAcres = "";
+                    return;
+                }
+                if (guntas % 1 > 0)
+                {
+                     ViewModel.ValidationMeassge("Decimal values are not allowed");
+                    ViewModel.EditableItem.AKarabAreaInputGuntas = "";
+                    return;
+                }
                 if (guntas > 40 && !IsAnyContentDialogOpen())
                 {
-                    await ViewModel.ValidationMeassge("Akarab Gundas Shoud not be greater than 40");
+                     ViewModel.ValidationMeassge("Akarab Gundas Shoud not be greater than 40");
                     ViewModel.EditableItem.AKarabAreaInputGuntas = "";
                     return;
                 }
                 if (anas >= 16 && !IsAnyContentDialogOpen())
                 {
-                    await ViewModel.ValidationMeassge("Akarab Aanas Shoud not be greater than 16");
+                     ViewModel.ValidationMeassge("Akarab Aanas Shoud not be greater than 16");
                     ViewModel.EditableItem.AKarabAreaInputAanas = "";
                     return;
                 }
@@ -120,15 +142,27 @@ namespace LandBankManagement.Views
                 var area = Convert.ToDecimal(IsNullOrEnpty(ViewModel.EditableItem.BKarabAreaInputAcres));
                 var guntas = Convert.ToDecimal(IsNullOrEnpty(ViewModel.EditableItem.BKarabAreaInputGuntas));
                 var anas = Convert.ToDecimal(IsNullOrEnpty(ViewModel.EditableItem.BKarabAreaInputAanas));
+                if (area % 1 > 0)
+                {
+                     ViewModel.ValidationMeassge("Decimal values are not allowed");
+                    ViewModel.EditableItem.BKarabAreaInputAcres = "";
+                    return;
+                }
+                if (guntas % 1 > 0)
+                {
+                     ViewModel.ValidationMeassge("Decimal values are not allowed");
+                    ViewModel.EditableItem.BKarabAreaInputGuntas = "";
+                    return;
+                }
                 if (guntas > 40 && !IsAnyContentDialogOpen())
                 {
-                    await ViewModel.ValidationMeassge("Bkarab Gundas Shoud not be greater than 40");
+                    ViewModel.ValidationMeassge("Bkarab Gundas Shoud not be greater than 40");
                     ViewModel.EditableItem.BKarabAreaInputGuntas = "";
                     return;
                 }
                 if (anas >= 16 && !IsAnyContentDialogOpen())
                 {
-                    await ViewModel.ValidationMeassge("Bkarab Aanas Shoud not be greater than 16");
+                    ViewModel.ValidationMeassge("Bkarab Aanas Shoud not be greater than 16");
                     ViewModel.EditableItem.BKarabAreaInputAanas = "";
                     return;
                 }

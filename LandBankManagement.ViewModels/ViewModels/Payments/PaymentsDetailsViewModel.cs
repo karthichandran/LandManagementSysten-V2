@@ -12,7 +12,9 @@ namespace LandBankManagement.ViewModels
 {
    public class PaymentsDetailsViewModel : GenericDetailsViewModel<PaymentModel>
     {
-        public IDropDownService DropDownService { get; }
+        #region declaration
+        public IDropDownService DropDownService { get; } 
+       
         public IPaymentService PaymentsService { get; }
         public IFilePickerService FilePickerService { get; }
       
@@ -170,6 +172,7 @@ namespace LandBankManagement.ViewModels
 
         private PaymentsViewModel PaymentsViewModel { get; set; }
         private bool IsProcessing = false;
+        #endregion
         public PaymentsDetailsViewModel(IDropDownService dropDownService, IPaymentService villageService, IFilePickerService filePickerService, ICommonServices commonServices, PaymentsViewModel paymentsViewModel) : base(commonServices)
         {
             DropDownService = dropDownService;
@@ -207,6 +210,7 @@ namespace LandBankManagement.ViewModels
             if (Item.PaymentTypeId == 1)
             {
                 IsCashChecked = true;
+                Item.PDC = false;
                 IsBankChecked = false;
             }
             else
@@ -225,7 +229,7 @@ namespace LandBankManagement.ViewModels
             PaymentsViewModel.ShowProgressRing();
            CompanyOptions =await DropDownService.GetCompanyOptions();
             ExpenseOptions = await DropDownService.GetExpenseHeadOptions();
-            //PartyOptions= await DropDownService.GetPartyOptions();
+           // PartyOptions= await DropDownService.GetPartyOptions();
             PropertyOptions= await DropDownService.GetPropertyOptions();
             GroupsOptions= await DropDownService.GetGroupsOptionsForParty();
             ActiveDocumentTypeOptions = await DropDownService.GetDocumentTypeOptions();           
@@ -244,12 +248,39 @@ namespace LandBankManagement.ViewModels
             DocumentTypeOptions = await DropDownService.GetDocumentTypesByPropertyID(Convert.ToInt32(Item.PropertyId));
             PartyOptions = await DropDownService.GetPartyOptionsByProperty(Convert.ToInt32(Item.PropertyId));
         }
+        public async Task LoadGroup() {
+            if ((Item.PropertyId != null && Item.PropertyId != "0"))
+            {
+                GroupsOptions = await DropDownService.GetGroupsOptionsByProperty(Convert.ToInt32(Item.PropertyId));
+                if (GroupsOptions.Count == 2)
+                {
+                    Item.GroupName = GroupsOptions[1].Description;
+                    Item.GroupId = GroupsOptions[1].Id;
+                
+                }
+                else {
+                    Item.GroupName = "";
+                    Item.GroupId = "";
+                }
+                var temp = Item;
+                Item = null;
+                Item = temp;
+
+            }
+        }
 
         public async Task LoadParty()
         {
             //if (!IsExpenseChecked && (Item.PropertyId != null && Item.PropertyId != "0"))
             //PartyOptions = await DropDownService.GetPartyOptionsByProperty(Convert.ToInt32(Item.PropertyId));
-            if (!IsExpenseChecked && (Item.GroupId != null && Item.GroupId != "0"))
+
+            if (!IsExpenseChecked && (Item.GroupId != null || Item.GroupId == "0")) {
+                if(Item.PropertyId != null && Item.PropertyId != "0")
+                    PartyOptions = await DropDownService.GetPartyOptionsByProperty(Convert.ToInt32( Item.PropertyId));
+                else
+                PartyOptions = await DropDownService.GetPartyOptions();
+            }
+                if (!IsExpenseChecked && (!string.IsNullOrEmpty( Item.GroupId) && Item.GroupId != "0"))
             {
                 var items = await DropDownService.GetPartyOptionsByGroup(Convert.ToInt32(Item.GroupId));
                 PartyOptions = items;
@@ -303,6 +334,10 @@ namespace LandBankManagement.ViewModels
             {
                 CashVisibility = true;
                 BankVisibility = false;
+                Item.PDC = false;
+                var temp = Item;
+                Item = null;
+                Item = temp;
             }
             else
             {
@@ -380,7 +415,10 @@ namespace LandBankManagement.ViewModels
                     model.PayeeTypeId = 2;
 
                 if (IsCashChecked)
+                {
                     model.PaymentTypeId = 1;
+                    model.PDC = false;
+                }
                 else
                     model.PaymentTypeId = 2;
 
@@ -467,6 +505,8 @@ namespace LandBankManagement.ViewModels
         {
             try
             {
+                if (model == null || model.PaymentId <= 0)
+                    return false;
                 StartStatusMessage("Deleting Payments...");
                 PaymentsViewModel.ShowProgressRing();
                 await PaymentsService.DeletePaymentAsync(model);
@@ -488,6 +528,8 @@ namespace LandBankManagement.ViewModels
 
         protected override async Task<bool> ConfirmDeleteAsync()
         {
+            if (Item == null || Item.PaymentId <= 0)
+                return false;
             return await DialogService.ShowAsync("Confirm Delete", "Are you sure to delete current Payments?", "Ok", "Cancel");
         }
 

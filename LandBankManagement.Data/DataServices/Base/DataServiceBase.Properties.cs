@@ -481,12 +481,32 @@ dt in _dataSource.DocumentTypes on pd.DocumentTypeId equals dt.DocumentTypeId
         public async Task<int> AddPropertyParty(List<PropertyParty> propertyParties) {
             if (propertyParties == null)
                 return 0;
-            foreach (var model in propertyParties) {
-                if(model.PropertyPartyId==0)
-                _dataSource.Entry(model).State = EntityState.Added;
-                else
-                    _dataSource.Entry(model).State = EntityState.Modified;
+
+            var party = propertyParties[0];
+            var properties =await _dataSource.Properties.Where(x => x.GroupGuid == party.PropertyGuid).ToListAsync();
+            foreach (var prop in properties) {
+                var existParty = _dataSource.PropertyParty.Where(x => x.PropertyId == prop.PropertyId).ToList();
+                if (existParty != null) {
+                    _dataSource.PropertyParty.RemoveRange(existParty);
+                    await _dataSource.SaveChangesAsync();
+                }
+                var entity = new PropertyParty
+                {
+                    PropertyId = prop.PropertyId,
+                    IsGroup = party.IsGroup,
+                    IsPrimaryParty = party.IsPrimaryParty,
+                    PartyId = party.PartyId,
+                    PropertyGuid = party.PropertyGuid
+                };
+                _dataSource.Entry(entity).State = EntityState.Added;
             }
+
+            //foreach (var model in propertyParties) {
+            //    if(model.PropertyPartyId==0)
+            //    _dataSource.Entry(model).State = EntityState.Added;
+            //    else
+            //        _dataSource.Entry(model).State = EntityState.Modified;
+            //}
             int res = await _dataSource.SaveChangesAsync();
             return res;
         }
@@ -504,7 +524,8 @@ dt in _dataSource.DocumentTypes on pd.DocumentTypeId equals dt.DocumentTypeId
                                 PartyId =  (pp.IsGroup)?pg.GroupId: pp.PartyId,
                                 PropertyGuid = pp.PropertyGuid,
                                 PropertyId = pp.PropertyId,
-                                PartyName = (pp.IsGroup) ?"Group-"+ pg.GroupName : party.PartyFirstName,
+                                IsGroup=pp.IsGroup,
+                                PartyName = (pp.IsGroup) ? pg.GroupName+" (G)" : party.PartyFirstName,
                                 IsPrimaryParty = pp.IsPrimaryParty
                             }).ToListAsync();
                

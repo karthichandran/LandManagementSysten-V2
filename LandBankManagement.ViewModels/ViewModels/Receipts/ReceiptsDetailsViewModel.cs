@@ -163,13 +163,20 @@ namespace LandBankManagement.ViewModels
                 return bankList;
             }
             else  {
-                var items = await DropDownService.GetDealPartiesOptions(id);
+                var items = await DealService.GetDealPartiesForReceipt(id);
                 var partyList = new ObservableCollection<ComboBoxOptionsStringId>();
                 foreach (var obj in items)
                 {
-                    partyList.Add(new ComboBoxOptionsStringId { Id = obj.Id.ToString(), Description = obj.Description });
+                    partyList.Add(new ComboBoxOptionsStringId { Id = obj.PartyId.ToString(), Description = obj.PartyName });
                 }
                 return partyList;
+                //var items = await DropDownService.GetDealPartiesOptions(id);
+                //var partyList = new ObservableCollection<ComboBoxOptionsStringId>();
+                //foreach (var obj in items)
+                //{
+                //    partyList.Add(new ComboBoxOptionsStringId { Id = obj.Id.ToString(), Description = obj.Description });
+                //}
+                //return partyList;
             }
         }
         public async Task LoadBankAndCompany()

@@ -512,22 +512,22 @@ namespace LandBankManagement.Services
             target.PropertyId = source.PropertyId;
             target.DocumentType = source.DocumentTypeName;
             target.DocumentTypeId = source.DocumentTypeId;
-            target.LandAreaInputAcres = source.LandAreaInputAcres.ToString();
-            target.LandAreaInputGuntas =source.LandAreaInputGuntas.ToString();
+            target.LandAreaInputAcres =Convert.ToInt32( source.LandAreaInputAcres).ToString();
+            target.LandAreaInputGuntas = Convert.ToInt32(source.LandAreaInputGuntas).ToString();
             target.LandAreaInputAanas =  source.LandAreaInputAanas.ToString();
             target.LandAreaInAcres =source.LandAreaInAcres.ToString();
             target.LandAreaInGuntas = source.LandAreaInGuntas.ToString();
             target.LandAreaInSqMts =  source.LandAreaInSqMts.ToString();
             target.LandAreaInSqft =  source.LandAreaInSqft.ToString();
-            target.AKarabAreaInputAcres = source.AKarabAreaInputAcres.ToString();
-            target.AKarabAreaInputGuntas =  source.AKarabAreaInputGuntas.ToString();
+            target.AKarabAreaInputAcres = Convert.ToInt32(source.AKarabAreaInputAcres).ToString();
+            target.AKarabAreaInputGuntas = Convert.ToInt32(source.AKarabAreaInputGuntas).ToString();
             target.AKarabAreaInputAanas = source.AKarabAreaInputAanas.ToString();
             target.AKarabAreaInAcres =  source.AKarabAreaInAcres.ToString();
             target.AKarabAreaInGuntas =  source.AKarabAreaInGuntas.ToString();
             target.AKarabAreaInSqMts =  source.AKarabAreaInSqMts.ToString();
             target.AKarabAreaInSqft = source.AKarabAreaInSqft.ToString();
-            target.BKarabAreaInputAcres =source.BKarabAreaInputAcres.ToString();
-            target.BKarabAreaInputGuntas = source.BKarabAreaInputGuntas.ToString();
+            target.BKarabAreaInputAcres = Convert.ToInt32(source.BKarabAreaInputAcres).ToString();
+            target.BKarabAreaInputGuntas = Convert.ToInt32(source.BKarabAreaInputGuntas).ToString();
             target.BKarabAreaInputAanas = source.BKarabAreaInputAanas.ToString();
             target.BKarabAreaInAcres = source.BKarabAreaInAcres.ToString();
             target.BKarabAreaInGuntas =source.BKarabAreaInGuntas.ToString();
@@ -535,6 +535,7 @@ namespace LandBankManagement.Services
             target.BKarabAreaInSqft = source.BKarabAreaInSqft.ToString();
             target.SaleValue1 = source.SaleValue1;
             target.SaleValue2 = source.SaleValue2;
+            target.TotalSale = (source.SaleValue1 + source.SaleValue2).ToString();
             if (source.LandArea != null && source.LandArea != "")
             {
                 var area = source.LandArea.Split('-');

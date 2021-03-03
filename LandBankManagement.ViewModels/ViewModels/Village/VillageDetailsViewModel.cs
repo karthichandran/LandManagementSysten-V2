@@ -177,16 +177,14 @@ namespace LandBankManagement.ViewModels
             var hobliId = Item.HobliId;
             int id = Convert.ToInt32(Item.TalukId);
             HobliOptions = await DropDownService.GetHobliOptionsByTaluk(id);
-            if (HobliOptions.Count <= 1)
-            {
-                ChangeHobliOptions(Item.HobliId);
-            }
-            else
+            if (hobliId != "0" && hobliId != null)
             {
                 SelectedHobli = "0";
                 SelectedHobli = hobliId;
+                var isActive = HobliOptions.Where(x => x.Id == hobliId).FirstOrDefault();
+                if (isActive == null)
+                    ChangeHobliOptions(hobliId);
             }
-           // 
         }
         public void Subscribe()
         {

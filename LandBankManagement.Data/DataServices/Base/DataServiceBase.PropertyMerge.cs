@@ -77,8 +77,8 @@ namespace LandBankManagement.Data.Services
                                   LandArea = CalculateArea(pdt),
                                   SaleValue1 = pdt.SaleValue1.ToString(),
                                   SaleValue2 = pdt.SaleValue2.ToString(),
-                                  Amount1 = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId==2 && x.PaymentTypeId==2 && x.DocumentTypeId==DocumentTypeId).Sum(x => x.Amount).ToString(),
-                                  Amount2 = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId == 2 && x.PaymentTypeId == 1 && x.DocumentTypeId == DocumentTypeId).Sum(x => x.Amount).ToString(),
+                                  Amount1 = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId==2 && x.PaymentTypeId==1 && x.DocumentTypeId==DocumentTypeId).Sum(x => x.Amount).ToString(),
+                                  Amount2 = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId == 2 && x.PaymentTypeId == 2 && x.DocumentTypeId == DocumentTypeId && x.PDC == false).Sum(x => x.Amount).ToString(),
                                   Expense = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId == 1 ).Sum(x => x.Amount).ToString(),
                                   Party = string.Join(",", partyName)
                               }).FirstOrDefaultAsync();
@@ -126,8 +126,8 @@ namespace LandBankManagement.Data.Services
                                 LandArea = CalculateArea(pdt),
                                 SaleValue1 = pdt.SaleValue1.ToString(),
                                 SaleValue2 = pdt.SaleValue2.ToString(),
-                                Amount1 = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId == 2 && x.PaymentTypeId == 2 && x.DocumentTypeId == pdt.DocumentTypeId).Sum(x => x.Amount).ToString(),
-                                Amount2 = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId == 2 && x.PaymentTypeId == 1 && x.DocumentTypeId == pdt.DocumentTypeId).Sum(x => x.Amount).ToString(),
+                                Amount1 = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId == 2 && x.PaymentTypeId == 1 && x.DocumentTypeId == pdt.DocumentTypeId).Sum(x => x.Amount).ToString(),
+                                Amount2 = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId == 2 && x.PaymentTypeId == 2 && x.DocumentTypeId == pdt.DocumentTypeId && x.PDC==false).Sum(x => x.Amount).ToString(),
                                 Expense = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId == 1).Sum(x => x.Amount).ToString(),
                             }).ToList();
 

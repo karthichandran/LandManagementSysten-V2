@@ -15,28 +15,28 @@
         <DataTemplate x:Key="DetailsTemplate" x:DataType="viewmodels:UserDetailsViewModel">
             <controls:FluidGrid  Margin="0,30,0,50" Columns="2" ColumnSpacing="50" RowSpacing="12" HorizontalAlignment="Center">
                
-                <controls:FluidGrid Margin="0,30,0,0" Columns="2" ColumnSpacing="50" RowSpacing="12" HorizontalAlignment="Center">
+                <controls:FluidGrid Margin="0,30,0,0" Columns="2" ColumnSpacing="30" RowSpacing="12" HorizontalAlignment="Center">
 
                     <controls:FormTextBox Header="Staff Name" Text="{x:Bind EditableItem.UserName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <controls:FormTextBox Header="Email" Text="{x:Bind EditableItem.Email, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                    <controls:FormTextBox Header="Mobile" Text="{x:Bind EditableItem.MobileNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
-
-                    <CheckBox x:Name="isActive" Margin="10 20 0 0" IsChecked="{x:Bind EditableItem.IsActive, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
-                        <TextBlock Text="Is Active"  Foreground="{StaticResource TextControlTextBlockHeaderForeground}" FontSize="15"/>
-                </CheckBox>
-                <StackPanel Orientation="Horizontal">
-
-                        <CheckBox x:Name="isAdmin" Margin="10 20 0 0" IsChecked="{x:Bind EditableItem.IsAdmin, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
-                            <TextBlock Text="Is Admin"  Foreground="{StaticResource TextControlTextBlockHeaderForeground}" FontSize="15"/>
-                </CheckBox>
-                </StackPanel>
+                    <controls:FluidGrid Margin="0,12,0,0" Columns="2"  ColumnSpan="2" ColumnSpacing="30" RowSpacing="12">
+                        <controls:FormTextBox Header="Mobile" Text="{x:Bind EditableItem.MobileNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    </controls:FluidGrid>
+                    
                     <controls:FormTextBox Header="Login Name" Text="{x:Bind EditableItem.loginName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <controls:FormTextBox Header="Password" Text="{x:Bind EditableItem.UserPassword, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    <CheckBox x:Name="isActive" Margin="10 20 0 0" IsChecked="{x:Bind EditableItem.IsActive, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+                        <TextBlock Text="Is Active"  Foreground="{StaticResource TextControlTextBlockHeaderForeground}" FontSize="15"/>
+                    </CheckBox>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox x:Name="isAdmin" Margin="10 20 0 0" IsChecked="{x:Bind EditableItem.IsAdmin, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+                            <TextBlock Text="Is Admin"  Foreground="{StaticResource TextControlTextBlockHeaderForeground}" FontSize="15"/>
+                        </CheckBox>
+                    </StackPanel>
+                </controls:FluidGrid>
 
-            </controls:FluidGrid>
-
-                <StackPanel Margin="0 20 0 0" BorderBrush="#81D4FA" BorderThickness="1">
+                <StackPanel Margin="0 20 10 0" BorderBrush="#81D4FA" BorderThickness="1"  Background="#fbfafa">
                     <Grid Background="#81D4FA">
                         <TextBlock Text="Roles"  Foreground="#fff" FontSize="16" Margin="10" FontWeight="Medium"/>
                     </Grid>

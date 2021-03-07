@@ -122,6 +122,11 @@ namespace LandBankManagement.ViewModels
         public ICommand SaveCommand => new RelayCommand(OnSave);
         virtual protected async void OnSave()
         {
+            if (!NavigationService.CanReadWrite && NavigationService.CurrentScreen!="RolePermission")
+            {
+                await DialogService.ShowAsync("Information", "You don't have access permission.");
+                return;
+            }
             StatusReady();
             var result = Validate(EditableItem);
             if (result.IsOk)
@@ -163,6 +168,11 @@ namespace LandBankManagement.ViewModels
         public ICommand DeleteCommand => new RelayCommand(OnDelete);
         virtual protected async void OnDelete()
         {
+            if (!NavigationService.CanReadWrite && NavigationService.CurrentScreen != "RolePermission")
+            {
+                await DialogService.ShowAsync("Information", "You don't have access permission.");
+                return;
+            }
             StatusReady();
             if (await ConfirmDeleteAsync())
             {

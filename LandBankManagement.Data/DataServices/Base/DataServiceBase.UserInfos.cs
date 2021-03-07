@@ -56,7 +56,7 @@ namespace LandBankManagement.Data.Services
 
         public UserInfo AuthenticateUser(string username, string password)
         {
-            var userInfo = _dataSource.UserInfos.Where(x => x.UserName == username && x.UserPassword == password).FirstOrDefault();
+            var userInfo = _dataSource.UserInfos.Where(x => x.loginName == username && x.UserPassword == password).FirstOrDefault();
             if (userInfo != null) return userInfo;
 
             throw new AccessDeniedException();

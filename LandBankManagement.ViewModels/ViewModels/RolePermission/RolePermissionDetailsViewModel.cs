@@ -65,6 +65,31 @@ namespace LandBankManagement.ViewModels
             RolePermissionViewModel.HideProgressRing();
         }
 
+        public void SetAllToCanView(bool status) {
+
+            if (RolePermissionList == null)
+                return;
+            foreach (var obj in RolePermissionList) {
+                obj.CanView = status;
+            }
+            Reload();
+        }
+        public void SetAllToReadWrite(bool status) {
+            if (RolePermissionList == null)
+                return;
+            foreach (var obj in RolePermissionList)
+            {
+                obj.OptionId = status;
+            }
+            Reload();
+        }
+
+        private void Reload() {
+            var temp = RolePermissionList;
+            RolePermissionList = null;
+            RolePermissionList = temp;
+        }
+
         public void Subscribe()
         {
             MessageService.Subscribe<RolePermissionDetailsViewModel,RolePermissionModel>(this, OnDetailsMessage);

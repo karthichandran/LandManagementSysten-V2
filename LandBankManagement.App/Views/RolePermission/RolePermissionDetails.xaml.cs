@@ -36,5 +36,17 @@ namespace LandBankManagement.Views
             if(id!=0)
             ViewModel.GetRolePermissionForRole(id);
         }
+
+        private void canViewAll_Checked(object sender, RoutedEventArgs e)
+        {
+            var setAll = (bool)((CheckBox)sender).IsChecked;
+            ViewModel.SetAllToCanView(setAll);
+        }
+
+        private void readAndwriteAll_Checked(object sender, RoutedEventArgs e)
+        {
+            var setAll = (bool)((CheckBox)sender).IsChecked;
+            ViewModel.SetAllToReadWrite(setAll);
+        }
     }
 }

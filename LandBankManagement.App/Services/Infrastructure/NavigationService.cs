@@ -23,6 +23,8 @@ namespace LandBankManagement.Services
             MainViewId = ApplicationView.GetForCurrentView().Id;
         }
         static public int MainViewId { get; }
+        public string CurrentScreen { get; set; }
+        public bool CanReadWrite { get; set; }
 
         static public void Register<TViewModel, TView>() where TView : Page
         {

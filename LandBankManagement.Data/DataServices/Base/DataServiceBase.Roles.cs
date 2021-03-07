@@ -123,6 +123,7 @@ namespace LandBankManagement.Data.Services
 
         public IList<RolePermission> GetRolePermisions(int roleId)
         {
+         
             return _dataSource.RolePermissions.Where(x => x.RoleInfoId == roleId).ToList();
         }
 

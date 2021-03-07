@@ -63,7 +63,7 @@ namespace LandBankManagement.Views
         {
             if (args.SelectedItem is NavigationItem item)
             {
-                ViewModel.NavigateTo(item.ViewModel);
+                ViewModel.NavigateTo(item.ViewModel, item.Screen.ToString());
             }
             else if (args.IsSettingsSelected)
             {

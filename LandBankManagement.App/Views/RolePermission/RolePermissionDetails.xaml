@@ -25,22 +25,40 @@
 
                 <Grid >
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30*" />
+                        <RowDefinition Height="40*" />
                         <RowDefinition Height="*"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Background="#B3E5FC" Margin="0 20 0 0">
-                <Grid   HorizontalAlignment="Stretch" Height="30" Padding="10 5 0 0">
-                        
-                    <Grid.ColumnDefinitions >
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Sengment"/>
-                        <TextBlock Grid.Column="1" Text="View" HorizontalAlignment="Center"/>
-                        <TextBlock Grid.Column="2" Text="Read / Write" HorizontalAlignment="Center"/>
-                </Grid>
+                    <StackPanel Grid.Row="0" Background="#B3E5FC" Margin="0 20 0 0" VerticalAlignment="Center">
+                        <Grid   HorizontalAlignment="Stretch" Height="40" Padding="10 5 0 5">
+
+                            <Grid.ColumnDefinitions >
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Sengment" VerticalAlignment="Center" FontWeight="Medium" FontSize="15"/>
+
+                            <Grid Grid.Column="1" VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions >
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox x:Name="canViewAll" Grid.Column="0"  Checked="canViewAll_Checked" Unchecked="canViewAll_Checked" VerticalAlignment="Center">
+                                </CheckBox>
+                                <TextBlock  Text="View" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Medium" FontSize="15"/>
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <Grid.ColumnDefinitions >
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox x:Name="readAndwriteAll" Grid.Column="0" Checked="readAndwriteAll_Checked" Unchecked="readAndwriteAll_Checked" >
+                                </CheckBox>
+                                <TextBlock  Text="Read / Write" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Medium" FontSize="15"/>
+                            </Grid>
+                           
+                        </Grid>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Margin="0 0 0 20"  HorizontalAlignment="Stretch" BorderBrush="#B3E5FC" BorderThickness="1">
                         <ScrollViewer VerticalScrollMode="Enabled" MaxHeight="500" >

@@ -9,6 +9,9 @@ namespace LandBankManagement.Services
 
         bool CanGoBack { get; }
 
+        string CurrentScreen { get; set; }
+        bool CanReadWrite { get; set; }
+
         void Initialize(object frame);
 
         bool Navigate<TViewModel>(object parameter = null);

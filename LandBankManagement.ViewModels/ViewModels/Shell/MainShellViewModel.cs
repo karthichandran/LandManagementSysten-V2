@@ -82,18 +82,41 @@ namespace LandBankManagement.ViewModels
 
         public MainShellViewModel(ILoginService loginService, ICommonServices commonServices) : base(loginService, commonServices)
         {
-
         }
 
         private void SetMenuPermissions()
-        {
+        {           
             SetupItem.Children.ToList().ForEach(x => x.HasPermission = _userInfo.Permission.Any(item => (NavigationScreen)item.ScreenId == x.Screen));
             TransactionItem.Children.ToList().ForEach(x => x.HasPermission = _userInfo.Permission.Any(item => (NavigationScreen)item.ScreenId == x.Screen));
             ReportItem.Children.ToList().ForEach(x => x.HasPermission = _userInfo.Permission.Any(item => (NavigationScreen)item.ScreenId == x.Screen));
             AdminItem.Children.ToList().ForEach(x => x.HasPermission = _userInfo.Permission.Any(item => (NavigationScreen)item.ScreenId == x.Screen));
             PropertyItem.Children.ToList().ForEach(x => x.HasPermission = _userInfo.Permission.Any(items => (NavigationScreen)items.ScreenId == x.Screen));
+        
+           // AdminItem.Children.Where(x => x.Screen == NavigationScreen.Default).ToList().ForEach(x => x.HasPermission = true);
+        }
 
-            AdminItem.Children.Where(x => x.Screen == NavigationScreen.Default).ToList().ForEach(x => x.HasPermission = true);
+        public void GetValidMenu() {
+            SetupItem.Children = FilterMenu(SetupItem.Children);
+            TransactionItem.Children = FilterMenu(TransactionItem.Children);
+            ReportItem.Children = FilterMenu(ReportItem.Children);           
+            PropertyItem.Children = FilterMenu(PropertyItem.Children);
+
+            if (_userInfo.UserName.ToLower() != "admin")
+             AdminItem.Children = FilterMenu(AdminItem.Children);
+        }
+
+        private ObservableCollection<NavigationItem> FilterMenu(ObservableCollection<NavigationItem> items) {
+            ObservableCollection<NavigationItem> FilteredItem = new ObservableCollection<NavigationItem>();
+            foreach (var obj in items) {
+
+                var menu = _userInfo.Permission.Where(x => (NavigationScreen)x.ScreenId == obj.Screen).FirstOrDefault();
+                if (menu != null)
+                {
+                    if (menu.CanView)
+                        FilteredItem.Add(obj);
+                }
+            }
+            return FilteredItem;
         }
 
         private object _selectedItem;
@@ -117,16 +140,15 @@ namespace LandBankManagement.ViewModels
             set => Set(ref _items, value);
         }
 
-
-
         public override async Task LoadAsync(ShellArgs args)
         {
+            _userInfo = args.UserInfo;
+             GetValidMenu();
             Items = GetItems().ToArray();
             await UpdateAppLogBadge();
-            await base.LoadAsync(args);
-            _userInfo = args.UserInfo;
-            SetMenuPermissions();
-            // HideProgressRing();
+            await base.LoadAsync(args);       
+            SetMenuPermissions();            
+           
         }
 
         public void ClosePopup()
@@ -134,8 +156,16 @@ namespace LandBankManagement.ViewModels
             ShowSuccessPopupMessage = false;
             ShowErrorPopupMessage = false;
         }
-        public async void NavigateTo(Type viewModel)
+
+        private void HasReadWriteAcess(string screen) {
+            NavigationService.CurrentScreen = screen;
+            var menu = _userInfo.Permission.Where(x => ((NavigationScreen)x.ScreenId).ToString() == screen).FirstOrDefault();
+            if (menu != null)
+                NavigationService.CanReadWrite = menu.OptionId;
+        }
+        public async void NavigateTo(Type viewModel,string screen=null)
         {
+            HasReadWriteAcess(screen);
             switch (viewModel.Name)
             {
                 case "DashboardViewModel":
@@ -234,6 +264,7 @@ namespace LandBankManagement.ViewModels
 
         private IEnumerable<NavigationItem> GetItems()
         {
+           
             yield return DashboardItem;
             yield return SetupItem;
             yield return PropertyItem;

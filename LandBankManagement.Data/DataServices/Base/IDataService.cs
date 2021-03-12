@@ -254,6 +254,7 @@ namespace LandBankManagement.Data.Services
         Task<Dictionary<int, string>> GetPropertyMergeOptions();
         Task<Dictionary<int, string>> GetPropertyOptionsByCompanyID(int companyId);
         Task<Dictionary<int, string>> GetDealOptions();
+        Task<Dictionary<int, string>> GetDealOptionsByCompany(int companyId);
         Dictionary<int, string> GetSalutationOptions();
         Task<Dictionary<int, string>> GetDocumentTypesByPropertyID(int propertyId);
         Task<Dictionary<int, string>> GetDealPartiesOptions(int dealId);

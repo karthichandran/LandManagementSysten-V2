@@ -243,6 +243,15 @@ namespace LandBankManagement.ViewModels
             BankOptions = await DropDownService.GetBankOptionsByCompany(Convert.ToInt32(Item.PayeeId));
         }
 
+        public async Task LoadPropertyOptionByCompany()
+        {
+            if (Item.PayeeId== "0" || Item.PayeeId == null)
+                return;
+            PaymentsViewModel.ShowProgressRing();
+            PropertyOptions = await DropDownService.GetPropertyOptionsByCompanyID(Convert.ToInt32(Item.PayeeId));
+            PaymentsViewModel.HideProgressRing();
+        }
+
         public async Task LoadDocumentTypedByProperty() {
             if (!IsExpenseChecked &&(Item.PropertyId != null && Item.PropertyId != "0") )
             DocumentTypeOptions = await DropDownService.GetDocumentTypesByPropertyID(Convert.ToInt32(Item.PropertyId));

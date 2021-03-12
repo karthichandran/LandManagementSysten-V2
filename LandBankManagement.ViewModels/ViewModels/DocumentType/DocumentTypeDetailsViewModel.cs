@@ -122,7 +122,13 @@ namespace LandBankManagement.ViewModels
             {
                 StartStatusMessage("Deleting DocumentType...");
                 DocumentTypeViewModel.ShowProgressRing();
-                await DocumentTypeService.DeleteDocumentTypeAsync(model);
+               var status= await DocumentTypeService.DeleteDocumentTypeAsync(model);
+                if (status == -1)
+                {
+                    await DialogService.ShowAsync("", "This Document Type is in use ", "Ok");
+                    StatusError($"This Document Type is not deleted ");
+                    return false;
+                }
                 ClearItem();
                 ShowPopup("success", "Document Type is deleted");
                 await DocumentTypeListViewModel.RefreshAsync();

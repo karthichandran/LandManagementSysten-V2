@@ -48,7 +48,8 @@ namespace LandBankManagement.Views
             var val = ((ComboBox)sender).SelectedValue;
             if (val == null)
                 return;
-           await ViewModel.LoadBankAndCompany();
+            await ViewModel.LoadPropertyOptionByCompany();
+            await ViewModel.LoadBankAndCompany();
         }
 
         private void cashCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)

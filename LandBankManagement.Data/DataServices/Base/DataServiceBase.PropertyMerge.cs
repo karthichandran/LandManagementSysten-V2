@@ -52,6 +52,11 @@ namespace LandBankManagement.Data.Services
             //                       from party in _dataSource.Parties.Where(x => x.PartyId == pp.PartyId)
             //                      select party.PartyFirstName).ToListAsync();
 
+            bool isOld = (from p in _dataSource.Properties join pm in _dataSource.PropertyMergeList on p.PropertyGuid 
+                          equals pm.PropertyGuid join pd in _dataSource.PropertyDocumentType on pm.PropertyDocumentTypeId equals pd.PropertyDocumentTypeId 
+                          join dt in _dataSource.DocumentTypes on pd.DocumentTypeId equals dt.DocumentTypeId
+                          where dt.DocumentTypeId == DocumentTypeId select p.PropertyId).Any();
+
             var partyName = "";
             var propertyparty =await _dataSource.PropertyParty.Where(x => x.PropertyId == propertyId).ToListAsync();
             if (propertyparty != null&& propertyparty.Count !=0) {
@@ -80,7 +85,8 @@ namespace LandBankManagement.Data.Services
                                   Amount1 = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId==2 && x.PaymentTypeId==1 && x.DocumentTypeId==DocumentTypeId).Sum(x => x.Amount).ToString(),
                                   Amount2 = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId == 2 && x.PaymentTypeId == 2 && x.DocumentTypeId == DocumentTypeId && x.PDC == false).Sum(x => x.Amount).ToString(),
                                   Expense = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId == 1 ).Sum(x => x.Amount).ToString(),
-                                  Party = string.Join(",", partyName)
+                                  Party = string.Join(",", partyName),
+                                  IsOld=isOld
                               }).FirstOrDefaultAsync();
 
             item.Balance1 =(Convert.ToDecimal( item.SaleValue1) - Convert.ToDecimal(item.Amount1)).ToString();
@@ -121,6 +127,7 @@ namespace LandBankManagement.Data.Services
                                 PropertyGuid = pm.PropertyGuid,
                                 PropertyName = pt.PropertyName,
                                 DocumentTypeName=pd.DocumentTypeName,
+                                PropertyDocumentTypeId=pd.DocumentTypeId,
                                 Village = v.VillageName,
                                 SurveyNo = pt.SurveyNo,
                                 LandArea = CalculateArea(pdt),
@@ -129,6 +136,8 @@ namespace LandBankManagement.Data.Services
                                 Amount1 = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId == 2 && x.PaymentTypeId == 1 && x.DocumentTypeId == pdt.DocumentTypeId).Sum(x => x.Amount).ToString(),
                                 Amount2 = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId == 2 && x.PaymentTypeId == 2 && x.DocumentTypeId == pdt.DocumentTypeId && x.PDC==false).Sum(x => x.Amount).ToString(),
                                 Expense = _dataSource.Payments.Where(x => x.PropertyId == pt.PropertyId && x.PayeeTypeId == 1).Sum(x => x.Amount).ToString(),
+                                companyId=pt.CompanyID.ToString(),
+                                propertyId=pt.PropertyId.ToString()
                             }).ToList();
 
                 foreach (var item in list) {

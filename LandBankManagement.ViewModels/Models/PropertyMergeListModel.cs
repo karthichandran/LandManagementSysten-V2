@@ -26,6 +26,9 @@ namespace LandBankManagement.Models
         public string TotalArea { get; set; }        
         public string Expense { get; set; }        
         public string Balance1 { get; set; }        
-        public string Balance2 { get; set; }        
+        public string Balance2 { get; set; }    
+        public string CompanyId { get; set; }
+        public string propertyId { get; set; }
+        public bool IsOld { get; set; }
     }
 }

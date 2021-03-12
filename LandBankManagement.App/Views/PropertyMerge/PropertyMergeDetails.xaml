@@ -28,11 +28,12 @@
                         <controls:FormComboBox x:Name="CompanyDDL" Header="Company / Individual" ItemsSource="{x:Bind CompanyOptions}" SelectionChanged="CompanyDDL_SelectionChanged"
                                            SelectedValue="{x:Bind selectedCompany, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                            SelectedValuePath="Id" DisplayMemberPath="Description" />
-                        <controls:FormComboBox x:Name="PropertyDDL"  Header="Property Name" ItemsSource="{x:Bind PropertyOptions}" SelectionChanged="PropertyDDL_SelectionChanged"
+                        <controls:FormComboBox x:Name="PropertyDDL"  Header="Property Name" ItemsSource="{x:Bind PropertyOptions,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="PropertyDDL_SelectionChanged"
                                            SelectedValue="{x:Bind selectedProperty, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                            SelectedValuePath="Id" DisplayMemberPath="Description" />
-                        <controls:FormComboBox x:Name="DocumentTypeDDL"  Header="Document Type" ItemsSource="{x:Bind PropertyDocumentOptions,Mode=TwoWay}" SelectionChanged="DocumentTypeDDL_SelectionChanged"
-                                           SelectedValuePath="Id" DisplayMemberPath="Description" />
+                        <controls:FormComboBox x:Name="DocumentTypeDDL"  Header="Document Type" ItemsSource="{x:Bind PropertyDocumentOptions,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="DocumentTypeDDL_SelectionChanged"
+                                           SelectedValue="{x:Bind selectedDocumentType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                               SelectedValuePath="Id" DisplayMemberPath="Description" />
                         <!--<StackPanel Orientation="Horizontal">
                             <Button  x:Name="Search" Margin="10 25 0 0" Click="Search_Click" Background="#03A9F4" Foreground="#fff"  Width="120">
                                 <StackPanel Orientation="Horizontal">
@@ -70,7 +71,7 @@
                         </Grid.RowDefinitions>
                         <sync:SfDataGrid Grid.Row="0" x:Name="sfdataGrid" AutoGenerateColumns="False" ItemsSource="{x:Bind PropertyList,Mode=TwoWay}" ColumnSizer="Star" 
                                          HeaderRowHeight="40"  HeaderStyle="{StaticResource GridHeader}" RowStyle="{StaticResource GridRowStyle}"
-                                         AlternatingRowStyle="{StaticResource alternatingRowStyle}" AlternationCount="2">
+                                         AlternatingRowStyle="{StaticResource alternatingRowStyle}" AlternationCount="2" SelectionChanged="sfdataGrid_SelectionChanged">
                             <sync:SfDataGrid.Columns>
                                 <sync:GridTextColumn HeaderText="Property Name" MappingName="PropertyName"/>
                                 <!--<sync:GridTextColumn HeaderText="Party" MappingName="Party"/>

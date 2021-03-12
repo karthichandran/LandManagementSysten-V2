@@ -44,5 +44,11 @@ namespace LandBankManagement.Data
         public string Balance1 { get; set; } 
         [NotMapped]
         public string Balance2 { get; set; }
+        [NotMapped]
+        public string companyId { get; set; }
+        [NotMapped]
+        public string propertyId { get; set; }
+        [NotMapped]
+        public bool IsOld { get; set; }
     }
 }

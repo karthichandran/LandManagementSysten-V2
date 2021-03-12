@@ -86,7 +86,8 @@ namespace LandBankManagement.ViewModels
         {
             ViewModelArgs = args;
 
-            UserName = args.UserInfo.UserName;
+           // UserName = args.UserInfo.UserName;
+            UserName = args.UserInfo.loginName;
             IsLoginWithWindowsHello = LoginService.IsWindowsHelloEnabled(UserName);
             IsLoginWithPassword = !IsLoginWithWindowsHello;
             IsBusy = false;

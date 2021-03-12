@@ -92,7 +92,8 @@ namespace LandBankManagement.Services
                     Expense=obj.Expense,
                     Balance1=obj.Balance1,
                     Balance2=obj.Balance2,
-                    TotalArea=obj.TotalArea
+                    TotalArea=obj.TotalArea,
+                    IsOld=obj.IsOld,
                 };
                 return model;
             }
@@ -220,7 +221,9 @@ namespace LandBankManagement.Services
                         Expense=obj.Expense,
                         Balance1=obj.Balance1,
                         Balance2=obj.Balance2,
-                        TotalArea=obj.TotalArea
+                        TotalArea=obj.TotalArea,
+                        CompanyId=obj.companyId,
+                        propertyId=obj.propertyId
                     });
 
                 }

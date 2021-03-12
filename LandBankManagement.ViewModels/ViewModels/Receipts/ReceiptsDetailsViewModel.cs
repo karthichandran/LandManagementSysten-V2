@@ -191,7 +191,13 @@ namespace LandBankManagement.ViewModels
             SelectedBankId = "0";
             currentCompanyId = payeeid;
         }
-
+        public async Task LoadDealsByCompany() {
+            if (Item.PayeeId == null || Item.PayeeId == "0")
+                return;
+            ReceiptsViewModel.ShowProgressRing();
+            DealOptions = await DropDownService.GetDealOptionsByCompany(Convert.ToInt32(Item.PayeeId));
+            ReceiptsViewModel.HideProgressRing();
+        }
         public async Task LoadDealParties(int dealId) {
             if (dealId == 0 || dealId== currentDealId)
                 return;

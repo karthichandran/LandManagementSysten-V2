@@ -152,6 +152,10 @@ namespace LandBankManagement.ViewModels
             if (selectedProperty == "0"|| selectedProperty==null)
                 return;
             PropertyDocumentOptions = await DropDownService.GetDocumentTypesByPropertyID(Convert.ToInt32( selectedProperty));
+            if (CurrentProperty!=null && CurrentProperty.PropertyDocumentTypeId>0)
+            {
+                selectedDocumentType = CurrentProperty.PropertyDocumentTypeId.ToString();
+            }
         }
 
         public async Task LoadedSelectedProperty() {
@@ -163,6 +167,12 @@ namespace LandBankManagement.ViewModels
                 {
                     PropertyMergesViewModel.ShowProgressRing();
                     var model = await PropertyMergeService.GetPropertyListItemForProeprty(Convert.ToInt32(selectedProperty), Convert.ToInt32(selectedDocumentType));
+                    if (Item.PropertyMergeId<=0 && model.IsOld) {
+                        await DialogService.ShowAsync("", "This document type is already exist in another deal", "Ok");
+                        selectedDocumentType = "0";
+                        PropertyMergesViewModel.HideProgressRing();
+                        return;
+                    }
                     var area = model.LandArea.Split('-');
                     var calculatedArea = AreaConvertor.ConvertArea(Convert.ToDecimal(area[0]), Convert.ToDecimal(area[1]), Convert.ToDecimal(area[2]));
                     model.LandArea = calculatedArea.Acres + " - " + calculatedArea.Guntas + " - " + calculatedArea.Anas;
@@ -176,12 +186,32 @@ namespace LandBankManagement.ViewModels
             }
         }
 
-        public async void LoadPropertyOptionByCompany() {
+        public async Task LoadExistingPropertyDetails(PropertyMergeListModel model) {
+            selectedCompany = "0";
+            if (CurrentProperty == null)
+                CurrentProperty = new PropertyMergeListModel();
+            CurrentProperty = model;
+            selectedCompany = model.CompanyId;
+         //   selectedProperty = model.propertyId;
+           // selectedDocumentType = model.PropertyDocumentTypeId.ToString();  
+        }
+
+        public async Task LoadPropertyOptionByCompany() {
             if (selectedCompany == "0" || selectedCompany == null)
                 return;
             PropertyMergesViewModel.ShowProgressRing();
             PropertyOptions = await DropDownService.GetPropertyOptionsByCompanyID(Convert.ToInt32(selectedCompany));
             PropertyMergesViewModel.HideProgressRing();
+            PropertyDocumentOptions = null;
+            if (CurrentProperty!=null && CurrentProperty.propertyId != null) {
+                if (selectedProperty != CurrentProperty.propertyId)
+                {
+                    selectedProperty = CurrentProperty.propertyId;
+                }
+                else
+                    await GetDocumentType();
+            }
+           
         }
 
         public void AddPropertyToList() {          
@@ -343,6 +373,11 @@ namespace LandBankManagement.ViewModels
             TotalBalance1 = "";
             TotalBalance2 = "";
             Expense ="";
+
+            CurrentProperty = new PropertyMergeListModel();
+            selectedProperty = "0";
+            selectedCompany = "0";
+            selectedDocumentType = "0";
         }
         protected override async Task<bool> DeleteItemAsync(PropertyMergeModel model)
         {

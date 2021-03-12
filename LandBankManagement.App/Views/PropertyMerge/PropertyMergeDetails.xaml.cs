@@ -1,4 +1,5 @@
-﻿using LandBankManagement.ViewModels;
+﻿using LandBankManagement.Models;
+using LandBankManagement.ViewModels;
 using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -53,8 +54,15 @@ namespace LandBankManagement.Views
             var val = ((ComboBox)sender).SelectedValue;
             if (val == null)
                 return;
-            ViewModel.selectedDocumentType = val.ToString();
+           // ViewModel.selectedDocumentType = val.ToString();
             await ViewModel.LoadedSelectedProperty();
+        }
+
+        private async void sfdataGrid_SelectionChanged(object sender, Syncfusion.UI.Xaml.Grid.GridSelectionChangedEventArgs e)
+        {
+            var model = ((Syncfusion.UI.Xaml.Grid.SfDataGrid) sender).SelectedItem;
+            if (model != null)
+               await ViewModel.LoadExistingPropertyDetails((PropertyMergeListModel)model);
         }
     }
 }

@@ -270,6 +270,12 @@ namespace LandBankManagement.Data.Services
                         join pm in _dataSource.PropertyMerge on d.PropertyMergeId equals pm.PropertyMergeId
                         select new { d.DealId, pm.PropertyMergeDealName }).ToDictionaryAsync(t => t.DealId, t => t.PropertyMergeDealName);           
         }
+        public async Task<Dictionary<int, string>> GetDealOptionsByCompany(int companyId)
+        {
+            return await (from d in _dataSource.Deal
+                          join pm in _dataSource.PropertyMerge on d.PropertyMergeId equals pm.PropertyMergeId where d.CompanyId==companyId
+                          select new { d.DealId, pm.PropertyMergeDealName }).ToDictionaryAsync(t => t.DealId, t => t.PropertyMergeDealName);
+        }
 
         public Dictionary<int, string> GetSalutationOptions()
         {

@@ -111,6 +111,9 @@ namespace LandBankManagement.Data.Services
 
         public async Task<int> DeleteDocumentTypeAsync(DocumentType model)
         {
+            var isUseIn = _dataSource.PropertyDocumentType.Where(x => x.DocumentTypeId == model.DocumentTypeId).Select(x => x).Any();
+            if (isUseIn)
+                return -1;
             _dataSource.DocumentTypes.Remove(model);
             return await _dataSource.SaveChangesAsync();
         }

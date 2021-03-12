@@ -710,6 +710,25 @@ namespace LandBankManagement.Services
             }
         }
 
+        public async Task<ObservableCollection<ComboBoxOptions>> GetDealOptionsByCompany(int companyId)
+        {
+            ObservableCollection<ComboBoxOptions> list = new ObservableCollection<ComboBoxOptions>();
+            using (var dataService = DataServiceFactory.CreateDataService())
+            {
+                var models = await dataService.GetDealOptionsByCompany(companyId);
+                foreach (var obj in models)
+                {
+                    list.Add(new ComboBoxOptions
+                    {
+                        Id = obj.Key.ToString(),
+                        Description = obj.Value
+                    });
+                }
+                list.Insert(0, new ComboBoxOptions { Id = "0", Description = "" });
+                return list;
+            }
+        }
+
         public  ObservableCollection<ComboBoxOptions> GetSalutationOptions()
         {
             ObservableCollection<ComboBoxOptions> list = new ObservableCollection<ComboBoxOptions>();

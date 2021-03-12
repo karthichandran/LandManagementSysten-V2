@@ -41,6 +41,7 @@ namespace LandBankManagement.Views
             var val = ((ComboBox)sender).SelectedValue;
             if (val == null)
                 return;
+            await ViewModel.LoadDealsByCompany();
             await ViewModel.LoadBankAndCompany();
         }
     }

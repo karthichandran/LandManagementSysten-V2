@@ -46,7 +46,7 @@
                     <Viewbox Margin="0,9,0,9" HorizontalAlignment="Left">
                         <PersonPicture ProfilePicture="{x:Bind PictureSource, Converter={StaticResource ObjectToImageConverter}}" DisplayName="{x:Bind loginName}" />
                     </Viewbox>
-                    <TextBlock Grid.Column="1" Text="{x:Bind loginName}" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="1" Text="{x:Bind UserName}" VerticalAlignment="Center" />
                 </Grid>
                 <Button Margin="-4,0,0,0" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0" Click="OnLogoff" />
             </Grid>

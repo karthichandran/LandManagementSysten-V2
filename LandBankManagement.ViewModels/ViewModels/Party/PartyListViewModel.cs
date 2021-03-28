@@ -17,7 +17,7 @@ namespace LandBankManagement.ViewModels
 
         public PartyListArgs()
         {
-            OrderBy = r => r.PartyFirstName;
+            OrderBy = r => r.GroupName;
         }
 
         public int SelectedPageIndex { get; set; } = 0;

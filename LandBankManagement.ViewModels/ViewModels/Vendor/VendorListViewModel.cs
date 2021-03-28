@@ -16,7 +16,7 @@ namespace LandBankManagement.ViewModels
 
         public VendorListArgs()
         {
-            OrderBy = r => r.VendorName;
+            OrderBy = r => r.GroupName;
         }
         public bool FromPropertyCheckList { get; set; } = false;
         public int SelectedPageIndex { get; set; } = 0;

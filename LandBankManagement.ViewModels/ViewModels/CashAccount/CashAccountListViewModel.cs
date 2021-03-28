@@ -16,7 +16,7 @@ namespace LandBankManagement.ViewModels
 
         public CashAccountListArgs()
         {
-            OrderBy = r => r.CashAccountName;
+            OrderBy = r => r.CompanyName;
         }
 
         public bool IsEmpty { get; set; }

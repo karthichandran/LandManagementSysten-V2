@@ -1,4 +1,5 @@
 ﻿using LandBankManagement.Data;
+using LandBankManagement.Enums;
 using LandBankManagement.Models;
 using LandBankManagement.Services;
 using System;
@@ -26,6 +27,14 @@ namespace LandBankManagement.ViewModels
             set => Set(ref _groupsOptions, value);
         }
         private bool IsProcessing = false;
+
+        private bool _copyGroup = false;
+        public bool CoptyGroup
+        {
+            get => _copyGroup;
+            set => Set(ref _copyGroup, value);
+        }
+
         public GroupsDetailsViewModel(IGroupsService groupsService, IFilePickerService filePickerService, ICommonServices commonServices, GroupsListViewModel groupsListViewModel, GroupsViewModel groupsViewModel, IDropDownService dropDownService) : base(commonServices)
         {
             GroupsService = groupsService;
@@ -90,6 +99,14 @@ namespace LandBankManagement.ViewModels
             }
         }
 
+        public void CloneGroup() {
+            CoptyGroup = false;
+            Item.GroupType =Convert.ToInt32( GroupTypeEnm.Party).ToString();
+            Item.DoCopyGroup = true;
+            var temp = Item;
+            Item = null;
+            Item = temp;
+        }
         protected override async Task<bool> SaveItemAsync(GroupsModel model)
         {
             try
@@ -102,7 +119,11 @@ namespace LandBankManagement.ViewModels
                 if (model.GroupId <= 0)
                     await GroupsService.AddGroupsAsync(model);
                 else
-                    await GroupsService.UpdateGroupsAsync(model);
+                {
+                    var groupdId = model.GroupId;
+                    model.GroupId = 0;
+                    await GroupsService.UpdateGroupsAsync(groupdId,model);
+                }
                 IsProcessing = false;
                 ShowPopup("success", "Group is Saved");
                 await GroupsListViewModel.RefreshAsync();
@@ -127,6 +148,7 @@ namespace LandBankManagement.ViewModels
         protected override void ClearItem()
         {
             Item = new GroupsModel { IsActive = true };
+            CoptyGroup = false;
         }
         protected override async Task<bool> DeleteItemAsync(GroupsModel model)
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-
+using LandBankManagement.Enums;
 using LandBankManagement.Models;
 using LandBankManagement.Services;
 
@@ -105,6 +105,11 @@ namespace LandBankManagement.ViewModels
                 var model = await GroupsService.GetGroupsAsync(selected.GroupId);
                 selected.Merge(model);
                 GroupsDetials.Item = model;
+                if (Convert.ToInt32(model.GroupType) == Convert.ToInt32(GroupTypeEnm.Vendor)) {
+                    GroupsDetials.CoptyGroup = true;
+                }
+                else
+                    GroupsDetials.CoptyGroup = false;
                 HideProgressRing();
             }
             catch (Exception ex)

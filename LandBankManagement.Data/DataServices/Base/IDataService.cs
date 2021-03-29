@@ -128,7 +128,7 @@ namespace LandBankManagement.Data.Services
         Task<IList<Groups>> GetGroupsAsync(DataRequest<Groups> request);
         Task<IList<Groups>> GetGroupsAsync(int skip, int take, DataRequest<Groups> request);
         Task<int> GetGroupsCountAsync(DataRequest<Groups> request);
-        Task<int> UpdateGroupsAsync(Groups model);
+        Task<int> UpdateGroupsAsync(int groupId, Groups model);
         Task<int> DeleteGroupsAsync(Groups model);
 
 

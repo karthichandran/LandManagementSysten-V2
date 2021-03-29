@@ -13,6 +13,7 @@ namespace LandBankManagement.Models
         public string GroupType { get; set; }
         public string GroupTypeName { get; set; }
         public bool IsNew => GroupId <= 0;
+        public bool DoCopyGroup { get; set; }
 
         public override void Merge(ObservableObject source)
         {

@@ -46,4 +46,8 @@ namespace LandBankManagement.Enums
         Accounts,
         Legal
     }
+    public enum GroupTypeEnm { 
+    Party=1,
+    Vendor=2
+    }
 }

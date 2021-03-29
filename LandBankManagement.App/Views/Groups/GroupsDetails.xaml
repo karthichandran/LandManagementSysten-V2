@@ -22,6 +22,7 @@
                 <!--<CheckBox x:Name="isActive" Margin="10 20 0 0" IsChecked="{x:Bind EditableItem.IsActive, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
                     <TextBlock Text="IsActive"  Foreground="{StaticResource TextControlTextBlockHeaderForeground}" FontSize="15"/>
                 </CheckBox>-->
+                <Button x:Name="CopyGroup" Content="Copy Group" Click="CopyGroup_Click" Margin="0 10 0 0" Background="#2196F3" Foreground="#fff" Visibility="{Binding CoptyGroup ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></Button>
             </controls:FluidGrid>
         </DataTemplate>
     </UserControl.Resources>

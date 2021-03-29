@@ -25,5 +25,10 @@ namespace LandBankManagement.Views
         {
             details.SetFocus();
         }
+
+        private void CopyGroup_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.CloneGroup();
+        }
     }
 }

@@ -15,6 +15,8 @@ namespace LandBankManagement.Data
         public int GroupType { get; set; }
         [NotMapped]
         public string SearchTerms { get; set; }
+        [NotMapped]
+        public bool DoCopyGroup { get; set; }
         public string BuildSearchTerms() => $"{GroupName}".ToLower();
     }
 }

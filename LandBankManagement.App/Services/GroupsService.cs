@@ -67,6 +67,7 @@ namespace LandBankManagement.Services
             target.GroupName = source.GroupName;
             target.GroupType = Convert.ToInt32(source.GroupType);
             target.IsActive = source.IsActive;
+            target.DoCopyGroup = source.DoCopyGroup;
         }
 
         public async Task<GroupsModel> GetGroupsAsync(long id)
@@ -106,7 +107,7 @@ namespace LandBankManagement.Services
             }
         }
 
-        public async Task<int> UpdateGroupsAsync(GroupsModel model)
+        public async Task<int> UpdateGroupsAsync(int groupId, GroupsModel model)
         {
             long id = model.GroupId;
             using (var dataService = DataServiceFactory.CreateDataService())
@@ -115,7 +116,7 @@ namespace LandBankManagement.Services
                 if (Groups != null)
                 {
                     UpdateGroupsFromModel(Groups, model);
-                    await dataService.UpdateGroupsAsync(Groups);
+                    await dataService.UpdateGroupsAsync(groupId,Groups);
                     model.Merge(await GetGroupsAsync(dataService, Groups.GroupId));
                 }
                 return 0;

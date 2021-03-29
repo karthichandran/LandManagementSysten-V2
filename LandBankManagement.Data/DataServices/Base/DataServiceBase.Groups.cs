@@ -103,11 +103,89 @@ namespace LandBankManagement.Data.Services
             return await items.CountAsync();
         }
 
-        public async Task<int> UpdateGroupsAsync(Groups model)
+        public async Task<int> UpdateGroupsAsync(int existingGroupdId, Groups model)
         {
-            _dataSource.Entry(model).State = EntityState.Modified;
-            int res = await _dataSource.SaveChangesAsync();
-            return res;
+            if (model.DoCopyGroup)
+            {
+
+                var entity = new Groups()
+                {
+                    GroupName = model.GroupName,
+                    IsActive = true,
+                    GroupType = model.GroupType
+                };
+                _dataSource.Groups.Add(entity);
+                int id = await _dataSource.SaveChangesAsync();
+                await DoCopyGroup(existingGroupdId, entity.GroupId);
+                return entity.GroupId;
+            }
+            else
+            {
+                _dataSource.Entry(model).State = EntityState.Modified;
+                int res = await _dataSource.SaveChangesAsync();
+                return res;
+            }
+        }
+
+        private async Task<int> DoCopyGroup(int vendorGroupId, int partyGroupId) {
+            try
+            {
+                var vendors = _dataSource.Vendors.Where(x => x.GroupId == vendorGroupId).ToList();
+                foreach (var vendor in vendors)
+                {
+                    var entity = new Party()
+                    {
+                        GroupId = partyGroupId,
+                        PartyGuid = Guid.NewGuid(),
+                        PartyFirstName = vendor.VendorName,
+                        PartyAlias = vendor.VendorAlias,
+                        PartySalutation = vendor.VendorSalutation,
+                        AadharNo = vendor.AadharNo,
+                        ContactPerson = vendor.ContactPerson,
+                        PAN = vendor.PAN,
+                        GSTIN = vendor.GSTIN,
+                        email = vendor.email,
+                        IsPartyActive = vendor.IsVendorActive,
+                        PhoneNo = vendor.PhoneNo,
+                        AddressLine1 = vendor.AddressLine1,
+                        AddressLine2 = vendor.AddressLine2,
+                        City = vendor.City,
+                        PinCode = vendor.PinCode,
+                        SalutationType = vendor.SalutationType,
+                        BankName = vendor.BankName,
+                        Branch = vendor.Branch,
+                        AccountNumber = vendor.AccountNumber,
+                        IFSCCode = vendor.IFSCCode,
+                    };
+
+                    _dataSource.Entry(entity).State = EntityState.Added;
+                    await _dataSource.SaveChangesAsync();
+
+                    var docs = _dataSource.VendorDocuments.Where(x => x.VendorGuid == vendor.VendorGuid).ToList();
+                    if (docs != null && docs.Count > 0)
+                    {
+                        foreach (var doc in docs)
+                        {
+                            var partyDoc = new PartyDocuments
+                            {
+                                PartyGuid = entity.PartyGuid,
+                                FileName = doc.FileName,
+                                FileBlob = doc.FileBlob,
+                                FileType = doc.FileType,
+                                FileLength = doc.FileLength,
+                                FileCategoryId = doc.FileCategoryId,
+                                UploadTime=DateTime.Now
+                            };
+                            _dataSource.PartyDocuments.Add(partyDoc);
+                            await _dataSource.SaveChangesAsync();
+                        }
+                    }
+                }
+                return 0;
+            }
+            catch (Exception ex) {
+                throw ex;
+            }
         }
 
         public async Task<int> DeleteGroupsAsync(Groups model)

@@ -24,8 +24,8 @@
         <Pivot  SelectedIndex="{x:Bind ViewModel.SelectedPivotIndex, Mode=TwoWay}" SelectionChanged="Pivot_SelectionChanged">
             <PivotItem >
                 <PivotItem.Header>
-                    <PivotHeaderItem  >
-                        <TextBlock Text="Company List" FontWeight="Bold" FontSize="17" ></TextBlock>
+                    <PivotHeaderItem  Background="{StaticResource PivotHeaderItemBackgroundColor}">
+                        <TextBlock Text="Company List" FontWeight="Bold" FontSize="17"></TextBlock>
                     </PivotHeaderItem>
                 </PivotItem.Header>
                 <Grid Grid.Row="1"  Grid.RowSpan="{x:Bind GetRowSpan(ViewModel.CompanyList.IsMultipleSelection), Mode=OneWay}">
@@ -40,7 +40,7 @@
             </PivotItem>
             <PivotItem >
                 <PivotItem.Header>
-                    <PivotHeaderItem  >
+                    <PivotHeaderItem  Background="{StaticResource PivotHeaderItemBackgroundColor}">
                         <TextBlock Text="Company Details" FontWeight="Bold"  FontSize="17"></TextBlock>
                     </PivotHeaderItem>
                 </PivotItem.Header>

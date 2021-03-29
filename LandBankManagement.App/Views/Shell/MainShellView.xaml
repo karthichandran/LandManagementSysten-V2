@@ -123,7 +123,7 @@
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
-                                    <VisualState x:Name="UnselectedPointerOver">
+                                    <!--<VisualState x:Name="UnselectedPointerOver">
                                         <VisualState.Setters>
                                             <Setter Target="SelectedPipe.Visibility" Value="Collapsed" />
                                         </VisualState.Setters>
@@ -172,7 +172,7 @@
                                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource PivotHeaderItemBackgroundSelectedPressed}" />
                                             </ObjectAnimationUsingKeyFrames>
                                         </Storyboard>
-                                    </VisualState>
+                                    </VisualState>-->
 
                                 </VisualStateGroup>
 
@@ -190,7 +190,7 @@
                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                 Foreground="{StaticResource PivotForegroundBaseMediumBrush}"
-                Background="{StaticResource PivotHeaderItemBackground}"
+               
                 OpticalMarginAlignment="TrimSideBearings" />
                             <Rectangle x:Name="SelectedPipe"
                 Fill="{ThemeResource PivotHeaderItemSelectedPipeFill}"

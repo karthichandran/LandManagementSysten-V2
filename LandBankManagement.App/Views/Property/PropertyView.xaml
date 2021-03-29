@@ -30,7 +30,7 @@
 
             <PivotItem>
                 <PivotItem.Header>
-                    <PivotHeaderItem>
+                    <PivotHeaderItem Background="{StaticResource PivotHeaderItemBackgroundColor}">
                         <TextBlock Text="Property List" FontWeight="Bold" FontSize="17"></TextBlock>
                     </PivotHeaderItem>
                 </PivotItem.Header>
@@ -46,7 +46,7 @@
             </PivotItem>
             <PivotItem >
                 <PivotItem.Header>
-                    <PivotHeaderItem  >
+                    <PivotHeaderItem  Background="{StaticResource PivotHeaderItemBackgroundColor}">
                         <TextBlock Text="Property Details" FontWeight="Bold"  FontSize="17"></TextBlock>
                     </PivotHeaderItem>
                 </PivotItem.Header>

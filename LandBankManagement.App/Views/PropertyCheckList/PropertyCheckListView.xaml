@@ -32,7 +32,7 @@
 
             <PivotItem >
                 <PivotItem.Header>
-                    <PivotHeaderItem >
+                    <PivotHeaderItem Background="{StaticResource PivotHeaderItemBackgroundColor}">
                         <TextBlock Text="Property CheckList" FontWeight="Bold" FontSize="17" ></TextBlock>
                     </PivotHeaderItem>
                 </PivotItem.Header>
@@ -47,7 +47,7 @@
             </PivotItem>
             <PivotItem >
                 <PivotItem.Header>
-                    <PivotHeaderItem  >
+                    <PivotHeaderItem  Background="{StaticResource PivotHeaderItemBackgroundColor}">
                         <TextBlock Text="Property CheckList Details" FontWeight="Bold"  FontSize="17"></TextBlock>
                     </PivotHeaderItem>
                 </PivotItem.Header>

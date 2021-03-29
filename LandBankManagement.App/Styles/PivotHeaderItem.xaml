@@ -6,6 +6,10 @@
         <GradientStop Color="#0091EA" Offset="0.0" />
         <GradientStop Color="#40C4FF" Offset="1.0" />
     </LinearGradientBrush>
+    <LinearGradientBrush x:Key="PivotHeaderItemBackgroundColor" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#0091EA" Offset="0.0" />
+        <GradientStop Color="#40C4FF" Offset="1.0" />
+    </LinearGradientBrush>
     <Style TargetType="PivotHeaderItem">
         <Setter Property="FontSize" Value="18" />
         <Setter Property="FontFamily" Value="{ThemeResource PivotHeaderItemFontFamily}" />

@@ -28,7 +28,7 @@
             </Pivot.Resources>
             <PivotItem >
                 <PivotItem.Header>
-                    <PivotHeaderItem  >
+                    <PivotHeaderItem  Background="{StaticResource PivotHeaderItemBackgroundColor}">
                         <TextBlock Text="Proposal List" FontWeight="Bold" FontSize="17" ></TextBlock>
                     </PivotHeaderItem>
                 </PivotItem.Header>
@@ -44,7 +44,7 @@
             </PivotItem>
             <PivotItem >
                 <PivotItem.Header>
-                    <PivotHeaderItem  >
+                    <PivotHeaderItem  Background="{StaticResource PivotHeaderItemBackgroundColor}">
                         <TextBlock Text="Proposal Details" FontWeight="Bold"  FontSize="17"></TextBlock>
                     </PivotHeaderItem>
                 </PivotItem.Header>

@@ -25,6 +25,8 @@ namespace LandBankManagement.Services
             {
                 _dataRequest = dataRequest;
                 Count = await DocumentTypeService.GetDocumentTypesCountAsync(_dataRequest);
+                if (Count > 0)
+                    RangeSize = Count;// Note : Pagination is not implemented so fetch all records
                 Ranges[0] = await DocumentTypeService.GetDocumentTypesAsync(0, RangeSize, _dataRequest);
             }
             catch (Exception ex)

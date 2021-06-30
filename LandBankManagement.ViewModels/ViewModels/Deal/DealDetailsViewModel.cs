@@ -140,6 +140,13 @@ namespace LandBankManagement.ViewModels
             set => Set(ref _showParties, value);
         }
 
+        private double _setPopupWidth;
+        public double SetPopupWidth
+        {
+            get => _setPopupWidth;
+            set => Set(ref _setPopupWidth, value);
+        }
+
         private DealViewModel DealsViewModel { get; set; }
         private bool IsProcessing = false;
         public DealDetailsViewModel(IDropDownService dropDownService, IDealService dealService, IFilePickerService filePickerService, ICommonServices commonServices, DealViewModel dealViewModel) : base(commonServices)

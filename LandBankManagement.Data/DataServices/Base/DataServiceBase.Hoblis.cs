@@ -57,7 +57,8 @@ namespace LandBankManagement.Data.Services
                                           HobliGMapLink = h.HobliGMapLink,
                                           TalukId = h.TalukId,
                                           HobliName = h.HobliName,
-                                          TalukName = t.TalukName
+                                          TalukName = t.TalukName,
+                                          HobliIsActive=h.HobliIsActive
                                       });
 
             // Query

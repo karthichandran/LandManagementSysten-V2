@@ -37,6 +37,9 @@ namespace LandBankManagement.Views
 
         private void partySearch_Click(object sender, RoutedEventArgs e)
         {
+            var stackpanel = (StackPanel)((Button)sender).Parent;
+            var grid = (Grid)stackpanel.Parent;
+            ViewModel.SetPopupWidth = grid.ActualWidth;
             ViewModel.GetVendors();
         }
 

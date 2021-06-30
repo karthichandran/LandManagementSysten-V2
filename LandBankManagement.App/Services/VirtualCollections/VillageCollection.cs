@@ -24,8 +24,10 @@ namespace LandBankManagement.Services
 
             _dataRequest = dataRequest;
             Count = await VillageService.GetVillagesCountAsync(_dataRequest);
+            if (Count > 0)
+                RangeSize = Count;// Note : Pagination is not implemented so fetch all records
             Ranges[0] = await VillageService.GetVillagesAsync(0, RangeSize, _dataRequest);
-
+           
         }
 
         protected override async Task<IList<VillageModel>> FetchDataAsync(int rangeIndex, int rangeSize)

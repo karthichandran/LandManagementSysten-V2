@@ -64,7 +64,7 @@
                                            SelectedValue="{x:Bind SelectedToCashId, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                            SelectedValuePath="Id" DisplayMemberPath="Description" />
                 </StackPanel>
-                <controls:FormTextBox Header="Narration" MinHeight="100" TextWrapping="Wrap" Text="{x:Bind EditableItem.Narration, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                <controls:FormTextBox Header="Narration" MinHeight="100" TextWrapping="Wrap" Text="{x:Bind EditableItem.Narration, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="180"/>
             </controls:FluidGrid>
         </DataTemplate>
     </UserControl.Resources>

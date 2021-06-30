@@ -22,6 +22,8 @@ namespace LandBankManagement.Services
         {
             _dataRequest = dataRequest;
             Count = await RoleService.GetRolesCountAsync(_dataRequest);
+            if (Count > 0)
+                RangeSize = Count;// Note : Pagination is not implemented so fetch all records
             Ranges[0] = await RoleService.GetRolesAsync(0, RangeSize, _dataRequest);
         }
 

@@ -53,27 +53,30 @@
                     </controls:FluidGrid>
                     
                     
-                    <controls:FluidGrid   Columns="1" ColumnSpacing="10" Margin="0 45 0 0">
+                    <controls:FluidGrid   Columns="1" ColumnSpacing="10" Margin="0 20 0 0">
+                        <StackPanel>
+                            <TextBlock Text="Party" Foreground="{StaticResource TextControlTextBlockHeaderForeground}" HorizontalAlignment="Left" Margin="0 0 10 0" Height="25"/>
+                        </StackPanel>
                         <StackPanel Orientation="Vertical" BorderBrush="#4FC3F7" BorderThickness="2"  Margin="0 0 10 20">
-                            <Grid Background="#4FC3F7">
+                            <Grid x:Name="PartySearchGrid" Background="#4FC3F7">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                     <ColumnDefinition  Width="50"/>
                                 </Grid.ColumnDefinitions>
-                                <Popup x:Name="SearchPopup" IsOpen="{x:Bind PopupOpened,Mode=TwoWay}"  Margin="10 50 0 0" IsLightDismissEnabled="True" >
+                                <Popup x:Name="SearchPopup" IsOpen="{x:Bind PopupOpened,Mode=TwoWay}"  Margin="10 50 0 0" IsLightDismissEnabled="True">
                                     <Popup.Resources>
                                         <ThemeShadow x:Name="borderShadow"/>
                                     </Popup.Resources>
 
-                                    <Grid x:Name="PopupContainer" Shadow="{StaticResource borderShadow}" Translation="0,0,20" Background="#fff">
+                                    <Grid x:Name="PopupContainer" Shadow="{StaticResource borderShadow}" Translation="0,0,20" Background="#fff"  Width="{Binding SetPopupWidth }">
                                         <Grid.RowDefinitions>
                                             <RowDefinition/>
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
                                         <TextBlock Text="No Parties found" Grid.Column="0" Visibility="{Binding NoRecords,Mode=TwoWay}" Padding="10" FontWeight="Medium" Foreground="#757575"/>
-                                        <ScrollViewer VerticalScrollMode="Enabled" MaxHeight="200" Grid.Row="0" Visibility="{Binding ShowParties,Mode=TwoWay}">
+                                        <ScrollViewer VerticalScrollMode="Enabled"  MaxHeight="200" Grid.Row="0" Visibility="{Binding ShowParties,Mode=TwoWay}">
 
                                             <ListView  ItemsSource="{x:Bind PartyOptions,Mode=TwoWay}"  Margin="0 0 0 15"  Background="#fbfafa">
                                                 <ListView.ItemContainerStyle>
@@ -83,7 +86,7 @@
                                                 </ListView.ItemContainerStyle>
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Grid   HorizontalAlignment="Stretch" MinWidth="200">
+                                                        <Grid   HorizontalAlignment="Stretch" MinWidth="150">
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="*"/>
                                                                 <ColumnDefinition Width="40"/>
@@ -192,13 +195,13 @@
                         </StackPanel>                     
                     </controls:FluidGrid>
                     <controls:FluidGrid  ColumnSpan="2" Columns="4" ColumnSpacing="10" Margin="0 20 0 0">                        
-                        <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Vertical" Margin="0 5 0 0">
                             <TextBlock Text="Date Of Execution" Foreground="{StaticResource TextControlTextBlockHeaderForeground}" Margin="0 0 0 0"/>
                         <CalendarDatePicker  BorderBrush="#cfcbca" BorderThickness="1" x:Name="paymentDateCalender" HorizontalAlignment="Stretch" Date="{x:Bind CurrentSchedule.ScheduleDate,Mode=TwoWay,Converter={StaticResource DateTimeOffsetConverter},UpdateSourceTrigger=PropertyChanged}" DateFormat="{}{day.integer}/{month.integer}/{year.full}" Style="{StaticResource CalendarPickerStyle}"/>
                         </StackPanel>
-                        <controls:FormTextBox Header="Description " Text="{x:Bind CurrentSchedule.Description, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-                        <controls:FormTextBox x:Name="Amount" Header="Amount 1 " Text="{x:Bind CurrentSchedule.Amount1,Converter={StaticResource DecimalConverter}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" LostFocus="Amount_LostFocus" TextChanging="salevalue2_TextChanging"/>
-                        <controls:FormTextBox Header="Amount2" Text="{x:Bind CurrentSchedule.Amount2,Converter={StaticResource DecimalConverter}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" LostFocus="Amount_LostFocus" TextChanging="salevalue2_TextChanging"/>
+                        <controls:FormTextBox Header="Description " Text="{x:Bind CurrentSchedule.Description, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Height="60"/>
+                        <controls:FormTextBox x:Name="Amount" Header="Amount 1 " Height="60" Text="{x:Bind CurrentSchedule.Amount1,Converter={StaticResource DecimalConverter}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" LostFocus="Amount_LostFocus" TextChanging="salevalue2_TextChanging"/>
+                        <controls:FormTextBox Header="Amount2" Height="60" Text="{x:Bind CurrentSchedule.Amount2,Converter={StaticResource DecimalConverter}, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" LostFocus="Amount_LostFocus" TextChanging="salevalue2_TextChanging"/>
                     </controls:FluidGrid>
 
                     <controls:FluidGrid  ColumnSpan="2" Columns="1" ColumnSpacing="10" Margin="0 20 0 0" HorizontalAlignment="Center">

@@ -29,7 +29,8 @@ namespace LandBankManagement.Services
     {
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-        public readonly int RangeSize;
+       // public readonly int RangeSize;
+        public  int RangeSize; // Note : removing static size in order to list all records
 
         private DispatcherTimer _timer = null;
         bool MustExploreDeepExceptions { get;  set; }

@@ -300,7 +300,12 @@ namespace LandBankManagement.ViewModels
             set => Set(ref _totalArea, value);
         }
         private bool IsProcessing = false;
-
+        private double _setPopupWidth;
+        public double SetPopupWidth
+        {
+            get => _setPopupWidth;
+            set => Set(ref _setPopupWidth, value);
+        }
         public PropertyDetailsViewModel(IDropDownService dropDownService, IPropertyService propertyService, IFilePickerService filePickerService, ICommonServices commonServices, PropertyListViewModel propertyListViewModel, PropertyViewModel propertyView) : base(commonServices)
         {
             DropDownService = dropDownService;

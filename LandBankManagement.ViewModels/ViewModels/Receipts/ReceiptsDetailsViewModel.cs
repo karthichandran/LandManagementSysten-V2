@@ -307,8 +307,9 @@ namespace LandBankManagement.ViewModels
         {
             Item = new ReceiptModel { DealId = "0", PaymentTypeId = 0, PayeeId = "0", DepositBankId = "0", DateOfPayment = DateTime.Now };
             PartyOptions = new ObservableCollection<ComboBoxOptionsStringId>();
-           // DealParties = new ObservableCollection<DealPartiesModel>();
-            SelectedBankId = "0";
+            // DealParties = new ObservableCollection<DealPartiesModel>();
+            currentDealId = 0;
+             SelectedBankId = "0";
             SelectedCashId = "0";
         }
         protected override async Task<bool> DeleteItemAsync(ReceiptModel model)

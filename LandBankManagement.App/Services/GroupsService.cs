@@ -109,10 +109,9 @@ namespace LandBankManagement.Services
 
         public async Task<int> UpdateGroupsAsync(int groupId, GroupsModel model)
         {
-            long id = model.GroupId;
             using (var dataService = DataServiceFactory.CreateDataService())
             {
-                var Groups = id > 0 ? await dataService.GetGroupsAsync(model.GroupId) : new Groups();
+                var Groups = groupId > 0 ? await dataService.GetGroupsAsync(model.GroupId) : new Groups();
                 if (Groups != null)
                 {
                     UpdateGroupsFromModel(Groups, model);

@@ -26,6 +26,8 @@ namespace LandBankManagement.Services.VirtualCollections
             {
                 _dataRequest = dataRequest;
                 Count = await PropertyService.GetPropertiesCountAsync(_dataRequest);
+                if (Count > 0)
+                    RangeSize = Count;// Note : Pagination is not implemented so fetch all records
                 Ranges[0] = await PropertyService.GetPropertiesAsync(0, RangeSize, _dataRequest);
             }
             catch (Exception ex)

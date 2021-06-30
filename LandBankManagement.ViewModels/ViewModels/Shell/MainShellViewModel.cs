@@ -62,7 +62,7 @@ namespace LandBankManagement.ViewModels
         {
             Children = new ObservableCollection<NavigationItem>
             {
-                new NavigationItem(0xf243, "View Log",true,false, typeof(AppLogsViewModel)){IconColor = "Red",Screen=NavigationScreen.ViewLogs},
+               // new NavigationItem(0xf243, "View Log",true,false, typeof(AppLogsViewModel)){IconColor = "Red",Screen=NavigationScreen.ViewLogs},
                 new NavigationItem(0xf044, "Role", true,false,typeof(RoleViewModel)){Screen=NavigationScreen.Role},
                 new NavigationItem(0xf044, "Role Permission",true,false, typeof(RolePermissionViewModel)){Screen=NavigationScreen.RolePermission},
                 new NavigationItem(0xf2bb, "User", true,false,typeof(UserViewModel)){Screen=NavigationScreen.UserInfo}
@@ -101,8 +101,10 @@ namespace LandBankManagement.ViewModels
             ReportItem.Children = FilterMenu(ReportItem.Children);           
             PropertyItem.Children = FilterMenu(PropertyItem.Children);
 
-            if (_userInfo.UserName.ToLower() != "admin")
-             AdminItem.Children = FilterMenu(AdminItem.Children);
+            //if (_userInfo.UserName.ToLower() != "User Admin")
+            // AdminItem.Children = FilterMenu(AdminItem.Children);
+            if (!_userInfo.IsAdmin)
+                AdminItem.Children = FilterMenu(AdminItem.Children);
         }
 
         private ObservableCollection<NavigationItem> FilterMenu(ObservableCollection<NavigationItem> items) {

@@ -15,7 +15,7 @@
         <DataTemplate x:Key="DetailsTemplate" x:DataType="viewmodels:GroupsDetailsViewModel">
             <controls:FluidGrid Margin="0,30,0,0" Columns="1" ColumnSpacing="12" RowSpacing="5" HorizontalAlignment="Center">
 
-                <controls:FormTextBox Header="Group *" Text="{x:Bind EditableItem.GroupName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                <controls:FormTextBox Header="Group *" Text="{x:Bind EditableItem.GroupName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="200"/>
                 <controls:FormComboBox  Grid.Column="0" Header="Group Type *" x:Name="GroupType" ItemsSource="{x:Bind GroupsOptions, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                            SelectedValue="{x:Bind EditableItem.GroupType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                            SelectedValuePath="Id" DisplayMemberPath="Description" />

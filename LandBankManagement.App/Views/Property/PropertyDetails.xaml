@@ -210,7 +210,7 @@
                                         <ThemeShadow x:Name="borderShadow"/>
                                     </Popup.Resources>
 
-                                    <Grid x:Name="PopupContainer" Shadow="{StaticResource borderShadow}" Translation="0,0,20" Background="#fff">
+                                    <Grid x:Name="PopupContainer" Shadow="{StaticResource borderShadow}" Translation="0,0,20" Background="#fff"  Width="{Binding SetPopupWidth }">
                                         <Grid.RowDefinitions>
                                             <RowDefinition/>
                                             <RowDefinition/>

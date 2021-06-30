@@ -22,8 +22,8 @@
 
                 </controls:FluidGrid>
                 <controls:FluidGrid Margin="0,12,0,0" ColumnSpan="2"  ColumnSpacing="12" RowSpacing="12"  HorizontalAlignment="Center">
-                    <controls:FormTextBox Header="Party Name *" Text="{x:Bind EditableItem.PartyName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                    <controls:FormTextBox Header="Party Alias" Text="{x:Bind EditableItem.PartyAlias, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    <controls:FormTextBox Header="Party Name *" Text="{x:Bind EditableItem.PartyName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="150"/>
+                    <controls:FormTextBox Header="Party Alias" Text="{x:Bind EditableItem.PartyAlias, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="150"/>
                     <Grid >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="35*"/>
@@ -43,15 +43,15 @@
                     <controls:FormTextBox Header="Contact Person" Text="{x:Bind EditableItem.ContactPerson, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <controls:FormTextBox Header="EMail Address" Text="{x:Bind EditableItem.email, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="100" />
                     <controls:FormTextBox Header="Phone" Text="{x:Bind EditableItem.PhoneNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="10" />
-                    <controls:FormTextBox Header="Address 1" Text="{x:Bind EditableItem.AddressLine1, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                    <controls:FormTextBox Header="Address 2" Text="{x:Bind EditableItem.AddressLine2, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    <controls:FormTextBox Header="Address 1" Text="{x:Bind EditableItem.AddressLine1, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="150"/>
+                    <controls:FormTextBox Header="Address 2" Text="{x:Bind EditableItem.AddressLine2, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="150"/>
                     <controls:FluidGrid  ColumnSpacing="6" RowSpacing="12" MinColumnWidth="60" >
-                        <controls:FormTextBox Header="Postal Code" MaxLength="6" Text="{x:Bind EditableItem.PinCode, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                        <controls:FormTextBox Header="Postal Code" MaxLength="6" Text="{x:Bind EditableItem.PinCode, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                         <controls:FormTextBox Header="City" MaxLength="120" Text="{x:Bind EditableItem.City, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     </controls:FluidGrid>
-                   
-                    <controls:FormTextBox Header="Bank Name" Text="{x:Bind EditableItem.BankName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                    <controls:FormTextBox Header="Branch Name" Text="{x:Bind EditableItem.BranchName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+
+                    <controls:FormTextBox Header="Bank Name" Text="{x:Bind EditableItem.BankName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="150"/>
+                    <controls:FormTextBox Header="Branch Name" Text="{x:Bind EditableItem.BranchName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="100"/>
                     <controls:FormTextBox Header="IFSC Code" Text="{x:Bind EditableItem.IFSCCode, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="12"/>
                     <controls:FormTextBox x:Name="accountNo" Header="Account Number" Text="{x:Bind EditableItem.AccountNumber, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" TextChanging="accountNo_TextChanging" MaxLength="18" />
                     <CheckBox x:Name="isActive" Margin="10 20 0 0" IsChecked="{x:Bind EditableItem.IsPartyActive, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >

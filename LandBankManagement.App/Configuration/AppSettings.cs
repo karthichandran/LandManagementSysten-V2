@@ -128,9 +128,23 @@ namespace LandBankManagement
 
         private string GetConnectionString()
         {
-            string Datasource = GetRegValue("DBServer", @"DESKTOP-2CCRBBJ\LEANSYS");
-            string Catalog = GetRegValue("DBCatalog", "DB_A637E6_LmsDev");
-            string Username = GetRegValue("DBUsername", "sa");
+            //string Datasource = GetRegValue("DBServer", "DESKTOP-C0K88IN\\EQUINOX");
+            //string Catalog = GetRegValue("DBCatalog", "LmsDev");
+            //string Username = GetRegValue("DBUsername", "sa");
+
+            //string Datasource = GetRegValue("DBServer", @"DESKTOP-2CCRBBJ\LEANSYS");
+            //string Catalog = GetRegValue("DBCatalog", "DB_A637E6_LmsDev");
+            //string Username = GetRegValue("DBUsername", "sa");
+
+            string Datasource = GetRegValue("DBServer", "DESKTOP-TV5J5QA\\SQLEXPRESS");
+            //string Catalog = GetRegValue("DBCatalog", "lmsDev");
+            string Catalog = GetRegValue("DBCatalog", "lmsfeed");
+            string Username = GetRegValue("DBUsername", "karthi");
+
+            //string Datasource = GetRegValue("DBServer", "DESKTOP-TV5J5QA\\SQLEXPRESS");
+            //string Catalog = GetRegValue("DBCatalog", "DB_A637E6_LmsDev");
+            //string Username = GetRegValue("DBUsername", "karthi");
+
             //string Datasource = GetRegValue("DBServer", "SQL5097.site4now.net");
             //string Catalog = GetRegValue("DBCatalog", "DB_A637E6_LandBank");
             //string Username = GetRegValue("DBUsername", "DB_A637E6_LandBank_admin");

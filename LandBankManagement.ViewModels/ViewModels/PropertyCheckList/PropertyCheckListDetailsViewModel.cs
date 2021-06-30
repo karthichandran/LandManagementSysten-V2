@@ -327,6 +327,14 @@ namespace LandBankManagement.ViewModels
 
         private bool IsProcessing = false;
         private PropertyCheckListViewModel PropertyCheckListViewModel { get; set; }
+
+
+        private double _setPopupWidth;
+        public double SetPopupWidth
+        {
+            get => _setPopupWidth;
+            set => Set(ref _setPopupWidth, value);
+        }
         #endregion
         public PropertyCheckListDetailsViewModel(IDropDownService dropDownService, IPropertyCheckListService propertyCheckListService, IPropertyService propertyService, IFilePickerService filePickerService, ICommonServices commonServices, PropertyCheckListListViewModel propertyCheckListListViewModel, PropertyCheckListViewModel propertyCheckListViewModel) : base(commonServices)
         {

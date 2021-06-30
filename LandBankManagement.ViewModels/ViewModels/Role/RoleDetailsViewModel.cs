@@ -131,7 +131,7 @@ namespace LandBankManagement.ViewModels
 
         override protected IEnumerable<IValidationConstraint<RoleModel>> GetValidationConstraints(RoleModel model)
         {
-            yield return new RequiredConstraint<RoleModel>("Name", m => m.Name);
+            yield return new RequiredConstraint<RoleModel>("Description", m => m.Name);
             //yield return new RequiredConstraint<CompanyModel>("Email", m => m.Email);
             //yield return new RequiredConstraint<CompanyModel>("Phone Number", m => m.PhoneNo);
 

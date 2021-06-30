@@ -17,15 +17,15 @@
                
                 <controls:FluidGrid Margin="0,30,0,0" Columns="2" ColumnSpacing="30" RowSpacing="12" HorizontalAlignment="Center">
 
-                    <controls:FormTextBox Header="Staff Name" Text="{x:Bind EditableItem.UserName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    <controls:FormTextBox Header="Staff Name *" Text="{x:Bind EditableItem.UserName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <controls:FormTextBox Header="Email" Text="{x:Bind EditableItem.Email, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
                     <controls:FluidGrid Margin="0,12,0,0" Columns="2"  ColumnSpan="2" ColumnSpacing="30" RowSpacing="12">
                         <controls:FormTextBox Header="Mobile" Text="{x:Bind EditableItem.MobileNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     </controls:FluidGrid>
                     
-                    <controls:FormTextBox Header="Login Name" Text="{x:Bind EditableItem.loginName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                    <controls:FormTextBox Header="Password" Text="{x:Bind EditableItem.UserPassword, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    <controls:FormTextBox Header="Login Name *" Text="{x:Bind EditableItem.loginName, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    <controls:FormTextBox Header="Password *" Text="{x:Bind EditableItem.UserPassword, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <CheckBox x:Name="isActive" Margin="10 20 0 0" IsChecked="{x:Bind EditableItem.IsActive, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
                         <TextBlock Text="Is Active"  Foreground="{StaticResource TextControlTextBlockHeaderForeground}" FontSize="15"/>
                     </CheckBox>
@@ -51,14 +51,14 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                   
-                                    <Grid  HorizontalAlignment="Stretch">
+                                    <Grid  HorizontalAlignment="Stretch" >
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding Name}" Foreground="{StaticResource TextControlTextBlockHeaderForeground}" FontSize="16"  Padding="0 15 20 0" TextWrapping="Wrap" ></TextBlock>
+                                        <TextBlock Grid.Column="0" Text="{Binding Name}" Foreground="{StaticResource TextControlTextBlockHeaderForeground}" FontSize="16" Margin="0 0 10 0"  Padding="0 15 0 0" TextWrapping="Wrap" ></TextBlock>
 
-                                        <RadioButton Grid.Column="1"   Margin="10" GroupName="role" IsChecked="{Binding IsSelected,Mode=TwoWay}" >
+                                        <RadioButton Grid.Column="1"   Margin="5" GroupName="role" IsChecked="{Binding IsSelected,Mode=TwoWay}" HorizontalAlignment="Center">
                                             <TextBlock   Foreground="Black" FontSize="15"/>
                                         </RadioButton>
                                         

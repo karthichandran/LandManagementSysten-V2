@@ -25,6 +25,8 @@ namespace LandBankManagement.Services
             {
                 _dataRequest = dataRequest;
                 Count = await VendorService.GetVendorsCountAsync(_dataRequest);
+                if (Count > 0)
+                    RangeSize = Count;// Note : Pagination is not implemented so fetch all records
                 Ranges[0] = await VendorService.GetVendorsAsync(0, RangeSize, _dataRequest);
             }
             catch (Exception ex)

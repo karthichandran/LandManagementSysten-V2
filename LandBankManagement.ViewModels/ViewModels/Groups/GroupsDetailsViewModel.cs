@@ -121,7 +121,6 @@ namespace LandBankManagement.ViewModels
                 else
                 {
                     var groupdId = model.GroupId;
-                    model.GroupId = 0;
                     await GroupsService.UpdateGroupsAsync(groupdId,model);
                 }
                 IsProcessing = false;

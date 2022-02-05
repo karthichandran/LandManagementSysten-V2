@@ -45,7 +45,7 @@ namespace LandBankManagement.Views
 
         private void Amount_LostFocus(object sender, RoutedEventArgs e)
         {
-
+            FormatValue(sender);
         }
 
         private void AddPayment_Click(object sender, RoutedEventArgs e)
@@ -61,12 +61,13 @@ namespace LandBankManagement.Views
 
         private void saleValue_LostFocus(object sender, RoutedEventArgs e)
         {
+            FormatValue(sender);
             ViewModel.CalculateSaleValue();
         }
 
         private void salevalue2_TextChanging(TextBox sender, TextBoxTextChangingEventArgs args)
         {
-            sender.Text = new String(sender.Text.Where(x=>char.IsDigit(x)||x=='.' ).ToArray());
+            sender.Text = new String(sender.Text.Where(x=>char.IsDigit(x)||x=='.'|| x == ',').ToArray());
             sender.SelectionStart = sender.Text.Length;
         }
 
@@ -74,6 +75,14 @@ namespace LandBankManagement.Views
         {
             var item =(DealPayScheduleModel) ((ListView)sender).SelectedItem;
             ViewModel.CurrentSchedule = item;
+        }
+
+        private void FormatValue(object sender) {
+            var testbox = (TextBox)sender;
+            if (testbox.Text == "")
+                return;
+            var amount = testbox.Text.Replace(',', ' ').Replace(" ", "").Trim();
+            testbox.Text = Convert.ToDecimal(amount).ToString("N");
         }
     }
 }

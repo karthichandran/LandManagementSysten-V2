@@ -71,8 +71,8 @@
                                          HeaderRowHeight="40" RowHeight="35" HeaderStyle="{StaticResource GridHeader}" RowStyle="{StaticResource GridRowStyle}" SelectionMode="Single"
                                          AlternatingRowStyle="{StaticResource alternatingRowStyle}" AlternationCount="2" BorderBrush="#9E9E9E" SelectionChanged="sfdataGrid_SelectionChanged">
             <sync:SfDataGrid.Columns>
-                <sync:GridTextColumn HeaderText="Group Name*" MappingName="GroupName"/>
-                <sync:GridTextColumn HeaderText="Group Type" MappingName="GroupTypeName"/>                
+                <sync:GridTextColumn HeaderText="Group Name*" MappingName="GroupName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Group Type" MappingName="GroupTypeName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>                
             </sync:SfDataGrid.Columns>
         </sync:SfDataGrid>
 

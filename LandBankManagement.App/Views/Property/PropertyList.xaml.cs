@@ -44,9 +44,10 @@ namespace LandBankManagement.Views
             ViewModel.PopupOpened = true;
         }
 
-        private void Popup_closeBtn_Click(object sender, RoutedEventArgs e)
+        private async void Popup_closeBtn_Click(object sender, RoutedEventArgs e)
         {
             CostDetailsPopup.IsOpen = false;
+            await ViewModel.RefreshAsync();
         }
 
         private void DocumentType_Click(object sender, RoutedEventArgs e)

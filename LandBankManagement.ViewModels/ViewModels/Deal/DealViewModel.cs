@@ -107,9 +107,9 @@ namespace LandBankManagement.ViewModels
                 var model = await DealService.GetDealAsync(selected.DealId);
                 selected.Merge(model);
                 DealDetails.Item = model;
-                DealDetails.Sale1 = model.SaleValue1.ToString();
-                DealDetails.Sale2 = model.SaleValue2.ToString();
-                DealDetails.SaleTotal = (model.SaleValue1 + model.SaleValue2).ToString();
+                DealDetails.Sale1 = model.SaleValue1;
+                DealDetails.Sale2 = model.SaleValue2;
+                DealDetails.SaleTotal = (Convert.ToDecimal(model.SaleValue1) + Convert.ToDecimal(model.SaleValue2)).ToString("N");
                 DealDetails.DealPartyList = model.DealParties;
                 for (int i = 0; i < model.DealPaySchedules.Count; i++)
                 {
@@ -118,13 +118,13 @@ namespace LandBankManagement.ViewModels
                 decimal amt1=0;
                 decimal amt2=0;
                 foreach (var obj in model.DealPaySchedules) {
-                    amt1 += obj.Amount1;
-                    amt2 += obj.Amount2;
-                    obj.Total = obj.Amount1 + obj.Amount2;
+                    amt1 += Convert.ToDecimal(obj.Amount1);
+                    amt2 += Convert.ToDecimal(obj.Amount2);
+                    obj.Total = (Convert.ToDecimal(obj.Amount1) + Convert.ToDecimal(obj.Amount2)).ToString("N");
                 }
-                DealDetails.TotalAmount1 = amt1.ToString();
-                DealDetails.TotalAmount2 = amt2.ToString();
-                DealDetails.FinalAmount = (amt1+amt2).ToString();
+                DealDetails.TotalAmount1 = amt1.ToString("N");
+                DealDetails.TotalAmount2 = amt2.ToString("N");
+                DealDetails.FinalAmount = (amt1+amt2).ToString("N");
 
                 DealDetails.ScheduleList = model.DealPaySchedules;
                

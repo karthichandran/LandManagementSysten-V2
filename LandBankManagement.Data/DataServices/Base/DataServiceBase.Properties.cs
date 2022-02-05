@@ -465,6 +465,10 @@ dt in _dataSource.DocumentTypes on pd.DocumentTypeId equals dt.DocumentTypeId
         {
             try
             {
+                var payments = await _dataSource.Payments.Where(x => x.PropertyId == model.PropertyId).ToListAsync();
+                if (payments.Count > 0)
+                    return -1;
+
                 var propertyEnity = await _dataSource.Properties.Where(x => x.PropertyId == model.PropertyId).FirstOrDefaultAsync();
                 var usedProperty = await _dataSource.PropertyMergeList.Where(x => x.PropertyGuid == propertyEnity.PropertyGuid).FirstOrDefaultAsync();
                 if (usedProperty != null)

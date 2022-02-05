@@ -24,10 +24,12 @@ namespace LandBankManagement.Views
 
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel", typeof(CostDetailsViewModel), typeof(CostDetails), new PropertyMetadata(null));
 
-        private void CancelBtn_Click(object sender, RoutedEventArgs e)
+        private async void CancelBtn_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.PropertyListViewModel.PopupOpened = false;
-           
+           await ViewModel.PropertyListViewModel.RefreshAsync();
+
+
         }
 
         private void AddPayment_Click(object sender, RoutedEventArgs e)
@@ -51,13 +53,16 @@ namespace LandBankManagement.Views
         {
             try
             {
+                UpdateAmountFormat(sender);//Formating amount value
+
                 var sal1 = (string.IsNullOrEmpty(ViewModel.Item.SaleValue1)) ? 0 : Convert.ToDecimal(ViewModel.Item.SaleValue1);
                 var sal2 = (string.IsNullOrEmpty(ViewModel.Item.SaleValue2)) ? 0 : Convert.ToDecimal(ViewModel.Item.SaleValue2);
 
                 var valu = sal1 + sal2;
                 if (valu > 0)
                 {
-                    TotalSales.Text = valu.ToString();
+                    //TotalSales.Text = valu.ToString();
+                    TotalSales.Text = valu.ToString("N");
                 }
             }
             catch (Exception ex) {
@@ -78,6 +83,14 @@ namespace LandBankManagement.Views
         {
             var identity = Convert.ToInt32(((Button)sender).Tag.ToString());
             ViewModel.DeletePayment(identity);
+        }
+
+        private void UpdateAmountFormat(object sender) {
+            var testbox = (TextBox)sender;
+            if (testbox.Text == "")
+                return;
+            var amount = testbox.Text.Replace(',', ' ').Replace(" ", "").Trim();
+            testbox.Text = Convert.ToDecimal(amount).ToString("N");
         }
     }
 }

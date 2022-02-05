@@ -14,7 +14,7 @@ namespace LandBankManagement.Models
         public string Name { get; set; }
         public bool IsSelected { get; set; }
         public bool Delete { get; set; }
-
+        public bool IsReceived { get; set; }
         public ObservableCollection<PropertyCheckListDocumentsModel> Documents { get; set; }
     }
 }

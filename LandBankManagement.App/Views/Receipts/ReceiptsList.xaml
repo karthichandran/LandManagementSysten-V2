@@ -73,9 +73,9 @@
                                          HeaderRowHeight="40" RowHeight="35" HeaderStyle="{StaticResource GridHeader}" RowStyle="{StaticResource GridRowStyle}" SelectionMode="Single"
                                          AlternatingRowStyle="{StaticResource alternatingRowStyle}" AlternationCount="2" BorderBrush="#9E9E9E" SelectionChanged="sfdataGrid_SelectionChanged">
             <sync:SfDataGrid.Columns>
-                <sync:GridTextColumn HeaderText="Bank*" MappingName="BankName"/>
-                <sync:GridTextColumn HeaderText="Amount" MappingName="Amount"/>
-                <sync:GridTextColumn HeaderText="Narration" MappingName="Narration"/>
+                <sync:GridTextColumn HeaderText="Bank*" MappingName="BankName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Amount" MappingName="Amount" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Narration" MappingName="Narration" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
                 
             </sync:SfDataGrid.Columns>
         </sync:SfDataGrid>

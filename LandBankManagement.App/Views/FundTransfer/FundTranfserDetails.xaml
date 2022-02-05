@@ -40,7 +40,7 @@
                     
                     <CalendarDatePicker HorizontalAlignment="Stretch" BorderBrush="#cfcbca" BorderThickness="1" x:Name="paymentDateCalender"  Date="{x:Bind EditableItem.DateOfPayment,Mode=TwoWay,Converter={StaticResource DateTimeOffsetConverter},UpdateSourceTrigger=PropertyChanged}" DateFormat="{}{day.integer}/{month.integer}/{year.full}" Style="{StaticResource CalendarPickerStyle}"/>
                 </StackPanel>
-                <controls:FormTextBox Header="Amount *" Text="{x:Bind EditableItem.Amount, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="11"/>
+                <controls:FormTextBox x:Name="Amount" Header="Amount *" Text="{x:Bind EditableItem.Amount, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxLength="11" LostFocus="Amount_LostFocus"/>
                 <StackPanel></StackPanel>
                 <StackPanel></StackPanel>
                 <controls:FormComboBox x:Name="ToCompanyDDl"  Header="To Company / Individual *" ItemsSource="{x:Bind CompanyOptions}"

@@ -228,10 +228,10 @@ namespace LandBankManagement.Services
                 DealId = source.DealId,
                 DealName = source.DealName,
                 CompanyId = source.CompanyId.ToString(),
-                SaleValue1 = source.SaleValue1,
-                SaleValue2 = source.SaleValue2,
-                Amount1 = source.Amount1,
-                Amount2 = source.Amount2,
+                SaleValue1 = source.SaleValue1.ToString("N"),
+                SaleValue2 = source.SaleValue2.ToString("N"),
+                Amount1 = Convert.ToDecimal( source.Amount1).ToString("N"),
+                Amount2 = Convert.ToDecimal(source.Amount2).ToString("N")
             };
             if (source.DealParties != null && source.DealParties.Count > 0)
             {
@@ -260,8 +260,8 @@ namespace LandBankManagement.Services
                         DealPayScheduleId = obj.DealPayScheduleId,
                         Description = obj.Description,
                         ScheduleDate =obj.ScheduleDate,
-                        Amount1=obj.Amount1,
-                        Amount2=obj.Amount2
+                        Amount1=obj.Amount1.ToString("N"),
+                        Amount2=obj.Amount2.ToString("N")
                     });
 
                 }
@@ -275,8 +275,8 @@ namespace LandBankManagement.Services
             target.DealId = source.DealId;
             target.PropertyMergeId =Convert.ToInt32( source.PropertyMergeId??"0");
             target.CompanyId = Convert.ToInt32(source.CompanyId??"0");            
-            target.SaleValue1 = source.SaleValue1;
-            target.SaleValue2 = source.SaleValue2;           
+            target.SaleValue1 = Convert.ToDecimal( source.SaleValue1);
+            target.SaleValue2 = Convert.ToDecimal(source.SaleValue2);           
         }
 
         private void UpdateDealPartiesFromModel(DealParties target, DealPartiesModel source)
@@ -292,8 +292,8 @@ namespace LandBankManagement.Services
             target.DealPayScheduleId = source.DealPayScheduleId;
             target.Description = source.Description;
             target.ScheduleDate = source.ScheduleDate.UtcDateTime;
-            target.Amount1 = source.Amount1;
-            target.Amount2 = source.Amount2;
+            target.Amount1 =Convert.ToDecimal( source.Amount1);
+            target.Amount2 = Convert.ToDecimal(source.Amount2);
         }
 
 

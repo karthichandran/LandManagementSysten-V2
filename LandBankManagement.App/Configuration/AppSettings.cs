@@ -136,25 +136,16 @@ namespace LandBankManagement
             //string Catalog = GetRegValue("DBCatalog", "DB_A637E6_LmsDev");
             //string Username = GetRegValue("DBUsername", "sa");
 
-            //string Datasource = GetRegValue("DBServer", "DESKTOP-TV5J5QA\\SQLEXPRESS");
-            //// string Catalog = GetRegValue("DBCatalog", "lmsDev");
-            //// string Catalog = GetRegValue("DBCatalog", "lmsfeed");
-            // string Catalog = GetRegValue("DBCatalog", "lmsDevfeed");
-            //string Username = GetRegValue("DBUsername", "karthi");
-
-            //string Datasource = GetRegValue("DBServer", "DESKTOP-TV5J5QA\\SQLEXPRESS");
-            //string Catalog = GetRegValue("DBCatalog", "DB_A637E6_LmsDev");
-            //string Username = GetRegValue("DBUsername", "karthi");
-
-            //string Datasource = GetRegValue("DBServer", "SQL5097.site4now.net");
-            //string Catalog = GetRegValue("DBCatalog", "DB_A637E6_LandBank");
-            //string Username = GetRegValue("DBUsername", "DB_A637E6_LandBank_admin");
-            //string Password = GetRegValue("DBPassword", "Matrix@291");
-
-            string Datasource = GetRegValue("DBServer", "EGS-SERVER\\EQUINOX");
-            string Catalog = GetRegValue("DBCatalog", "lmsdevfeed");
-            string Username = GetRegValue("DBUsername", "sa");
+            string Datasource = GetRegValue("DBServer", "DESKTOP-TV5J5QA\\SQLEXPRESS");          //local   
+            string Catalog = GetRegValue("DBCatalog", "lmsDevfeed");
+            string Username = GetRegValue("DBUsername", "karthi");
             string Password = GetRegValue("DBPassword", "Matrix@291");
+
+
+            //string Datasource = GetRegValue("DBServer", "EGS-SERVER\\EQUINOX");
+            //string Catalog = GetRegValue("DBCatalog", "lmsdevfeed");
+            //string Username = GetRegValue("DBUsername", "sa");
+            //string Password = GetRegValue("DBPassword", "Matrix@291");
 
             //string Username = GetRegValue("DBUsername", "karthi");
             //string Password = GetRegValue("DBPassword", "matrix291");
@@ -165,8 +156,16 @@ namespace LandBankManagement
             //                          Username + ";Password=" + Password + ";Trusted_Connection=" + Trusted_Connection + ";Integrated Security=" + Integrated_Security + ";Pooling=False";
 
             // string connectionString = "Data Source=192.168.0.1,49172;Initial Catalog=DB_A637E6_LmsDev;User ID=karthi;Password=Matrix@291; Pooling=False";
+
+           // active
             string connectionString = "Data Source=" + Datasource + ";Initial Catalog=" + Catalog + ";User ID=" +
                                       Username + ";Password=" + Password + ";Pooling=False";
+
+
+            // string connectionString = "Data Source=SQL5053.site4now.net;Initial Catalog=DB_A637E6_LmsDev;User Id=DB_A637E6_LmsDev_admin;Password=Matrix@291";  //cloud
+
+
+
             return connectionString;
         }
 

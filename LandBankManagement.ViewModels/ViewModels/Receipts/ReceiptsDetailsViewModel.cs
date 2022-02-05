@@ -105,7 +105,7 @@ namespace LandBankManagement.ViewModels
 
         private ReceiptsViewModel ReceiptsViewModel { get; set; }
         private int currentCompanyId { get; set; } = 0;
-        private int currentDealId { get; set; } = 0;
+        public int currentDealId { get; set; } = 0;
         private bool IsProcessing = false;
         public ReceiptsDetailsViewModel(IDropDownService dropDownService, IReceiptService receiptService, IFilePickerService filePickerService, ICommonServices commonServices, ReceiptsListViewModel villageListViewModel, ReceiptsViewModel receiptsViewModel, IDealService dealService) : base(commonServices)
         {
@@ -211,7 +211,7 @@ namespace LandBankManagement.ViewModels
             var model = await ReceiptsService.GetReceiptAsync(id);
             Item.PayeeId = model.PayeeId;
            await LoadBankAndCompany();
-           await LoadDealParties(Convert.ToInt32(model.DealId));
+          await LoadDealParties(Convert.ToInt32(model.DealId));
             if (model.PaymentTypeId == 1)
             {
                 IsCashChecked = true;
@@ -234,6 +234,7 @@ namespace LandBankManagement.ViewModels
 
             SelectedPartyId = Item.PartyId;
             ReceiptsViewModel.HideProgressRing();
+
         }
 
         public ICommand CashCheckedCommand => new RelayCommand(OnCashRadioChecked);

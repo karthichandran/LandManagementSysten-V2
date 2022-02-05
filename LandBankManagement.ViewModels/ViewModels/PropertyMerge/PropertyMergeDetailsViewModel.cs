@@ -250,21 +250,21 @@ namespace LandBankManagement.ViewModels
             decimal expense = 0;
             foreach (var item in PropertyList)
             {
-                sal1 += Convert.ToDecimal(item.SaleValue1);
-                sal2 += Convert.ToDecimal(item.SaleValue2);
-                amt1 += Convert.ToDecimal(item.Amount1);
-                amt2 += Convert.ToDecimal(item.Amount2);
-                bal1 += Convert.ToDecimal(item.Balance1);
-                bal2 += Convert.ToDecimal(item.Balance2);
-                expense += Convert.ToDecimal(item.Expense);
+                sal1 +=string.IsNullOrEmpty(item.SaleValue1)?0:  Convert.ToDecimal(item.SaleValue1);
+                sal2 += string.IsNullOrEmpty(item.SaleValue2) ? 0 : Convert.ToDecimal(item.SaleValue2);
+                amt1 += string.IsNullOrEmpty(item.Amount1) ? 0 : Convert.ToDecimal(item.Amount1);
+                amt2 += string.IsNullOrEmpty(item.Amount2) ? 0 : Convert.ToDecimal(item.Amount2);
+                bal1 += string.IsNullOrEmpty(item.Balance1) ? 0 : Convert.ToDecimal(item.Balance1);
+                bal2 += string.IsNullOrEmpty(item.Balance2) ? 0 : Convert.ToDecimal(item.Balance2);
+                expense += string.IsNullOrEmpty(item.Expense) ? 0 : Convert.ToDecimal(item.Expense);
             }
-            TotalSale1 = sal1.ToString();
-            TotalSale2 = sal2.ToString();
-            TotalAmount1 = amt1.ToString();
-            TotalAmount2 = amt2.ToString();
-            TotalBalance1 = bal1.ToString();
-            TotalBalance2 = bal2.ToString();
-            Expense = expense.ToString();
+            TotalSale1 = sal1.ToString("N");
+            TotalSale2 = sal2.ToString("N");
+            TotalAmount1 = amt1.ToString("N");
+            TotalAmount2 = amt2.ToString("N");
+            TotalBalance1 = bal1.ToString("N");
+            TotalBalance2 = bal2.ToString("N");
+            Expense = expense.ToString("N");
         }
 
         public void Subscribe()
@@ -317,21 +317,35 @@ namespace LandBankManagement.ViewModels
                 decimal totalArea=0 ;
                 decimal totalGuntas = 0;
                 decimal totalAnas = 0;
+                decimal totalSalVal1 = 0;
+                decimal totalSalVal2 = 0;
+                decimal totalPaid1 = 0;
+                decimal totalPaid2 = 0;
+                decimal totalPayable1 = 0;
+                decimal totalPayable2 = 0;
+
                 foreach (var obj in model.propertyMergeLists) {
                     var area = obj.LandArea.Split('-');
                     totalArea += Convert.ToDecimal(area[0]);
                     totalGuntas += Convert.ToDecimal(area[1]);
                     totalAnas += Convert.ToDecimal(area[2]);
 
-                    model.MergedSaleValue1 = model.MergedSaleValue1 + Convert.ToDecimal(string.IsNullOrEmpty( obj.SaleValue1)?"0" : obj.SaleValue1);
-                    model.MergedSaleValue2 = model.MergedSaleValue2 + Convert.ToDecimal(string.IsNullOrEmpty( obj.SaleValue2)?"0" : obj.SaleValue2);
-                    model.MergedAmountPaid1 = model.MergedAmountPaid1 + Convert.ToDecimal(string.IsNullOrEmpty( obj.Amount1)?"0" : obj.Amount1);
-                    model.MergedAmountPaid2 = model.MergedAmountPaid2 + Convert.ToDecimal(string.IsNullOrEmpty( obj.Amount2)?"0" : obj.Amount2);
-                    model.MergedBalancePayable1 = model.MergedBalancePayable1 + Convert.ToDecimal(string.IsNullOrEmpty( obj.Balance1)?"0" : obj.Balance2);
-                    model.MergedBalancePayable2 = model.MergedBalancePayable2 + Convert.ToDecimal(string.IsNullOrEmpty( obj.Balance2)?"0" : obj.Balance2);
+                    totalSalVal1 = totalSalVal1 + Convert.ToDecimal(string.IsNullOrEmpty( obj.SaleValue1)?"0" : obj.SaleValue1);
+                    totalSalVal2 = totalSalVal2 + Convert.ToDecimal(string.IsNullOrEmpty( obj.SaleValue2)?"0" : obj.SaleValue2);
+                    totalPaid1 = totalPaid1 + Convert.ToDecimal(string.IsNullOrEmpty( obj.Amount1)?"0" : obj.Amount1);
+                    totalPaid2 = totalPaid2 + Convert.ToDecimal(string.IsNullOrEmpty( obj.Amount2)?"0" : obj.Amount2);
+                    totalPayable1 = totalPayable1 + Convert.ToDecimal(string.IsNullOrEmpty( obj.Balance1)?"0" : obj.Balance2);
+                    totalPayable2 = totalPayable2 + Convert.ToDecimal(string.IsNullOrEmpty( obj.Balance2)?"0" : obj.Balance2);
                 }
 
-               var finalArea = AreaConvertor.ConvertArea(totalArea, totalGuntas, totalAnas);
+                model.MergedSaleValue1 = totalSalVal1.ToString();
+                model.MergedSaleValue2 = totalSalVal2.ToString();
+                model.MergedAmountPaid1 = totalPaid1.ToString();
+                model.MergedAmountPaid2 = totalPaid2.ToString();
+                model.MergedBalancePayable1 = totalPayable1;
+                model.MergedBalancePayable2 = totalPayable2;
+
+                var finalArea = AreaConvertor.ConvertArea(totalArea, totalGuntas, totalAnas);
                 model.FormattedTotalArea = finalArea.Acres + " - " + finalArea.Guntas + " - " + finalArea.Anas;
                 StartStatusMessage("Saving PropertyMerges...");
                 PropertyMergesViewModel.ShowProgressRing();

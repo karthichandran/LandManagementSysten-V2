@@ -89,12 +89,12 @@
                                          HeaderRowHeight="40" RowHeight="35" HeaderStyle="{StaticResource GridHeader}" RowStyle="{StaticResource GridRowStyle}" SelectionMode="Single"
                                          AlternatingRowStyle="{StaticResource alternatingRowStyle}" AlternationCount="2" BorderBrush="#9E9E9E" SelectionChanged="sfdataGrid_SelectionChanged">
             <sync:SfDataGrid.Columns>
-                <sync:GridTextColumn HeaderText="Name *" MappingName="PartyName"/>
-                <sync:GridTextColumn HeaderText="Party Alias *" MappingName="PartyAlias"/>
-                <sync:GridTextColumn HeaderText="Group" MappingName="GroupName"/>
-                <sync:GridTextColumn HeaderText="Email *" MappingName="email"/>
-                <sync:GridTextColumn HeaderText="Phone" MappingName="PhoneNo"/>
-                <sync:GridTextColumn HeaderText="Address *" MappingName="AddressLine1"/>
+                <sync:GridTextColumn HeaderText="Name *" MappingName="PartyName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Party Alias *" MappingName="PartyAlias" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Group" MappingName="GroupName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Email *" MappingName="email" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Phone" MappingName="PhoneNo" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Address *" MappingName="AddressLine1" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
                 <sync:GridTextColumn HeaderText="IsActive" MappingName="IsPartyActive"/>
             </sync:SfDataGrid.Columns>
         </sync:SfDataGrid>

@@ -1115,6 +1115,10 @@ namespace LandBankManagement.ViewModels
                 StartStatusMessage("Deleting Property...");
                 PropertyView.ShowProgressRing();
                 var isDeleted = await PropertyService.DeletePropertyAsync(model);
+                if (isDeleted == -1) {
+                    ShowPopup("error", "Payments are exist for this property");
+                    return false;
+                }
                 if (isDeleted == 0)
                 {
                     await DialogService.ShowAsync("", "This property is in use ", "Ok");
@@ -1166,7 +1170,7 @@ namespace LandBankManagement.ViewModels
             yield return new ValidationConstraint<PropertyModel>("Hobli must be selected", m =>Convert.ToInt32(SelectedHobli) > 0);
             yield return new ValidationConstraint<PropertyModel>("Village must be selected", m =>Convert.ToInt32(SelectedVillage) > 0);
             yield return new ValidationConstraint<PropertyModel>("Document Type must be selected", m =>Convert.ToInt32( m.DocumentTypeId) > 0);
-            yield return new RequiredConstraint<PropertyModel>("Document No must be entered", m =>Convert.ToInt32( m.DocumentNo));
+            yield return new RequiredConstraint<PropertyModel>("Document No must be entered", m => m.DocumentNo);
             yield return new ValidationConstraint<PropertyModel>("Property Type must be selected", m =>Convert.ToInt32( m.PropertyTypeId) > 0);
             yield return new RequiredConstraint<PropertyModel>("Survey No", m => m.SurveyNo);          
             yield return new RequiredConstraint<PropertyModel>("Property Name", m => m.PropertyName);

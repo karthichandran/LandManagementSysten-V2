@@ -295,9 +295,9 @@ namespace LandBankManagement.Services
                 Hobli = source.Hobli,
                 Village = source.Village,
                 SurveyNo = source.SurveyNo,
-                SaleValue1 =(source.SaleValue1==0)?"": source.SaleValue1.ToString(),
-                SaleValue2 = (source.SaleValue2 == 0) ? "" : source.SaleValue2.ToString(),
-                Total = (source.SaleValue1 + source.SaleValue2)==0?"":(source.SaleValue1 + source.SaleValue2).ToString()
+                SaleValue1 =(source.SaleValue1==0)?"": source.SaleValue1.ToString("N"),
+                SaleValue2 = (source.SaleValue2 == 0) ? "" : source.SaleValue2.ToString("N"),
+                Total = (source.SaleValue1 + source.SaleValue2)==0?"":(source.SaleValue1 + source.SaleValue2).ToString("N")
             };
 
             var models = new ObservableCollection<PropertyPartyModel>();
@@ -346,8 +346,8 @@ namespace LandBankManagement.Services
             target.PropPayScheduleId = source.ScheduleId;
             target.ScheduleDate = source.ScheduleDate.UtcDateTime;
             target.Description = source.Description;
-            target.Amount1 = source.Amount1;
-            target.Amount2 = source.Amount2;
+            target.Amount1 =Convert.ToDecimal(source.Amount1);
+            target.Amount2 = Convert.ToDecimal(source.Amount2);
         }
 
         private PaymentScheduleModel CreatePaymentScheduleModel(PropPaySchedule source) {
@@ -357,8 +357,8 @@ namespace LandBankManagement.Services
             ScheduleId=source.PropPayScheduleId,
             ScheduleDate=source.ScheduleDate,
             Description=source.Description,
-            Amount1=source.Amount1,
-            Amount2=source.Amount2
+            Amount1=source.Amount1.ToString("N"),
+            Amount2=source.Amount2.ToString("N")
             };
 
             return model;

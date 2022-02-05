@@ -238,9 +238,11 @@ namespace LandBankManagement.ViewModels
         public void CalculateSaleValue() {
             try
             {
-                Item.SaleValue1 = string.IsNullOrEmpty(Sale1) ? 0 : Convert.ToDecimal(Sale1);
-                Item.SaleValue2 = string.IsNullOrEmpty(Sale2) ? 0 : Convert.ToDecimal(Sale2);
-                SaleTotal = (Item.SaleValue1 + Item.SaleValue2).ToString();
+                Sale1 = string.IsNullOrEmpty(Sale1) ? "0" : Sale1;
+                Sale2 = string.IsNullOrEmpty(Sale2) ? "0" : Sale2;
+                Item.SaleValue1 = Convert.ToDecimal(Sale1).ToString("N");
+                Item.SaleValue2 =  Convert.ToDecimal(Sale2).ToString("N");
+                SaleTotal = (Convert.ToDecimal(Sale1) + Convert.ToDecimal(Sale2)).ToString("N");
             }
             catch (Exception ex) {
                 DialogService.ShowAsync("", "Please enter the correct sale value","OK");
@@ -252,12 +254,12 @@ namespace LandBankManagement.ViewModels
             decimal totalAmt2 = 0;
             foreach (var model in ScheduleList)
             {
-                totalAmt1 += model.Amount1;
-                totalAmt2 += model.Amount2;
+                totalAmt1 += Convert.ToDecimal(model.Amount1);
+                totalAmt2 += Convert.ToDecimal(model.Amount2);
             }
-            FinalAmount = (totalAmt1 + totalAmt2).ToString();
-            TotalAmount1 = totalAmt1.ToString();
-            TotalAmount2 = totalAmt2.ToString();
+            FinalAmount = (totalAmt1 + totalAmt2).ToString("N");
+            TotalAmount1 = totalAmt1.ToString("N");
+            TotalAmount2 = totalAmt2.ToString("N");
         }
         public void AddPaymentToList()
         {
@@ -267,13 +269,16 @@ namespace LandBankManagement.ViewModels
             if (ScheduleList == null)
                 ScheduleList = new ObservableCollection<DealPayScheduleModel>();
 
-            CurrentSchedule.Total = CurrentSchedule.Amount1 + CurrentSchedule.Amount2;
-            if (CurrentSchedule.Total <= 0)
+
+            CurrentSchedule.Amount1 = string.IsNullOrEmpty(CurrentSchedule.Amount1) ? "0" : Convert.ToDecimal(CurrentSchedule.Amount1).ToString("N");
+            CurrentSchedule.Amount2 = string.IsNullOrEmpty(CurrentSchedule.Amount2) ? "0" : Convert.ToDecimal(CurrentSchedule.Amount2).ToString("N");
+           var total = Convert.ToDecimal(CurrentSchedule.Amount1) + Convert.ToDecimal(CurrentSchedule.Amount2);
+            if (total <= 0)
                 return;
 
             if (CurrentSchedule.Identity <= 0)
             {
-                CurrentSchedule.Total = CurrentSchedule.Amount1 + CurrentSchedule.Amount2;
+                CurrentSchedule.Total = total.ToString("N");
                 ScheduleList.Add(CurrentSchedule);              
                
                 for (int i = 0; i < ScheduleList.Count; i++)
@@ -288,7 +293,7 @@ namespace LandBankManagement.ViewModels
                 existItem.Description = CurrentSchedule.Description;
                 existItem.Amount1 = CurrentSchedule.Amount1;
                 existItem.Amount2 = CurrentSchedule.Amount2;
-                existItem.Total = existItem.Amount1+ existItem.Amount2;
+                existItem.Total = total.ToString("N");
                 existItem.ScheduleDate = CurrentSchedule.ScheduleDate;
                 ScheduleList = new ObservableCollection<DealPayScheduleModel>(ScheduleList);
             }
@@ -380,9 +385,9 @@ namespace LandBankManagement.ViewModels
         public async Task loadDeal(int dealId) {
             var model = await DealService.GetDealAsync(dealId);
             Item = model;
-            Sale1 = model.SaleValue1.ToString();
-            Sale2 = model.SaleValue2.ToString();
-            SaleTotal = (model.SaleValue1 + model.SaleValue2).ToString();
+            Sale1 = model.SaleValue1;
+            Sale2 = model.SaleValue2;
+            SaleTotal = (Convert.ToDecimal(model.SaleValue1) + Convert.ToDecimal(model.SaleValue2)).ToString("N");
             DealPartyList = model.DealParties;
             for (int i = 0; i < model.DealPaySchedules.Count; i++)
             {
@@ -392,13 +397,13 @@ namespace LandBankManagement.ViewModels
             decimal amt2 = 0;
             foreach (var obj in model.DealPaySchedules)
             {
-                amt1 += obj.Amount1;
-                amt2 += obj.Amount2;
-                obj.Total = obj.Amount1 + obj.Amount2;
+                amt1 += Convert.ToDecimal(obj.Amount1);
+                amt2 += Convert.ToDecimal(obj.Amount2);
+                obj.Total =( Convert.ToDecimal(obj.Amount1) + Convert.ToDecimal(obj.Amount2)).ToString("N");
             }
-           TotalAmount1 = amt1.ToString();
-           TotalAmount2 = amt2.ToString();
-           FinalAmount = (amt1 + amt2).ToString();
+           TotalAmount1 = amt1.ToString("N");
+           TotalAmount2 = amt2.ToString("N");
+           FinalAmount = (amt1 + amt2).ToString("N");
            ScheduleList = model.DealPaySchedules;
         }
 
@@ -422,8 +427,13 @@ namespace LandBankManagement.ViewModels
             {
                 StartStatusMessage("Deleting Deals...");
                 DealsViewModel.ShowProgressRing();
-                await DealService.DeleteDealAsync(model);
+               int status= await DealService.DeleteDealAsync(model);              
                 ShowPopup("success", "Deal details is deleted");
+                if (status == -1)
+                {
+                    ShowPopup("error", "Receipts are exist for this deal");
+                    return true;
+                }
                 ClearItem();
                 EndStatusMessage("Deals deleted");
                 LogWarning("Deals", "Delete", "Deals deleted", $"Taluk {model.DealId}  was deleted.");

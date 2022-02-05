@@ -1,4 +1,5 @@
 ﻿using LandBankManagement.ViewModels;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -42,6 +43,15 @@ namespace LandBankManagement.Views
             if (val == null || val == "0")
                 return;
             await ViewModel.LoadToBankAndCompany();
+        }
+
+        private void Amount_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var testbox = (TextBox)sender;
+            if (testbox.Text == "")
+                return;
+            var amount = testbox.Text.Replace(',', ' ').Replace(" ", "").Trim();
+            testbox.Text = Convert.ToDecimal(amount).ToString("N");
         }
     }
 }

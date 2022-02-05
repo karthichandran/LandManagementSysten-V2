@@ -12,8 +12,8 @@ namespace LandBankManagement.Models
         public int DealId { get; set; }
         public string PropertyMergeId { get; set; }
         public string CompanyId { get; set; }
-        public decimal SaleValue1 { get; set; }
-        public decimal SaleValue2 { get; set; }
+        public string SaleValue1 { get; set; }
+        public string SaleValue2 { get; set; }
 
         public ObservableCollection<DealPartiesModel> DealParties = new ObservableCollection<DealPartiesModel>();
         public ObservableCollection<DealPayScheduleModel> DealPaySchedules =new ObservableCollection<DealPayScheduleModel>();

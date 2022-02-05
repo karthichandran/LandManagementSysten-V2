@@ -17,7 +17,7 @@ namespace LandBankManagement.Data
         public string Name { get; set; }
         [NotMapped]
         public bool Delete { get; set; }
-        
+        public bool? IsReceived { get; set; }
         [NotMapped]
         public List<PropertyCheckListDocuments> Documents { get; set; }
     }

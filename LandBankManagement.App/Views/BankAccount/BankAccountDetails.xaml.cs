@@ -37,5 +37,14 @@ namespace LandBankManagement.Views
             sender.SelectionStart = sender.Text.Length;
 
         }
+
+        private void OpeningBalance_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var testbox = (TextBox)sender;
+            if (testbox.Text == "")
+                return;
+            var amount = testbox.Text.Replace(',', ' ').Replace(" ", "").Trim();
+            testbox.Text = Convert.ToDecimal(amount).ToString("N");
+        }
     }
 }

@@ -86,11 +86,11 @@
                                          HeaderRowHeight="40" RowHeight="35" HeaderStyle="{StaticResource GridHeader}" RowStyle="{StaticResource GridRowStyle}" SelectionMode="Single"
                                          AlternatingRowStyle="{StaticResource alternatingRowStyle}" AlternationCount="2" BorderBrush="#9E9E9E" SelectionChanged="sfdataGrid_SelectionChanged">
             <sync:SfDataGrid.Columns>
-                <sync:GridTextColumn HeaderText="Company Name" MappingName="CompanyName"/>
-                <sync:GridTextColumn HeaderText="Bank Name*" MappingName="BankName"/>
-                <sync:GridTextColumn HeaderText="Branch Name*" MappingName="BranchName"/>
-                <sync:GridTextColumn HeaderText="Acct type" MappingName="AccountTypeName"/>
-                <sync:GridTextColumn HeaderText="A/c No" MappingName="AccountNumber"/>
+                <sync:GridTextColumn HeaderText="Company Name" MappingName="CompanyName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Bank Name*" MappingName="BankName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Branch Name*" MappingName="BranchName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Acct type" MappingName="AccountTypeName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="A/c No" MappingName="AccountNumber" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
                 <sync:GridTextColumn HeaderText="IsActive" MappingName="IsBankAccountActive"/>
             </sync:SfDataGrid.Columns>
         </sync:SfDataGrid>

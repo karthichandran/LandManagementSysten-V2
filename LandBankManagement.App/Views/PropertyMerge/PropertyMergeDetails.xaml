@@ -73,19 +73,19 @@
                                          HeaderRowHeight="40"  HeaderStyle="{StaticResource GridHeader}" RowStyle="{StaticResource GridRowStyle}"
                                          AlternatingRowStyle="{StaticResource alternatingRowStyle}" AlternationCount="2" SelectionChanged="sfdataGrid_SelectionChanged">
                             <sync:SfDataGrid.Columns>
-                                <sync:GridTextColumn HeaderText="Property Name" MappingName="PropertyName"/>
+                                <sync:GridTextColumn HeaderText="Property Name" MappingName="PropertyName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
                                 <!--<sync:GridTextColumn HeaderText="Party" MappingName="Party"/>
                                 <sync:GridTextColumn HeaderText="Village" MappingName="Village"/>
                                 <sync:GridTextColumn HeaderText="Sy.No" MappingName="SurveyNo"/>-->
-                                <sync:GridTextColumn HeaderText="Document Type" MappingName="DocumentTypeName"/>
-                                <sync:GridTextColumn HeaderText="Area" MappingName="LandArea"  ShowToolTip="True"/>
-                                <sync:GridTextColumn HeaderText="Sale Value 1" MappingName="SaleValue1"/>
-                                <sync:GridTextColumn HeaderText="Sale Value 2" MappingName="SaleValue2"/>
-                                <sync:GridTextColumn HeaderText="Bank" MappingName="Amount2"/>
-                                <sync:GridTextColumn HeaderText="Cash" MappingName="Amount1"/>
-                                <sync:GridTextColumn HeaderText="Balance 1" MappingName="Balance1"/>
-                                <sync:GridTextColumn HeaderText="Balance 2" MappingName="Balance2"/>
-                                <sync:GridTextColumn HeaderText="Expense" MappingName="Expense"/>
+                                <sync:GridTextColumn HeaderText="Document Type" MappingName="DocumentTypeName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                                <sync:GridTextColumn HeaderText="Area" MappingName="LandArea"  TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                                <sync:GridTextColumn HeaderText="Sale Value 1" MappingName="SaleValue1" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                                <sync:GridTextColumn HeaderText="Sale Value 2" MappingName="SaleValue2" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                                <sync:GridTextColumn HeaderText="Bank" MappingName="Amount2" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                                <sync:GridTextColumn HeaderText="Cash" MappingName="Amount1" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                                <sync:GridTextColumn HeaderText="Balance 1" MappingName="Balance1" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                                <sync:GridTextColumn HeaderText="Balance 2" MappingName="Balance2" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                                <sync:GridTextColumn HeaderText="Expense" MappingName="Expense" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
                                 <sync:GridTemplateColumn HeaderText="" MappingName="PropertyGuid" Width="40" >
                                     <sync:GridTemplateColumn.CellTemplate>
                                         <DataTemplate>

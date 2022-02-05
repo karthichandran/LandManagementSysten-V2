@@ -9,7 +9,7 @@
   <Identity
     Name="LandManagementSystem"
     Publisher="CN=madhu"
-    Version="0.7.10.0" />
+    Version="0.7.13.0" />
 
   <Properties>
     <DisplayName>LMS_Deploy</DisplayName>

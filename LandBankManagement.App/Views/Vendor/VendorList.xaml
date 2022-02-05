@@ -89,13 +89,13 @@
                                          HeaderRowHeight="40" RowHeight="35" HeaderStyle="{StaticResource GridHeader}" RowStyle="{StaticResource GridRowStyle}" SelectionMode="Single"
                                          AlternatingRowStyle="{StaticResource alternatingRowStyle}" AlternationCount="2" BorderBrush="#9E9E9E" SelectionChanged="sfdataGrid_SelectionChanged">
             <sync:SfDataGrid.Columns>
-                <sync:GridTextColumn HeaderText="Name *" MappingName="VendorName"/>
-                <sync:GridTextColumn HeaderText="Alias Name *" MappingName="VendorAlias"/>
-                <sync:GridTextColumn HeaderText="Group" MappingName="GroupName"/>
-                <sync:GridTextColumn HeaderText="Email *" MappingName="email"/>
-                <sync:GridTextColumn HeaderText="Phone" MappingName="PhoneNo"/>
-                <sync:GridTextColumn HeaderText="Address *" MappingName="AddressLine1"/>
-                <sync:GridTextColumn HeaderText="IsActive" MappingName="IsVendorActive"/>
+                <sync:GridTextColumn HeaderText="Name *" MappingName="VendorName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Alias Name *" MappingName="VendorAlias" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Group" MappingName="GroupName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Email *" MappingName="email" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Phone" MappingName="PhoneNo" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Address *" MappingName="AddressLine1" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="IsActive" MappingName="IsVendorActive" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
             </sync:SfDataGrid.Columns>
         </sync:SfDataGrid>
 

@@ -93,15 +93,15 @@ namespace LandBankManagement.Views
                     ViewModel.EditableItem.LandAreaInputGuntas = "";
                     return;
                 }
-                if (guntas > 40 && !IsAnyContentDialogOpen())
+                if (guntas >= 40 && !IsAnyContentDialogOpen())
                 {
-                     ViewModel.ValidationMeassge("Land Area Gundas Shoud not be greater than 40");
+                     ViewModel.ValidationMeassge("Land Area Gundas Shoud be less than 40");
                     ViewModel.EditableItem.LandAreaInputGuntas = "";
                     return;
                 }
                 if (anas >= 16 && !IsAnyContentDialogOpen())
                 {
-                     ViewModel.ValidationMeassge("Land Area Aanas Shoud not be greater than 16");
+                     ViewModel.ValidationMeassge("Land Area Aanas Shoud be less than 16");
                     ViewModel.EditableItem.LandAreaInputAanas = "";
                     return;
                 }
@@ -125,15 +125,15 @@ namespace LandBankManagement.Views
                     ViewModel.EditableItem.AKarabAreaInputGuntas = "";
                     return;
                 }
-                if (guntas > 40 && !IsAnyContentDialogOpen())
+                if (guntas >= 40 && !IsAnyContentDialogOpen())
                 {
-                     ViewModel.ValidationMeassge("Akarab Gundas Shoud not be greater than 40");
+                     ViewModel.ValidationMeassge("Akarab Gundas Shoud be less than 40");
                     ViewModel.EditableItem.AKarabAreaInputGuntas = "";
                     return;
                 }
                 if (anas >= 16 && !IsAnyContentDialogOpen())
                 {
-                     ViewModel.ValidationMeassge("Akarab Aanas Shoud not be greater than 16");
+                     ViewModel.ValidationMeassge("Akarab Aanas Shoud be less than 16");
                     ViewModel.EditableItem.AKarabAreaInputAanas = "";
                     return;
                 }
@@ -157,15 +157,15 @@ namespace LandBankManagement.Views
                     ViewModel.EditableItem.BKarabAreaInputGuntas = "";
                     return;
                 }
-                if (guntas > 40 && !IsAnyContentDialogOpen())
+                if (guntas >= 40 && !IsAnyContentDialogOpen())
                 {
-                    ViewModel.ValidationMeassge("Bkarab Gundas Shoud not be greater than 40");
+                    ViewModel.ValidationMeassge("Bkarab Gundas Shoud be less than 40");
                     ViewModel.EditableItem.BKarabAreaInputGuntas = "";
                     return;
                 }
                 if (anas >= 16 && !IsAnyContentDialogOpen())
                 {
-                    ViewModel.ValidationMeassge("Bkarab Aanas Shoud not be greater than 16");
+                    ViewModel.ValidationMeassge("Bkarab Aanas Shoud be less than 16");
                     ViewModel.EditableItem.BKarabAreaInputAanas = "";
                     return;
                 }

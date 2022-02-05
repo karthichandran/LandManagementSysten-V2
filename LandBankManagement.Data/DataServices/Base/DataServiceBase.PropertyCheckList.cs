@@ -54,7 +54,7 @@ namespace LandBankManagement.Data.Services
                     BKarabAreaInSqft = model.BKarabAreaInSqft,
                     CompanyID = model.CompanyID,
                     CheckListMaster=model.CheckListMaster,
-                    PropertyDescription=model.PropertyDescription
+                    PropertyDescription=model.PropertyDescription                   
                 };
                 _dataSource.Entry(entity).State = EntityState.Added;
                 await _dataSource.SaveChangesAsync();
@@ -211,7 +211,8 @@ namespace LandBankManagement.Data.Services
                                  CheckListId = clp.CheckListId,
                                  Mandatory = clp.Mandatory,
                                  Name = cl.CheckListName,
-                                 CheckListPropertyId = clp.CheckListPropertyId
+                                 CheckListPropertyId = clp.CheckListPropertyId,
+                                 IsReceived=clp.IsReceived
                              }
                               ).ToListAsync();
 
@@ -315,7 +316,7 @@ namespace LandBankManagement.Data.Services
                                        Remarks = r.Remarks,
                                        TotalArea = (r.LandAreaInputAcres + r.AKarabAreaInputAcres + r.BKarabAreaInputAcres) + " - " +
                                 (r.LandAreaInputGuntas + r.AKarabAreaInputGuntas + r.BKarabAreaInputGuntas) + " - " +
-                                (r.LandAreaInputAanas + r.AKarabAreaInputAanas + r.BKarabAreaInputAanas)
+                                (r.LandAreaInputAanas + r.AKarabAreaInputAanas + r.BKarabAreaInputAanas)                                       
                                    }).ToList();
 
                 return finalResult;
@@ -401,6 +402,7 @@ namespace LandBankManagement.Data.Services
                         {
                             var item = _dataSource.CheckListOfProperty.Where(x => x.CheckListPropertyId == check.CheckListPropertyId).FirstOrDefault();
                             item.Mandatory = check.Mandatory;
+                            item.IsReceived = check.IsReceived;
                             _dataSource.Entry(item).State = EntityState.Modified;
                         }
 

@@ -120,7 +120,7 @@ namespace LandBankManagement.Services
                 PayeeBankId = source.PayeeBankId,
                 PayeeCashId=source.PayeeCashId,
                 DateOfPayment = source.DateOfPayment,
-                Amount = source.Amount.ToString(),
+                Amount = source.Amount.ToString("N"),
                 Narration = source.Narration,
                 ReceiverId = source.ReceiverId.ToString(),
                 ReceiverPaymentType = source.ReceiverPaymentType,

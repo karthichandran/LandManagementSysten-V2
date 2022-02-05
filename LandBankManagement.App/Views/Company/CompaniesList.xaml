@@ -90,11 +90,11 @@
                                          HeaderRowHeight="40" RowHeight="35" HeaderStyle="{StaticResource GridHeader}" RowStyle="{StaticResource GridRowStyle}" SelectionMode="Single"
                                          AlternatingRowStyle="{StaticResource alternatingRowStyle}" AlternationCount="2" BorderBrush="#9E9E9E" SelectionChanged="sfdataGrid_SelectionChanged">
             <sync:SfDataGrid.Columns>
-                <sync:GridTextColumn HeaderText="Name *" MappingName="Name"/>
-                <sync:GridTextColumn HeaderText="Email *" MappingName="Email"/>
-                <sync:GridTextColumn HeaderText="Phone" MappingName="PhoneNo"/>
-                <sync:GridTextColumn HeaderText="Address *" MappingName="AddressLine1"/>
-                <sync:GridTextColumn HeaderText="City" MappingName="City"/>
+                <sync:GridTextColumn HeaderText="Name *" MappingName="Name" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Email *" MappingName="Email" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Phone" MappingName="PhoneNo" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Address *" MappingName="AddressLine1" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="City" MappingName="City" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
                 <sync:GridTextColumn HeaderText="IsActive" MappingName="IsActive"/>               
             </sync:SfDataGrid.Columns>
         </sync:SfDataGrid>

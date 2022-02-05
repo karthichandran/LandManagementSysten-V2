@@ -78,16 +78,16 @@
                                          HeaderRowHeight="40" RowHeight="35" HeaderStyle="{StaticResource GridHeader}" RowStyle="{StaticResource GridRowStyle}" 
                                          AlternatingRowStyle="{StaticResource alternatingRowStyle}" AlternationCount="2" BorderBrush="#9E9E9E">
         <sync:SfDataGrid.Columns>
-                <sync:GridTextColumn HeaderText="Company Name" MappingName="CompanyName" />
-                <sync:GridTextColumn HeaderText="Village" MappingName="VillageName"/>
-                <sync:GridTextColumn HeaderText="Property Name *" MappingName="PropertyName"/>
-                <sync:GridTextColumn HeaderText="Survey No *" MappingName="SurveyNo"/>
-                <sync:GridTextColumn HeaderText="Area" MappingName="TotalArea"/>
+                <sync:GridTextColumn HeaderText="Company Name" MappingName="CompanyName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Village" MappingName="VillageName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Property Name *" MappingName="PropertyName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Survey No *" MappingName="SurveyNo" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
+                <sync:GridTextColumn HeaderText="Area" MappingName="TotalArea" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
                 <sync:GridComboBoxColumn HeaderText="Status" ItemsSource="{x:Bind ViewModel.Status,Mode=TwoWay}" AllowEditing="True" DisplayMemberPath="Description" 
                                          SelectedValuePath="Id" MappingName="Status"/>
                 <!--<sync:GridComboBoxColumn HeaderText="Status" ItemsSource="{Binding Status,Source={StaticResource viewModel}}" AllowEditing="True"  DisplayMemberPath="Description" 
                                          SelectedValuePath="Id" MappingName="Status"/>-->
-                <sync:GridTextColumn HeaderText="Remarks" MappingName="Remarks" AllowEditing="True"/>
+                <sync:GridTextColumn HeaderText="Remarks" MappingName="Remarks" AllowEditing="True" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
                 <sync:GridTemplateColumn HeaderText="" MappingName="PropertyGuid" Width="50" >
                 <sync:GridTemplateColumn.CellTemplate>
                     <DataTemplate>

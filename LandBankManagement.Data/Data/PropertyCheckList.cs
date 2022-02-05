@@ -46,7 +46,7 @@ namespace LandBankManagement.Data
         public bool CheckListMaster { get; set; }
         public string PropertyDescription { get; set; }
         public int Status { get; set; }
-        public string Remarks { get; set; }
+        public string Remarks { get; set; }      
         [NotMapped]
         public string SearchTerms { get; set; }
 

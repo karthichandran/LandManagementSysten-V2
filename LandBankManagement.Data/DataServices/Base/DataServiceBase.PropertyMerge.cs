@@ -180,7 +180,7 @@ namespace LandBankManagement.Data.Services
         private IQueryable<PropertyMerge> GetPropertyMerge(DataRequest<PropertyMerge> request)
         {
 
-            // IQueryable<PropertyMerge> items = _dataSource.PropertyMerge;
+            // IQueryable<PropertyMerge> items = _dataSource.PropertyMerge;         
             IQueryable<PropertyMerge> items = (from p in _dataSource.PropertyMerge
                                                from d in _dataSource.Deal.Where(d => d.PropertyMergeId == p.PropertyMergeId).DefaultIfEmpty()
                                                select new PropertyMerge
@@ -227,7 +227,24 @@ namespace LandBankManagement.Data.Services
         public async Task<int> GetPropertyMergeCountAsync(DataRequest<PropertyMerge> request)
         {
 
-            IQueryable<PropertyMerge> items = _dataSource.PropertyMerge;
+            IQueryable<PropertyMerge> items = (from p in _dataSource.PropertyMerge
+                                               from d in _dataSource.Deal.Where(d => d.PropertyMergeId == p.PropertyMergeId).DefaultIfEmpty()
+                                               select new PropertyMerge
+                                               {
+                                                   PropertyMergeId = p.PropertyMergeId,
+                                                   PropertyMergeGuid = p.PropertyMergeGuid,
+                                                   PropertyMergeDealName = p.PropertyMergeDealName,
+                                                   MergedTotalArea = p.MergedTotalArea,
+                                                   MergedSaleValue1 = p.MergedSaleValue1,
+                                                   MergedSaleValue2 = p.MergedSaleValue2,
+                                                   MergedAmountPaid1 = p.MergedAmountPaid1,
+                                                   MergedAmountPaid2 = p.MergedAmountPaid2,
+                                                   MergedBalancePayable1 = p.MergedBalancePayable1,
+                                                   MergedBalancePayable2 = p.MergedBalancePayable2,
+                                                   ForProposal = p.ForProposal,
+                                                   FormattedTotalArea = p.FormattedTotalArea,
+                                                   IsSold = d == null ? false : true
+                                               });
             // Query
             if (!String.IsNullOrEmpty(request.Query))
             {

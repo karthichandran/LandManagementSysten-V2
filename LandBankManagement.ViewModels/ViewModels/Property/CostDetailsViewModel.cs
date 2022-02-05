@@ -57,6 +57,7 @@ namespace LandBankManagement.ViewModels
             currentDocTypeId = id;
             CurrentPayment = new PaymentScheduleModel() { ScheduleDate =DateTimeOffset.Now };
             Item =await PropertyService.GetPropertyCostDetails(id);
+           
             Parties = Item.Parties;
             var inx = 1;
             foreach (var obj in Item.PropPaySchedules)
@@ -75,13 +76,13 @@ namespace LandBankManagement.ViewModels
             decimal totalAmt2 = 0;
             foreach (var model in PaymentScheduleList)
             {
-                model.Total += model.Amount1 + model.Amount2;
-                totalAmt1 += model.Amount1;
-                totalAmt2 += model.Amount2;
+                model.Total =(Convert.ToDecimal( model.Amount1) + Convert.ToDecimal(model.Amount2)).ToString("N");
+                totalAmt1 += Convert.ToDecimal(model.Amount1);
+                totalAmt2 += Convert.ToDecimal(model.Amount2);
             }
 
-            TotalAmount1 = totalAmt1.ToString();
-            TotalAmount2 = totalAmt2.ToString();
+            TotalAmount1 = totalAmt1.ToString("N");
+            TotalAmount2 = totalAmt2.ToString("N");
         }
 
         override public string Title => (Item?.IsNew ?? true) ? "New Property" : TitleEdit;
@@ -97,12 +98,20 @@ namespace LandBankManagement.ViewModels
         }
 
         public void AddPaymentToList() {
+
             if (PaymentScheduleList == null)
                 PaymentScheduleList = new ObservableCollection<PaymentScheduleModel>();
+
+            CurrentPayment.Amount1= CurrentPayment.Amount1.Replace(',', ' ').Replace(" ", "").Trim();
+            CurrentPayment.Amount2 = CurrentPayment.Amount2.Replace(',', ' ').Replace(" ", "").Trim();
+
             if (CurrentPayment.Identity <=0)
             {
-                CurrentPayment.Total = CurrentPayment.Amount1 + CurrentPayment.Amount2;
-                if (CurrentPayment.Total <= 0)
+                var total = Convert.ToDecimal(CurrentPayment.Amount1) + Convert.ToDecimal(CurrentPayment.Amount2);
+                CurrentPayment.Amount1 = Convert.ToDecimal(CurrentPayment.Amount1).ToString("N");
+                CurrentPayment.Amount2 = Convert.ToDecimal(CurrentPayment.Amount2).ToString("N");
+                CurrentPayment.Total = total.ToString("N");
+                if (total <= 0)
                     return;
 
                 if (CurrentPayment.ScheduleId <= 0)
@@ -126,9 +135,9 @@ namespace LandBankManagement.ViewModels
 
                 var existItem = PaymentScheduleList.Where(x => x.Identity == CurrentPayment.Identity).FirstOrDefault();
                 existItem.Description = CurrentPayment.Description;
-                existItem.Amount1 = CurrentPayment.Amount1;
-                existItem.Amount2 = CurrentPayment.Amount2;
-                existItem.Total = existItem.Amount1+ existItem.Amount2;
+                existItem.Amount1 = Convert.ToDecimal(CurrentPayment.Amount1).ToString("N");
+                existItem.Amount2 = Convert.ToDecimal(CurrentPayment.Amount2).ToString("N");
+                existItem.Total =( Convert.ToDecimal(CurrentPayment.Amount1) + Convert.ToDecimal(CurrentPayment.Amount2)).ToString("N");
 
                 var temp = PaymentScheduleList;
                 PaymentScheduleList = new ObservableCollection<PaymentScheduleModel>();
@@ -188,8 +197,8 @@ namespace LandBankManagement.ViewModels
             //    return;
             var totalAmt1 = Convert.ToDecimal(TotalAmount1);
             var totalAmt2 = Convert.ToDecimal(TotalAmount2);
-            var sale1 = Convert.ToDecimal(Item.SaleValue1);
-            var sale2 = Convert.ToDecimal(Item.SaleValue2);
+            var sale1 = Convert.ToDecimal(string.IsNullOrEmpty(Item.SaleValue1)?"0": Item.SaleValue1);
+            var sale2 = Convert.ToDecimal(string.IsNullOrEmpty(Item.SaleValue2) ? "0" : Item.SaleValue2);
             if (totalAmt1 != sale1 || totalAmt2 != sale2)
             {
                 await DialogService.ShowAsync("Error", "Total of Sale values and payment schedule values should be equal", "Ok");
@@ -206,7 +215,7 @@ namespace LandBankManagement.ViewModels
         }
 
         public void SelectedPayment(int id) {
-            CurrentPayment = PaymentScheduleList.Where(x => x.Identity == id).FirstOrDefault();
+            CurrentPayment = PaymentScheduleList.Where(x => x.Identity == id).FirstOrDefault();           
         }
 
         public void Subscribe()

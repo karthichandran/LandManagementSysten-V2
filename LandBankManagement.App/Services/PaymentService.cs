@@ -167,7 +167,7 @@ namespace LandBankManagement.Services
                 DocumentTypeId = source.DocumentTypeId.ToString(),
                 PaymentTypeId = source.PaymentTypeId,
                 DateOfPayment = source.DateOfPayment,
-                Amount = source.Amount.ToString(),
+                Amount = source.Amount.ToString("N"),
                 ChequeNo = source.ChequeNo,
                 Narration = source.Narration,
                 BankAccountId=(source.BankAccountId??0).ToString(),

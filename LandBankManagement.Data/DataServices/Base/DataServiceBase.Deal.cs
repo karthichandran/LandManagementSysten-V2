@@ -267,6 +267,10 @@ c in _dataSource.Companies on d.CompanyId equals c.CompanyID
 
         public async Task<int> DeleteDealAsync(Deal model)
         {
+            var receipts = _dataSource.Receipts.Where(x => x.DealId == model.DealId).ToList();
+            if (receipts.Count > 0)
+                return -1;
+
             var parties = _dataSource.DealParties.Where(x => x.DealId == model.DealId).ToList();
             _dataSource.DealParties.RemoveRange(parties);
             await _dataSource.SaveChangesAsync();

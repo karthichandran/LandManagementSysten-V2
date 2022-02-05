@@ -160,11 +160,13 @@
             </StackPanel>
             <StackPanel  Grid.Row="1" Grid.Column="2" Padding="5 0 5 0"  Orientation="Vertical">
                 <TextBlock Text="Amount 1"  Style="{StaticResource PopupLabels}"/>
-                <TextBox Text="{x:Bind ViewModel.CurrentPayment.Amount1,Mode=TwoWay,Converter={StaticResource DecimalConverter},UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PopupTextbox}"/>
+                <!--<TextBox Text="{x:Bind ViewModel.CurrentPayment.Amount1,Mode=TwoWay,Converter={StaticResource DecimalConverter},UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PopupTextbox}"/>-->
+                <TextBox Text="{x:Bind ViewModel.CurrentPayment.Amount1,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PopupTextbox}"/>
             </StackPanel>
             <StackPanel  Grid.Row="1" Grid.Column="3" Padding="5 0 5 0" Orientation="Vertical">
                 <TextBlock Text="Amount 2"  Style="{StaticResource PopupLabels}"/>
-                <TextBox Text="{x:Bind ViewModel.CurrentPayment.Amount2,Mode=TwoWay,Converter={StaticResource DecimalConverter},UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PopupTextbox}"/>
+                <!--<TextBox Text="{x:Bind ViewModel.CurrentPayment.Amount2,Mode=TwoWay,Converter={StaticResource DecimalConverter},UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PopupTextbox}"/>-->
+                <TextBox Text="{x:Bind ViewModel.CurrentPayment.Amount2,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource PopupTextbox}"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button Content="Add" x:Name="AddPayment" Background="#80D8FF"  Margin="10" Click="AddPayment_Click"  Width="100"/>

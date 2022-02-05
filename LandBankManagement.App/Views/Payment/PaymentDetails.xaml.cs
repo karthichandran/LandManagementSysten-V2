@@ -54,17 +54,28 @@ namespace LandBankManagement.Views
 
         private void cashCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //var val = ((ComboBox)sender).SelectedValue;
-            //if (val == null|| val.ToString()=="0")
-            //    return;
+            var val = ((ComboBox)sender).SelectedValue;
+            if (val == null || val.ToString() == "0")
+            {
+                if (ViewModel.currentCash != "")
+                {
+                    ((ComboBox)sender).SelectedValue = ViewModel.currentCash;
+                }
+                return;
+            }
             //ViewModel.Item.CashAccountId = val.ToString();
         }
 
         private void bankCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //var val = ((ComboBox)sender).SelectedValue;
-            //if (val == null ||val.ToString() == "0")
-            //    return;
+            var val = ((ComboBox)sender).SelectedValue;
+            if (val == null || val.ToString() == "0")
+            {
+                if (ViewModel.currentBank != "") {
+                    ((ComboBox)sender).SelectedValue= ViewModel.currentBank;
+                }
+                return;
+            }
             //ViewModel.Item.BankAccountId = val.ToString();
         }
 
@@ -72,7 +83,13 @@ namespace LandBankManagement.Views
         {
             var val = ((ComboBox)sender).SelectedValue;
             if (val == null || val.ToString() == "0")
+            {
+                if (ViewModel.currentPropertyId != "")
+                {
+                    ((ComboBox)sender).SelectedValue = ViewModel.currentPropertyId;
+                }
                 return;
+            }
             await ViewModel.LoadGroup();
            await ViewModel.LoadDocumentTypedByProperty();
             await ViewModel.LoadParty();
@@ -84,6 +101,15 @@ namespace LandBankManagement.Views
             if (val == null || val.ToString() == "0")
                 return;
             await ViewModel.LoadParty();
+        }
+
+        private void Amount_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var testbox = (TextBox)sender;
+            if (testbox.Text == "")
+                return;
+            var amount = testbox.Text.Replace(',', ' ').Replace(" ", "").Trim();
+            testbox.Text = Convert.ToDecimal(amount).ToString("N");
         }
     }
 }

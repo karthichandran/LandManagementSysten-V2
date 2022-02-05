@@ -128,7 +128,7 @@ namespace LandBankManagement.Services
                 DepositBankId = source.DepositBankId.ToString(),
                 DepositCashId = source.DepositCashId.ToString(),
                 DateOfPayment = source.DateOfPayment,
-                Amount = source.Amount.ToString(),
+                Amount = source.Amount.ToString("N"),
                 Narration = source.Narration,
                 BankName=source.BankName,
                 CashName=source.CashName

@@ -243,7 +243,8 @@ namespace LandBankManagement.Services
                         PropertyCheckListId=obj.PropertyCheckListId,
                         CheckListId=obj.CheckListId,
                         Mandatory=obj.Mandatory,
-                        Name=obj.Name
+                        Name=obj.Name,
+                        IsReceived=obj.IsReceived==null?false: obj.IsReceived.Value
                     });
                 }
 
@@ -295,6 +296,7 @@ namespace LandBankManagement.Services
                 Remarks=source.Remarks,
                 Status=source.Status.ToString(),
                 TotalArea=source.TotalArea
+                
             };
             var area = model.TotalArea.Split('-');
             var calculatedArea = LandBankManagement.AreaConvertor.ConvertArea(Convert.ToDecimal(area[0]), Convert.ToDecimal(area[1]), Convert.ToDecimal(area[2]));
@@ -379,7 +381,8 @@ namespace LandBankManagement.Services
                         PropertyCheckListId = obj.PropertyCheckListId,
                         CheckListId = obj.CheckListId,
                         Mandatory = obj.Mandatory,
-                        Name=obj.Name
+                        Name=obj.Name,
+                        IsReceived= obj.IsReceived == null ? false : obj.IsReceived.Value
                     };
                     var docList = new ObservableCollection<PropertyCheckListDocumentsModel>();
                     foreach (var doc in obj.Documents)
@@ -465,7 +468,6 @@ namespace LandBankManagement.Services
             target.CompanyID = Convert.ToInt32(source.CompanyID);
             target.PropertyDescription = source.PropertyDescription;
             target.CheckListMaster = source.CheckListMaster;
-
             //if (source.PropertyCheckListDocuments != null && source.PropertyCheckListDocuments.Count > 0)
             //{
             //    List<PropertyCheckListDocuments> docList = new List<PropertyCheckListDocuments>();
@@ -534,7 +536,7 @@ namespace LandBankManagement.Services
             target.PropertyCheckListId = source.PropertyCheckListId;
             target.Mandatory = source.Mandatory;
             target.Delete = source.Delete;
-
+            target.IsReceived = source.IsReceived;
             if (source.Documents == null)
                 return;
 

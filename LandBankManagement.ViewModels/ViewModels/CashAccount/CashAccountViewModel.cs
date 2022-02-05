@@ -106,6 +106,7 @@ namespace LandBankManagement.ViewModels
             {
                 ShowProgressRing();
                 var model = await CashAccountService.GetCashAccountAsync(selected.CashAccountId);
+                model.OpeningBalance = Convert.ToDecimal(model.OpeningBalance).ToString("N");
                 selected.Merge(model);
                 CashAccountDetials.ChangeCompanyOptions(Convert.ToInt32(model.CompanyID));
                 CashAccountDetials.Item = model;

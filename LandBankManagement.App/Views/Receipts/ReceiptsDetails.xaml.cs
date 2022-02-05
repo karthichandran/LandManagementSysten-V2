@@ -31,7 +31,13 @@ namespace LandBankManagement.Views
         {
             var val = ((ComboBox)sender).SelectedValue;
             if (val == null)
+            {
+                if (ViewModel.currentDealId >0) {
+                    ((ComboBox)sender).SelectedValue = ViewModel.currentDealId.ToString();
+                }
                 return;
+            }
+
 
            await ViewModel.LoadDealParties(Convert.ToInt32(val));
         }
@@ -43,6 +49,15 @@ namespace LandBankManagement.Views
                 return;
             await ViewModel.LoadDealsByCompany();
             await ViewModel.LoadBankAndCompany();
+        }
+
+        private void Amount_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var testbox = (TextBox)sender;
+            if (testbox.Text == "")
+                return;
+            var amount = testbox.Text.Replace(',', ' ').Replace(" ", "").Trim();
+            testbox.Text = Convert.ToDecimal(amount).ToString("N");
         }
     }
 }

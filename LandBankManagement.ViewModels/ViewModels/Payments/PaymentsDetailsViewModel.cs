@@ -172,6 +172,9 @@ namespace LandBankManagement.ViewModels
 
         private PaymentsViewModel PaymentsViewModel { get; set; }
         private bool IsProcessing = false;
+        public string currentPropertyId = "";
+        public string currentBank = "";
+        public string currentCash = "";
         #endregion
         public PaymentsDetailsViewModel(IDropDownService dropDownService, IPaymentService villageService, IFilePickerService filePickerService, ICommonServices commonServices, PaymentsViewModel paymentsViewModel) : base(commonServices)
         {
@@ -248,14 +251,16 @@ namespace LandBankManagement.ViewModels
             if (Item.PayeeId== "0" || Item.PayeeId == null)
                 return;
             PaymentsViewModel.ShowProgressRing();
-            PropertyOptions = await DropDownService.GetPropertyOptionsByCompanyID(Convert.ToInt32(Item.PayeeId));
+            PropertyOptions = await DropDownService.GetPropertyOptionsByCompanyID(Convert.ToInt32(Item.PayeeId));           
+
             PaymentsViewModel.HideProgressRing();
         }
 
         public async Task LoadDocumentTypedByProperty() {
             if (!IsExpenseChecked &&(Item.PropertyId != null && Item.PropertyId != "0") )
             DocumentTypeOptions = await DropDownService.GetDocumentTypesByPropertyID(Convert.ToInt32(Item.PropertyId));
-            PartyOptions = await DropDownService.GetPartyOptionsByProperty(Convert.ToInt32(Item.PropertyId));
+            //  PartyOptions = await DropDownService.GetPartyOptionsByProperty(Convert.ToInt32(Item.PropertyId));
+            LoadParty();
         }
         public async Task LoadGroup() {
             if ((Item.PropertyId != null && Item.PropertyId != "0"))
@@ -289,7 +294,7 @@ namespace LandBankManagement.ViewModels
                 else
                 PartyOptions = await DropDownService.GetPartyOptions();
             }
-                if (!IsExpenseChecked && (!string.IsNullOrEmpty( Item.GroupId) && Item.GroupId != "0"))
+                if (!string.IsNullOrEmpty( Item.GroupId) && Item.GroupId != "0")
             {
                 var items = await DropDownService.GetPartyOptionsByGroup(Convert.ToInt32(Item.GroupId));
                 PartyOptions = items;
@@ -332,9 +337,6 @@ namespace LandBankManagement.ViewModels
             }
         }
 
-        public void ReloadBankAndCash() {
-            
-        }
 
         public ICommand CashCheckedCommand => new RelayCommand(OnCashRadioChecked);
         virtual protected void OnCashRadioChecked()
@@ -503,12 +505,17 @@ namespace LandBankManagement.ViewModels
 
         protected override void ClearItem()
         {
+            currentPropertyId = "";
+            currentBank = "";
+            currentCash = "";
             Item = new PaymentModel() { PayeeTypeId = 1, PaymentTypeId = 1,DateOfPayment=DateTimeOffset.Now };
             PaymentList = new ObservableCollection<PaymentListModel>();
             defaultSettings();
             SelectedBank = "0";
             SelectedCash = "0";
             SelectedParty = "0";
+            SelectedDocType = "0";
+           
         }
         protected override async Task<bool> DeleteItemAsync(PaymentModel model)
         {

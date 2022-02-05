@@ -104,32 +104,33 @@ namespace LandBankManagement.ViewModels
                 ShowProgressRing();
                 SelectedPivotIndex = 1;
                 var model = await PaymentsService.GetPaymentAsync(selected.PaymentId);
-                selected.Merge(model);
+                //selected.Merge(model);
                 
                 var docType = model.DocumentTypeId;
                 var partyId = model.PartyId;
-                PaymentsDetails.Item.PropertyId = model.PropertyId;
+                var propertyId= model.PropertyId; 
+                
                 PaymentsDetails.SelectedDocType = docType;
                 PaymentsDetails.Item = model;
                 PaymentsDetails.defaultSettings();
-                //for (int i = 0; i < model.PaymentListModel.Count; i++)
-                //{
-                //    model.PaymentListModel[i].identity = i + 1;
-                //}
-                //PaymentsDetails.PaymentList = model.PaymentListModel;
+                            
 
-
-               await  PaymentsDetails.LoadDocTypes();
+                await  PaymentsDetails.LoadDocTypes();
                 PaymentsDetails.SelectedDocType = "0";
                 PaymentsDetails.SelectedDocType = docType;
-                await PaymentsDetails.LoadBankAndCompany();
-                PaymentsDetails.SelectedBank = "0";
+               // await PaymentsDetails.LoadBankAndCompany();
+                PaymentsDetails.Item.PropertyId = propertyId;
+                PaymentsDetails.SelectedBank = null;
                PaymentsDetails.SelectedBank = model.BankAccountId;
                 PaymentsDetails.SelectedCash = "0";
                 PaymentsDetails.SelectedCash = model.CashAccountId;
-                await PaymentsDetails.LoadParty();
+              //  await PaymentsDetails.LoadParty();
                 PaymentsDetails.SelectedParty = "0";
                PaymentsDetails.SelectedParty = partyId;
+
+                PaymentsDetails.currentPropertyId = propertyId;
+                PaymentsDetails.currentBank = model.BankAccountId;
+                PaymentsDetails.currentCash = model.CashAccountId;
             }
             catch (Exception ex)
             {

@@ -69,7 +69,7 @@
                                          HeaderRowHeight="40" RowHeight="35" HeaderStyle="{StaticResource GridHeader}" RowStyle="{StaticResource GridRowStyle}" SelectionMode="Single"
                                          AlternatingRowStyle="{StaticResource alternatingRowStyle}" AlternationCount="2" BorderBrush="#9E9E9E" SelectionChanged="sfdataGrid_SelectionChanged">
             <sync:SfDataGrid.Columns>
-                <sync:GridTextColumn HeaderText="Document Name*" MappingName="DocumentTypeName"/>
+                <sync:GridTextColumn HeaderText="Document Name*" MappingName="DocumentTypeName" TextTrimming="CharacterEllipsis" ShowToolTip="True"/>
                 <sync:GridTextColumn HeaderText="IsActive" MappingName="IsDocumentTypeActive"/>
             </sync:SfDataGrid.Columns>
         </sync:SfDataGrid>
